@@ -8,7 +8,7 @@
         public Genre()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Movies = new List<MovieGenre>();
+            this.Movies = new HashSet<MovieGenre>();
         }
 
         public string Id { get; set; }

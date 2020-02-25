@@ -8,7 +8,7 @@
         public Director()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Movies = new List<MovieDirector>();
+            this.Movies = new HashSet<MovieDirector>();
         }
 
         public string Id { get; set; }

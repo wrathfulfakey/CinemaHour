@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CinemaHour.Data.Migrations
 {
-    public partial class FixedMovieGenreRelation : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,8 @@ namespace CinemaHour.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Gender = table.Column<int>(nullable: false),
-                    BirthDate = table.Column<DateTime>(nullable: false)
+                    Gender = table.Column<int>(nullable: true),
+                    BirthDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,9 +118,9 @@ namespace CinemaHour.Data.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     Length = table.Column<int>(nullable: false),
-                    ReleaseDate = table.Column<DateTime>(nullable: false),
+                    ReleaseDate = table.Column<DateTime>(nullable: true),
                     Language = table.Column<string>(nullable: true),
-                    Rating = table.Column<float>(nullable: false),
+                    Rating = table.Column<float>(nullable: true),
                     DirectorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -253,6 +253,30 @@ namespace CinemaHour.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Favourites",
+                columns: table => new
+                {
+                    ApplicationUserId = table.Column<string>(nullable: false),
+                    MovieId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favourites", x => new { x.ApplicationUserId, x.MovieId });
+                    table.ForeignKey(
+                        name: "FK_Favourites_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Favourites_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MovieActors",
                 columns: table => new
                 {
@@ -348,6 +372,30 @@ namespace CinemaHour.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Watched",
+                columns: table => new
+                {
+                    ApplicationUserId = table.Column<string>(nullable: false),
+                    MovieId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Watched", x => new { x.ApplicationUserId, x.MovieId });
+                    table.ForeignKey(
+                        name: "FK_Watched_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Watched_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -403,6 +451,11 @@ namespace CinemaHour.Data.Migrations
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Favourites_MovieId",
+                table: "Favourites",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MovieActors_MovieId",
                 table: "MovieActors",
                 column: "MovieId");
@@ -432,6 +485,11 @@ namespace CinemaHour.Data.Migrations
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Watched_MovieId",
+                table: "Watched",
+                column: "MovieId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -452,6 +510,9 @@ namespace CinemaHour.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Favourites");
+
+            migrationBuilder.DropTable(
                 name: "MovieActors");
 
             migrationBuilder.DropTable(
@@ -467,10 +528,10 @@ namespace CinemaHour.Data.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Watched");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Actors");
@@ -483,6 +544,9 @@ namespace CinemaHour.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Genres");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Movies");

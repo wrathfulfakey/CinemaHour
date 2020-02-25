@@ -44,6 +44,10 @@
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<UserFavourite> Favourites { get; set; }
+
+        public DbSet<UserWatched> Watched { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -67,6 +71,28 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // User Movie (Watched) Relation
+            builder.Entity<UserWatched>(entity =>
+            {
+                entity.HasKey(u => new { u.ApplicationUserId, u.MovieId });
+
+                entity
+                    .HasOne(u => u.User)
+                    .WithMany(m => m.Watched)
+                    .HasForeignKey(u => u.ApplicationUserId);
+            });
+
+            // User Movie (Favourites) Relation
+            builder.Entity<UserFavourite>(entity =>
+            {
+                entity.HasKey(u => new { u.ApplicationUserId, u.MovieId });
+
+                entity
+                    .HasOne(u => u.User)
+                    .WithMany(m => m.Favourites)
+                    .HasForeignKey(u => u.ApplicationUserId);
+            });
+
             // Movie Director Relation
             builder.Entity<MovieDirector>(entity =>
             {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaHour.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200225000713_FixedMovieGenreRelation")]
-    partial class FixedMovieGenreRelation
+    [Migration("20200225180310_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,13 +26,13 @@ namespace CinemaHour.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gender")
+                    b.Property<int?>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -221,10 +221,10 @@ namespace CinemaHour.Data.Migrations
                     b.Property<int>("Length")
                         .HasColumnType("int");
 
-                    b.Property<float>("Rating")
+                    b.Property<float?>("Rating")
                         .HasColumnType("real");
 
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -325,6 +325,36 @@ namespace CinemaHour.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Settings");
+                });
+
+            modelBuilder.Entity("CinemaHour.Data.Models.UserFavourite", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ApplicationUserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("CinemaHour.Data.Models.UserWatched", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ApplicationUserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Watched");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -493,6 +523,36 @@ namespace CinemaHour.Data.Migrations
 
                     b.HasOne("CinemaHour.Data.Models.Movie", "Movie")
                         .WithMany("Genres")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CinemaHour.Data.Models.UserFavourite", b =>
+                {
+                    b.HasOne("CinemaHour.Data.Models.ApplicationUser", "User")
+                        .WithMany("Favourites")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CinemaHour.Data.Models.Movie", "Movie")
+                        .WithMany("UsersFavourite")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CinemaHour.Data.Models.UserWatched", b =>
+                {
+                    b.HasOne("CinemaHour.Data.Models.ApplicationUser", "User")
+                        .WithMany("Watched")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CinemaHour.Data.Models.Movie", "Movie")
+                        .WithMany("UsersWatched")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

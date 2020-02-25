@@ -3,6 +3,7 @@ namespace CinemaHour.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using CinemaHour.Data.Common.Models;
 
@@ -16,6 +17,8 @@ namespace CinemaHour.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Favourites = new HashSet<UserFavourite>();
+            this.Watched = new HashSet<UserWatched>();
         }
 
         // Audit info
@@ -28,10 +31,17 @@ namespace CinemaHour.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public int TotalTimeWatched 
+            => this.Watched.Sum(m => m.Movie.Length);
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<UserFavourite> Favourites { get; set; }
+
+        public virtual ICollection<UserWatched> Watched { get; set; }
     }
 }

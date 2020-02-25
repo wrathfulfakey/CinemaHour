@@ -8,7 +8,7 @@
         public Comment()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Replies = new List<Comment>();
+            this.Replies = new HashSet<Comment>();
         }
 
         public string Id { get; set; }

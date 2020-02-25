@@ -10,7 +10,7 @@
         public Actor()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Movies = new List<MovieActors>();
+            this.Movies = new HashSet<MovieActors>();
         }
 
         public string Id { get; set; }
@@ -20,10 +20,10 @@
 
         public string LastName { get; set; }
 
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         // Birthdate of the actor
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         // Movies the actor is starring
         public ICollection<MovieActors> Movies { get; set; }
