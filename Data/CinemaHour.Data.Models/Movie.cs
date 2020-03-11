@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using CinemaHour.Data.Common.Models;
 
-    public class Movie
+    public class Movie : BaseModel<string>
     {
         public Movie()
         {
@@ -15,26 +17,32 @@
             this.UsersWatched = new HashSet<UserWatched>();
         }
 
-        public string Id { get; set; }
-
         // Length of the movie in minutes
+        [Required]
+        [Range(30, 300)]
         public int Length { get; set; }
 
         // Release Date of the Movie
         public DateTime? ReleaseDate { get; set; }
 
+        // Movie Poster with default picture
+        public byte[] Poster { get; set; }
+
         // Movie Language dub
         public string? Language { get; set; }
 
         // Average Movie Rating
+        [Range(0, 5)]
         public float? Rating { get; set; }
 
         public string DirectorId { get; set; }
 
         public MovieDirector Director { get; set; }
 
+        [Required]
         public ICollection<MovieGenre> Genres { get; set; }
 
+        [Required]
         public ICollection<MovieActors> Actors { get; set; }
 
         public ICollection<MovieComment> Comments { get; set; }

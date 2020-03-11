@@ -2,8 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
-    public class Genre
+    using CinemaHour.Data.Common.Models;
+
+    public class Genre : BaseModel<string>
     {
         public Genre()
         {
@@ -11,8 +14,8 @@
             this.Movies = new HashSet<MovieGenre>();
         }
 
-        public string Id { get; set; }
-
+        [Required]
+        [StringLength(15, MinimumLength = 2)]
         public string Name { get; set; }
 
         public ICollection<MovieGenre> Movies { get; set; }

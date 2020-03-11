@@ -2,8 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
-    public class Director
+    using CinemaHour.Data.Common.Models;
+
+    public class Director : BaseModel<string>
     {
         public Director()
         {
@@ -11,12 +14,13 @@
             this.Movies = new HashSet<MovieDirector>();
         }
 
-        public string Id { get; set; }
-
         // First, Middle and Last name of director
+        [Required]
+        [StringLength(100, MinimumLength = 5)]
         public string FullName { get; set; }
 
         // Movies directed
+        [Required]
         public ICollection<MovieDirector> Movies { get; set; }
     }
 }

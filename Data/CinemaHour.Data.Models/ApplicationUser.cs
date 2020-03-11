@@ -21,6 +21,12 @@ namespace CinemaHour.Data.Models
             this.Watched = new HashSet<UserWatched>();
         }
 
+        //public byte[] Avatar { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 
@@ -31,8 +37,7 @@ namespace CinemaHour.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public int TotalTimeWatched 
-            => this.Watched.Sum(m => m.Movie.Length);
+        public int TotalTimeWatched => this.Watched.Sum(m => m.Movie.Length);
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

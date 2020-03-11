@@ -8,6 +8,7 @@
     using CinemaHour.Data.Models;
     using CinemaHour.Data.Repositories;
     using CinemaHour.Data.Seeding;
+    using CinemaHour.Services;
     using CinemaHour.Services.Data;
     using CinemaHour.Services.Mapping;
     using CinemaHour.Services.Messaging;
@@ -57,7 +58,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ISettingsService, SettingsService>();
         }
 
