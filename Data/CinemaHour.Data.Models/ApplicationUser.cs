@@ -21,7 +21,7 @@ namespace CinemaHour.Data.Models
             this.Watched = new HashSet<UserWatched>();
         }
 
-        //public byte[] Avatar { get; set; }
+        public byte[] Avatar { get; set; }
 
         public string FirstName { get; set; }
 

@@ -47,8 +47,17 @@
 
         public class InputModel
         {
-            //[Display(Name="Avatar")]
+            //[Display(Name = "Avatar")]
+            //[DataType(DataType.Upload)]
             //public byte[] Avatar { get; set; }
+
+            [StringLength(20, MinimumLength = 3, ErrorMessage = "Your first name must be between 3 and 20 characters.")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [StringLength(20, MinimumLength = 3, ErrorMessage = "Your last name must be between 3 and 20 characters.")]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
 
             [Required]
             [StringLength(20, MinimumLength = 6, ErrorMessage = "Username must be between 6 and 20 characters.")]
@@ -61,7 +70,7 @@
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(15, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -84,7 +93,18 @@
             this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email };
+                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName, };
+
+                if (this._userManager.Users.Any(x => x.UserName == user.UserName))
+                {
+                    this.ModelState.AddModelError(string.Empty, "Username already exists.");
+                    return this.Page();
+                }
+                else if (this._userManager.Users.Any(x => x.Email == user.Email))
+                {
+                    this.ModelState.AddModelError(string.Empty, "Email already exists.");
+                    return this.Page();
+                }
 
                 var result = await this._userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
@@ -98,7 +118,7 @@
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: this.Request.Scheme);
-                    //this.Input.Email, "Confirm your email", $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
+
                     await this._emailSender.SendEmailAsync("rokudo3@gmail.com", "Cinema Hour", this.Input.Email, "Email Confirmation", callbackUrl);
 
                     if (this._userManager.Options.SignIn.RequireConfirmedAccount)
