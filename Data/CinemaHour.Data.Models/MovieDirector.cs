@@ -2,12 +2,12 @@
 {
     public class MovieDirector
     {
-        public string MovieId { get; set; }
+        public int MovieId { get; set; }
 
-        public Movie Movie { get; set; }
+        public virtual Movie Movie { get; set; }
 
         public string DirectorId { get; set; }
 
-        public Director Director { get; set; }
+        public virtual Director Director { get; set; }
     }
 }

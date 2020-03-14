@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaHour.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200225181248_AddedBaseModelClassToEntities")]
-    partial class AddedBaseModelClassToEntities
+    [Migration("20200314164520_MinorChangeToMovieCommentRelation")]
+    partial class MinorChangeToMovieCommentRelation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,20 +26,24 @@ namespace CinemaHour.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("BirthDate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
-                    b.Property<int?>("Gender")
+                    b.Property<int>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -98,6 +102,9 @@ namespace CinemaHour.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -115,8 +122,14 @@ namespace CinemaHour.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -171,24 +184,44 @@ namespace CinemaHour.Data.Migrations
 
             modelBuilder.Entity("CinemaHour.Data.Models.Comment", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CommentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CommentId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -202,7 +235,9 @@ namespace CinemaHour.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -214,33 +249,53 @@ namespace CinemaHour.Data.Migrations
 
             modelBuilder.Entity("CinemaHour.Data.Models.Genre", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("CinemaHour.Data.Models.Movie", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DirectorId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Language")
                         .HasColumnType("nvarchar(max)");
@@ -251,6 +306,9 @@ namespace CinemaHour.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte[]>("Poster")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<float?>("Rating")
                         .HasColumnType("real");
 
@@ -258,6 +316,8 @@ namespace CinemaHour.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Movies");
                 });
@@ -267,8 +327,8 @@ namespace CinemaHour.Data.Migrations
                     b.Property<string>("ActorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
                     b.HasKey("ActorId", "MovieId");
 
@@ -279,23 +339,24 @@ namespace CinemaHour.Data.Migrations
 
             modelBuilder.Entity("CinemaHour.Data.Models.MovieComment", b =>
                 {
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CommentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
 
                     b.HasKey("MovieId", "CommentId");
 
-                    b.HasIndex("CommentId");
+                    b.HasIndex("CommentId")
+                        .IsUnique();
 
                     b.ToTable("MovieComments");
                 });
 
             modelBuilder.Entity("CinemaHour.Data.Models.MovieDirector", b =>
                 {
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
                     b.Property<string>("DirectorId")
                         .HasColumnType("nvarchar(450)");
@@ -312,11 +373,11 @@ namespace CinemaHour.Data.Migrations
 
             modelBuilder.Entity("CinemaHour.Data.Models.MovieGenre", b =>
                 {
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("GenreId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
 
                     b.HasKey("MovieId", "GenreId");
 
@@ -362,8 +423,8 @@ namespace CinemaHour.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
                     b.HasKey("ApplicationUserId", "MovieId");
 
@@ -377,8 +438,8 @@ namespace CinemaHour.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
 
                     b.HasKey("ApplicationUserId", "MovieId");
 
@@ -496,6 +557,10 @@ namespace CinemaHour.Data.Migrations
                     b.HasOne("CinemaHour.Data.Models.Comment", null)
                         .WithMany("Replies")
                         .HasForeignKey("CommentId");
+
+                    b.HasOne("CinemaHour.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("CinemaHour.Data.Models.MovieActors", b =>
@@ -516,8 +581,8 @@ namespace CinemaHour.Data.Migrations
             modelBuilder.Entity("CinemaHour.Data.Models.MovieComment", b =>
                 {
                     b.HasOne("CinemaHour.Data.Models.Comment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId")
+                        .WithOne("Movie")
+                        .HasForeignKey("CinemaHour.Data.Models.MovieComment", "CommentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

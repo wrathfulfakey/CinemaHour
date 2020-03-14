@@ -21,6 +21,6 @@
 
         // Movies directed
         [Required]
-        public ICollection<MovieDirector> Movies { get; set; }
+        public virtual ICollection<MovieDirector> Movies { get; set; }
     }
 }

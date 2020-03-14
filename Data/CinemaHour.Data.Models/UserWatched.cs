@@ -4,10 +4,10 @@
     {
         public string ApplicationUserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        public string MovieId { get; set; }
+        public int MovieId { get; set; }
 
-        public Movie Movie { get; set; }
+        public virtual Movie Movie { get; set; }
     }
 }

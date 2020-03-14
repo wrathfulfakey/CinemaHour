@@ -6,11 +6,10 @@
 
     using CinemaHour.Data.Common.Models;
 
-    public class Genre : BaseModel<string>
+    public class Genre : BaseDeletableModel<int>
     {
         public Genre()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.Movies = new HashSet<MovieGenre>();
         }
 
@@ -18,6 +17,6 @@
         [StringLength(15, MinimumLength = 2)]
         public string Name { get; set; }
 
-        public ICollection<MovieGenre> Movies { get; set; }
+        public virtual ICollection<MovieGenre> Movies { get; set; }
     }
 }

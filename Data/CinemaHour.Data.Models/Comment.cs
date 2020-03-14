@@ -6,11 +6,10 @@
 
     using CinemaHour.Data.Common.Models;
 
-    public class Comment : BaseModel<string>
+    public class Comment : BaseDeletableModel<int>
     {
         public Comment()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.Replies = new HashSet<Comment>();
         }
 
@@ -18,6 +17,15 @@
         [StringLength(255, MinimumLength = 3)]
         public string Content { get; set; }
 
-        public ICollection<Comment> Replies { get; set; }
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
+        public int MovieId { get; set; }
+
+        public MovieComment Movie { get; set; }
+
+        public virtual ICollection<Comment> Replies { get; set; }
+
     }
 }

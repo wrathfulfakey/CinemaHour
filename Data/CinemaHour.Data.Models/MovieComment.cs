@@ -2,12 +2,12 @@
 {
     public class MovieComment
     {
-        public string MovieId { get; set; }
+        public int MovieId { get; set; }
 
-        public Movie Movie { get; set; }
+        public virtual Movie Movie { get; set; }
 
-        public string CommentId { get; set; }
+        public int CommentId { get; set; }
 
-        public Comment Comment { get; set; }
+        public virtual Comment Comment { get; set; }
     }
 }

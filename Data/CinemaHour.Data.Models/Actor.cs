@@ -25,14 +25,14 @@
         public string LastName { get; set; }
 
         [Required]
-        public Gender? Gender { get; set; }
+        public Gender Gender { get; set; }
 
         // Birthdate of the actor
         [Required]
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         // Movies the actor is starring
         [Required]
-        public ICollection<MovieActors> Movies { get; set; }
+        public virtual ICollection<MovieActors> Movies { get; set; }
     }
 }

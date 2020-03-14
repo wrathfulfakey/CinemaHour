@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CinemaHour.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FixedBugsToWatchedAndFavouritesEntities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +12,12 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Gender = table.Column<int>(nullable: true),
-                    BirthDate = table.Column<DateTime>(nullable: true)
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 25, nullable: false),
+                    LastName = table.Column<string>(maxLength: 25, nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    BirthDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,6 +61,9 @@ namespace CinemaHour.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    Avatar = table.Column<byte[]>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -70,30 +75,13 @@ namespace CinemaHour.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Content = table.Column<string>(nullable: true),
-                    CommentId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Directors",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    FullName = table.Column<string>(nullable: true)
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    FullName = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,8 +92,13 @@ namespace CinemaHour.Data.Migrations
                 name: "Genres",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,9 +109,15 @@ namespace CinemaHour.Data.Migrations
                 name: "Movies",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                     Length = table.Column<int>(nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: true),
+                    Poster = table.Column<byte[]>(nullable: true),
                     Language = table.Column<string>(nullable: true),
                     Rating = table.Column<float>(nullable: true),
                     DirectorId = table.Column<string>(nullable: true)
@@ -253,11 +252,49 @@ namespace CinemaHour.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Content = table.Column<string>(maxLength: 255, nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    MovieId = table.Column<int>(nullable: false),
+                    CommentId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Favourites",
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
-                    MovieId = table.Column<string>(nullable: false)
+                    MovieId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -280,7 +317,7 @@ namespace CinemaHour.Data.Migrations
                 name: "MovieActors",
                 columns: table => new
                 {
-                    MovieId = table.Column<string>(nullable: false),
+                    MovieId = table.Column<int>(nullable: false),
                     ActorId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -301,34 +338,10 @@ namespace CinemaHour.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieComments",
-                columns: table => new
-                {
-                    MovieId = table.Column<string>(nullable: false),
-                    CommentId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MovieComments", x => new { x.MovieId, x.CommentId });
-                    table.ForeignKey(
-                        name: "FK_MovieComments_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MovieComments_Movies_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MovieDirectors",
                 columns: table => new
                 {
-                    MovieId = table.Column<string>(nullable: false),
+                    MovieId = table.Column<int>(nullable: false),
                     DirectorId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -352,8 +365,8 @@ namespace CinemaHour.Data.Migrations
                 name: "MovieGenres",
                 columns: table => new
                 {
-                    MovieId = table.Column<string>(nullable: false),
-                    GenreId = table.Column<string>(nullable: false)
+                    MovieId = table.Column<int>(nullable: false),
+                    GenreId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -377,7 +390,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
-                    MovieId = table.Column<string>(nullable: false)
+                    MovieId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -390,6 +403,30 @@ namespace CinemaHour.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Watched_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovieComments",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(nullable: false),
+                    CommentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieComments", x => new { x.MovieId, x.CommentId });
+                    table.ForeignKey(
+                        name: "FK_MovieComments_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MovieComments_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
@@ -451,9 +488,29 @@ namespace CinemaHour.Data.Migrations
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_IsDeleted",
+                table: "Comments",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_MovieId",
+                table: "Comments",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Favourites_MovieId",
                 table: "Favourites",
                 column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Genres_IsDeleted",
+                table: "Genres",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieActors_MovieId",
@@ -480,6 +537,11 @@ namespace CinemaHour.Data.Migrations
                 name: "IX_MovieGenres_GenreId",
                 table: "MovieGenres",
                 column: "GenreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Movies_IsDeleted",
+                table: "Movies",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
@@ -546,10 +608,10 @@ namespace CinemaHour.Data.Migrations
                 name: "Genres");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "AspNetUsers");
         }
     }
 }

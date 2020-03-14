@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using CinemaHour.Data.Common.Models;
 
-    public class Movie : BaseModel<string>
+    public class Movie : BaseDeletableModel<int>
     {
         public Movie()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.Actors = new HashSet<MovieActors>();
             this.Comments = new HashSet<MovieComment>();
             this.Genres = new HashSet<MovieGenre>();
@@ -29,7 +29,7 @@
         public byte[] Poster { get; set; }
 
         // Movie Language dub
-        public string? Language { get; set; }
+        public string Language { get; set; }
 
         // Average Movie Rating
         [Range(0, 5)]
@@ -37,15 +37,15 @@
 
         public string DirectorId { get; set; }
 
-        public MovieDirector Director { get; set; }
+        public virtual MovieDirector Director { get; set; }
 
         [Required]
-        public ICollection<MovieGenre> Genres { get; set; }
+        public virtual ICollection<MovieGenre> Genres { get; set; }
 
         [Required]
-        public ICollection<MovieActors> Actors { get; set; }
+        public virtual ICollection<MovieActors> Actors { get; set; }
 
-        public ICollection<MovieComment> Comments { get; set; }
+        public virtual ICollection<MovieComment> Comments { get; set; }
 
         public virtual ICollection<UserFavourite> UsersFavourite { get; set; }
 
