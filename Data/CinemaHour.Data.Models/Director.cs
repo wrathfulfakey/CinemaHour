@@ -6,7 +6,7 @@
 
     using CinemaHour.Data.Common.Models;
 
-    public class Director : BaseModel<string>
+    public class Director : BaseDeletableModel<string>
     {
         public Director()
         {

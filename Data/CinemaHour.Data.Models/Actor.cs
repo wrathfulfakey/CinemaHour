@@ -7,7 +7,7 @@
     using CinemaHour.Data.Common.Models;
     using CinemaHour.Data.Models.Enum;
 
-    public class Actor : BaseModel<string>
+    public class Actor : BaseDeletableModel<string>
     {
         public Actor()
         {
@@ -15,13 +15,16 @@
             this.Movies = new HashSet<MovieActors>();
         }
 
+        //ToDo: add ActorImage
+        //public string Image { get; set; }
+
         // Actor's First Name
         [Required]
-        [StringLength(25, MinimumLength = 3)]
+        [StringLength(25, MinimumLength = 2)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(25, MinimumLength = 3)]
+        [StringLength(25, MinimumLength = 2)]
         public string LastName { get; set; }
 
         [Required]
@@ -32,7 +35,6 @@
         public DateTime BirthDate { get; set; }
 
         // Movies the actor is starring
-        [Required]
         public virtual ICollection<MovieActors> Movies { get; set; }
     }
 }

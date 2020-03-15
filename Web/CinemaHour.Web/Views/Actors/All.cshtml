@@ -1,0 +1,19 @@
+﻿@model CinemaHour.Web.ViewModels.Actors.AllActorsViewModel;
+@{
+    this.ViewData["Title"] = "All Actors";
+}
+
+<div class="row">
+    @foreach (var actor in Model.Actors)
+    {
+        <div class="col-md-4 media">
+            <div class="media-body">
+                <h3 class="mt-0">
+                    @(actor.FirstName + " " + actor.LastName)
+                </h3>
+                @actor.Gender
+                @actor.BirthDate.Date
+            </div>
+        </div>
+    }
+</div>

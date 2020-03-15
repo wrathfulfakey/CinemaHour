@@ -70,6 +70,7 @@
             // Application services
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IActorsService, ActorsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

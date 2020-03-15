@@ -29,6 +29,8 @@
                               new UsersSeeder(),
                               new UserRolesSeeder(dbContext),
                               new SettingsSeeder(),
+                              new GenresSeeder(),
+                              new ActorsSeeder(),
                           };
 
             foreach (var seeder in seeders)

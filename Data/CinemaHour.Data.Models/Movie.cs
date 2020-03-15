@@ -17,6 +17,11 @@
             this.UsersWatched = new HashSet<UserWatched>();
         }
 
+        // Movie Name
+        [Required]
+        [StringLength(100, MinimumLength = 3)]
+        public string Name { get; set; }
+
         // Length of the movie in minutes
         [Required]
         [Range(30, 300)]
@@ -34,6 +39,8 @@
         // Average Movie Rating
         [Range(0, 5)]
         public float? Rating { get; set; }
+
+        public string IMDBLink { get; set; }
 
         public string DirectorId { get; set; }
 
