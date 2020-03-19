@@ -1,0 +1,29 @@
+﻿@model CinemaHour.Web.ViewModels.Actors.ActorDetailsViewModel;
+@{
+    this.ViewData["Title"] = "Actor Details";
+}
+
+<div>
+    <div class="col-md-12 media">
+        <div class="media-body">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" width="250" />
+            <h3 class="mt-0">
+                @(Model.FirstName + " " + Model.LastName)
+            </h3>
+            <p>Gender: @Model.Gender</p>
+            <p>Birthdate: @Model.BirthDate.ToShortDateString()</p>
+            <p>Age: @Model.Age</p>
+            <div class="row">
+                @foreach (var movie in @Model.Movies)
+                {
+                    <div class="col-md-3">
+                        <h1> @movie.Name </h1>
+                        <p>@movie.Rating</p>
+                        <p>@movie.TrailerLink</p>
+                        <p>@movie.IMDBLink</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

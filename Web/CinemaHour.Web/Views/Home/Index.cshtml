@@ -10,7 +10,7 @@
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
     @if (this.SignInManager.IsSignedIn(this.User))
     {
-        <h3>You are looged in as <strong>@(this.User.Identity.Name)</strong></h3>
+        <h3>You are logged in as <b>@(this.User.Identity.Name)</b></h3>
     }
     else
     {

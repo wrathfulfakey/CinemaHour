@@ -22,5 +22,12 @@
 
             return this.View(viewModel);
         }
+
+        public IActionResult Details(string id)
+        {
+            var viewModel = new ActorDetailsViewModel();
+
+            return this.View($"/Actors/Details?id={id}", viewModel);
+        }
     }
 }

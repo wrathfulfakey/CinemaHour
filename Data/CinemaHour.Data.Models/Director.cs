@@ -20,7 +20,6 @@
         public string FullName { get; set; }
 
         // Movies directed
-        [Required]
         public virtual ICollection<MovieDirector> Movies { get; set; }
     }
 }

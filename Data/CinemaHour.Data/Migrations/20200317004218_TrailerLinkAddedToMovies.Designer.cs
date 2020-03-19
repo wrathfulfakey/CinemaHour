@@ -4,14 +4,16 @@ using CinemaHour.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CinemaHour.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200317004218_TrailerLinkAddedToMovies")]
+    partial class TrailerLinkAddedToMovies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +42,6 @@ namespace CinemaHour.Data.Migrations
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -308,6 +307,9 @@ namespace CinemaHour.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DirectorId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IMDBLink")
                         .HasColumnType("nvarchar(max)");
 
@@ -336,9 +338,6 @@ namespace CinemaHour.Data.Migrations
 
                     b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrailerLink")
                         .HasColumnType("nvarchar(max)");
@@ -392,6 +391,9 @@ namespace CinemaHour.Data.Migrations
                     b.HasKey("MovieId", "DirectorId");
 
                     b.HasIndex("DirectorId");
+
+                    b.HasIndex("MovieId")
+                        .IsUnique();
 
                     b.ToTable("MovieDirectors");
                 });
@@ -627,8 +629,8 @@ namespace CinemaHour.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CinemaHour.Data.Models.Movie", "Movie")
-                        .WithMany("Directors")
-                        .HasForeignKey("MovieId")
+                        .WithOne("Director")
+                        .HasForeignKey("CinemaHour.Data.Models.MovieDirector", "MovieId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

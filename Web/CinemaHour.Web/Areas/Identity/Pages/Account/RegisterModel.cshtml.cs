@@ -47,9 +47,9 @@
 
         public class InputModel
         {
-            //[Display(Name = "Avatar")]
-            //[DataType(DataType.Upload)]
-            //public byte[] Avatar { get; set; }
+            // [Display(Name = "Avatar")]
+            // [DataType(DataType.Upload)]
+            // public byte[] Avatar { get; set; }
 
             [StringLength(20, MinimumLength = 3, ErrorMessage = "Your first name must be between 3 and 20 characters.")]
             [Display(Name = "First Name")]
@@ -61,22 +61,22 @@
 
             [Required]
             [StringLength(20, MinimumLength = 6, ErrorMessage = "Username must be between 6 and 20 characters.")]
-            [Display(Name = "Username")]
+            [Display(Name = "Username *")]
             public string UserName { get; set; }
 
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Email *")]
             public string Email { get; set; }
 
             [Required]
             [StringLength(15, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Password *")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Confirm password *")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
@@ -91,9 +91,10 @@
         {
             returnUrl = returnUrl ?? this.Url.Content("~/");
             this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName, };
+                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName };
 
                 if (this._userManager.Users.Any(x => x.UserName == user.UserName))
                 {
@@ -107,6 +108,7 @@
                 }
 
                 var result = await this._userManager.CreateAsync(user, this.Input.Password);
+
                 if (result.Succeeded)
                 {
                     this._logger.LogInformation("User created a new account with password.");

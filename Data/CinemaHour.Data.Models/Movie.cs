@@ -13,6 +13,7 @@
             this.Actors = new HashSet<MovieActors>();
             this.Comments = new HashSet<MovieComment>();
             this.Genres = new HashSet<MovieGenre>();
+            this.Directors = new HashSet<MovieDirector>();
             this.UsersFavourite = new HashSet<UserFavourite>();
             this.UsersWatched = new HashSet<UserWatched>();
         }
@@ -42,9 +43,11 @@
 
         public string IMDBLink { get; set; }
 
-        public string DirectorId { get; set; }
+        public string TrailerLink { get; set; }
 
-        public virtual MovieDirector Director { get; set; }
+        public string Summary { get; set; }
+
+        public virtual ICollection<MovieDirector> Directors { get; set; }
 
         [Required]
         public virtual ICollection<MovieGenre> Genres { get; set; }

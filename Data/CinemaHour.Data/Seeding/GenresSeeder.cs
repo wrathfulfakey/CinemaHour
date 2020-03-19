@@ -1,10 +1,11 @@
 ﻿namespace CinemaHour.Data.Seeding
 {
-    using CinemaHour.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using CinemaHour.Data.Models;
 
     public class GenresSeeder : ISeeder
     {
@@ -17,18 +18,20 @@
 
             var genres = new List<string>
             {
-                "Comedy",
-                "Sci-Fi",
                 "Action",
-                "Drama",
-                "Historical",
                 "Adventure",
+                "Biography",
+                "Comedy",
                 "Crime",
+                "Drama",
                 "Fantasy",
+                "Historical",
                 "Horror",
+                "Mystery",
                 "Romance",
-                "Western",
+                "Sci-Fi",
                 "Thriller",
+                "Western",
             };
 
             foreach (var genre in genres)

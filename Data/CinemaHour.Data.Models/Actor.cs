@@ -15,8 +15,7 @@
             this.Movies = new HashSet<MovieActors>();
         }
 
-        //ToDo: add ActorImage
-        //public string Image { get; set; }
+        public byte[] Image { get; set; }
 
         // Actor's First Name
         [Required]
