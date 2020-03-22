@@ -1,8 +1,11 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
+    using CinemaHour.Data.Models;
     using CinemaHour.Services.Data;
+    using CinemaHour.Services.Mapping;
     using CinemaHour.Web.ViewModels.Actors;
     using Microsoft.AspNetCore.Mvc;
+    using System.Linq;
 
     public class ActorsController : Controller
     {
@@ -25,9 +28,16 @@
 
         public IActionResult Details(string id)
         {
-            var viewModel = new ActorDetailsViewModel();
+            var viewModel = this.actorsService
+                .GetAll<ActorDetailsViewModel>()
+                .FirstOrDefault(x => x.Id == id);
 
-            return this.View($"/Actors/Details?id={id}", viewModel);
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(viewModel);
         }
     }
 }

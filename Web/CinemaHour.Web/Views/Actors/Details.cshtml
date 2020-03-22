@@ -6,24 +6,31 @@
 <div>
     <div class="col-md-12 media">
         <div class="media-body">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" width="250" />
-            <h3 class="mt-0">
-                @(Model.FirstName + " " + Model.LastName)
-            </h3>
-            <p>Gender: @Model.Gender</p>
-            <p>Birthdate: @Model.BirthDate.ToShortDateString()</p>
-            <p>Age: @Model.Age</p>
-            <div class="row">
-                @foreach (var movie in @Model.Movies)
-                {
-                    <div class="col-md-3">
-                        <h1> @movie.Name </h1>
-                        <p>@movie.Rating</p>
-                        <p>@movie.TrailerLink</p>
-                        <p>@movie.IMDBLink</p>
-                    </div>
-                }
+            <div id="ActorDetails" align="center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" width="250" />
+                <h2 class="mt-0">
+                    @(Model.FirstName + " " + Model.LastName)
+                </h2>
+                <p>Gender: @Model.Gender</p>
+                <p>Birthdate: @Model.BirthDate.ToShortDateString()</p>
+                <p>Age: @Model.Age()</p>
             </div>
+            <div id="ActorMovieDetails">
+                <h3 align="center">Movies</h3>
+                <div class="row">
+                    @foreach (var movie in @Model.Movies)
+                    {
+                        <div class="col-md-4">
+                            <h4> @movie.Name </h4>
+                            <p>Rating: @movie.Rating</p>
+                            <p><a href="@movie.TrailerLink">Trailer</a></p>
+                            <p><a href="@movie.IMDBLink">IMDB</a></p>
+                            <p>Premiere: @movie.ReleaseDate.ToShortDateString()</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

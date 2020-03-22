@@ -10,6 +10,11 @@ namespace CinemaHour.Web.ViewModels.Actors
 
     public class ActorDetailsViewModel : IMapFrom<Actor>, IHaveCustomMappings
     {
+        public ActorDetailsViewModel()
+        {
+            this.Movies = new HashSet<ActorMovieViewModel>();
+        }
+
         public string Id { get; set; }
 
         public string FirstName { get; set; }
@@ -20,13 +25,22 @@ namespace CinemaHour.Web.ViewModels.Actors
 
         public DateTime BirthDate { get; set; }
 
-        public int Age => DateTime.Today.Year - this.BirthDate.Year;
+        public int Age()
+        {
+            int age = DateTime.UtcNow.Year - this.BirthDate.Year;
+            if ((this.BirthDate.Month > DateTime.UtcNow.Month) || (this.BirthDate.Month == DateTime.UtcNow.Month && this.BirthDate.Day > DateTime.UtcNow.Day))
+            {
+                age--;
+            }
+
+            return age;
+        }
 
         public IEnumerable<ActorMovieViewModel> Movies { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Actor, ActorViewModel>().ForMember(
+            configuration.CreateMap<Actor, ActorDetailsViewModel>().ForMember(
                 m => m.Gender,
                 opt => opt.MapFrom(x => x.Gender.ToString()));
         }

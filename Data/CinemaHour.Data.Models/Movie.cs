@@ -49,10 +49,8 @@
 
         public virtual ICollection<MovieDirector> Directors { get; set; }
 
-        [Required]
         public virtual ICollection<MovieGenre> Genres { get; set; }
 
-        [Required]
         public virtual ICollection<MovieActors> Actors { get; set; }
 
         public virtual ICollection<MovieComment> Comments { get; set; }

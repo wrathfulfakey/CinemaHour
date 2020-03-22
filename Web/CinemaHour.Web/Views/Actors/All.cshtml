@@ -4,16 +4,19 @@
 }
 
 <div class="row">
-    @foreach (var actor in Model.Actors)
+    @foreach (var actor in Model.Actors.OrderBy(x => x.FirstName))
     {
         <div class="col-md-4 media">
             <div class="media-body">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" width="250"/>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" width="250" />
                 <h3 class="mt-0">
                     @(actor.FirstName + " " + actor.LastName)
                 </h3>
                 <p>Gender: @actor.Gender</p>
                 <p>Birthdate: @actor.BirthDate.Date.ToShortDateString()</p>
+                <div class="button-holder">
+                    <a href="/Actors/Details?id=@actor.Id" class="btn btn-info text-uppercase">View More</a>
+                </div>
             </div>
         </div>
     }

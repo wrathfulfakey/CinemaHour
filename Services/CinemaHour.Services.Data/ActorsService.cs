@@ -29,5 +29,11 @@
 
             return query.To<T>().ToList();
         }
+
+        // Admins can [create], [delete] AND [edit] (same with directors, movies, comments, users) new actors (movies can be added AFTER we add actors and directors)
+        // public void Create() { }
+
+        public Actor GetById(string id)
+            => this.actorsRepository.All().FirstOrDefault(x => x.Id == id);
     }
 }
