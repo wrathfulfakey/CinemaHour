@@ -3,34 +3,41 @@
     this.ViewData["Title"] = "Actor Details";
 }
 
-<div>
-    <div class="col-md-12 media">
-        <div class="media-body">
-            <div id="ActorDetails" align="center">
+<div class="col-md-12 media">
+    <div class="media-body">
+        <div class="row">
+            <div class="col-md-8 media-body">
+                <p>
+                    @Model.Info
+                </p>
+            </div>
+            <div class="col-md-4 media-body">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png" width="250" />
-                <h2 class="mt-0">
+                <h2 class="mt-0" style="text-align:center;">
                     @(Model.FirstName + " " + Model.LastName)
                 </h2>
                 <p>Gender: @Model.Gender</p>
                 <p>Birthdate: @Model.BirthDate.ToShortDateString()</p>
                 <p>Age: @Model.Age()</p>
             </div>
-            <div id="ActorMovieDetails">
-                <h3 align="center">Movies</h3>
-                <div class="row">
-                    @foreach (var movie in @Model.Movies)
-                    {
-                        <div class="col-md-4">
-                            <h4> @movie.Name </h4>
-                            <p>Rating: @movie.Rating</p>
-                            <p><a href="@movie.TrailerLink">Trailer</a></p>
-                            <p><a href="@movie.IMDBLink">IMDB</a></p>
-                            <p>Premiere: @movie.ReleaseDate.ToShortDateString()</p>
-                        </div>
-                    }
-                </div>
+        </div>
+        <hr />
+        <div id="ActorMovieDetails">
+            <h3 align="center">Movies</h3>
+            <hr />
+            <div class="row">
+                @foreach (var movie in @Model.Movies)
+                {
+                    <div class="col-md-4">
+                        <h4 align="center"> @movie.Name </h4>
+                        <img style="float: left" src="https://m.media-amazon.com/images/M/MV5BNjdjNGQ4NDEtNTEwYS00MTgxLTliYzQtYzE2ZDRiZjFhZmNlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@@._V1_SY1000_CR0,0,666,1000_AL_.jpg" width="180" />
+                        <p style="margin-left:auto; margin-right:0;">Rating: @movie.Rating</p>
+                        <p><a href="@movie.TrailerLink">Trailer</a></p>
+                        <p><a href="@movie.IMDBLink">IMDB</a></p>
+                        <p>Premiere: @movie.ReleaseDate.ToShortDateString()</p>
+                    </div>
+                }
             </div>
-
         </div>
     </div>
 </div>

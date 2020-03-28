@@ -8,12 +8,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    @if (this.SignInManager.IsSignedIn(this.User))
-    {
-        <h3>You are logged in as <b>@(this.User.Identity.Name)</b></h3>
-    }
-    else
-    {
-        <h3>You have to <a href="\Identity\Account\Login">Login</a></h3>
-    }
+    <div>
+        <p>Browse all the actors and information about them <a href="/Actors/All"><strong>here</strong></a>.</p>
+    </div>
 </div>

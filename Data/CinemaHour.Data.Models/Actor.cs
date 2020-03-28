@@ -26,6 +26,8 @@
         [StringLength(25, MinimumLength = 2)]
         public string LastName { get; set; }
 
+        public string Info { get; set; }
+
         [Required]
         public Gender Gender { get; set; }
 

@@ -81,10 +81,16 @@
             public string ConfirmPassword { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.LocalRedirect("/");
+            }
+
             this.ReturnUrl = returnUrl;
             this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

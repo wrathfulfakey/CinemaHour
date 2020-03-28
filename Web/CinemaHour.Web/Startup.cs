@@ -17,6 +17,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,8 @@
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -47,7 +49,11 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(configure =>
+            {
+                configure.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);

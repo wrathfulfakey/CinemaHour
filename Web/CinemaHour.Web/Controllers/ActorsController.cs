@@ -1,11 +1,10 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
-    using CinemaHour.Data.Models;
+    using System.Linq;
+
     using CinemaHour.Services.Data;
-    using CinemaHour.Services.Mapping;
     using CinemaHour.Web.ViewModels.Actors;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
 
     public class ActorsController : Controller
     {

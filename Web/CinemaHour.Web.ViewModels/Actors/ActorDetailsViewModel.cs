@@ -21,6 +21,8 @@ namespace CinemaHour.Web.ViewModels.Actors
 
         public string LastName { get; set; }
 
+        public string Info { get; set; }
+
         public string Gender { get; set; }
 
         public DateTime BirthDate { get; set; }
