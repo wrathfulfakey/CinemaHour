@@ -1,10 +1,14 @@
 ﻿namespace CinemaHour.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using CinemaHour.Data.Common.Repositories;
     using CinemaHour.Data.Models;
+    using CinemaHour.Data.Models.Enum;
+    using CinemaHour.Services.Data.ViewModels.Actors;
     using CinemaHour.Services.Mapping;
 
     public class ActorsService : IActorsService
@@ -31,9 +35,34 @@
         }
 
         // Admins can [create], [delete] AND [edit] (same with directors, movies, comments, users) new actors (movies can be added AFTER we add actors and directors)
-        // public void Create() { }
+        public async Task<string> CreateActorAsync(CreateActorViewModel input)
+        {
+            var genderAsEnum = Enum.Parse<Gender>(input.Gender);
 
-        public Actor GetById(string id)
-            => this.actorsRepository.All().FirstOrDefault(x => x.Id == id);
+            var actor = new Actor
+            {
+                ImageUrl = input.Image,
+                FirstName = input.FirstName,
+                LastName = input.LastName,
+                Info = input.Info,
+                Gender = genderAsEnum,
+                BirthDate = input.BirthDate,
+            };
+
+            await this.actorsRepository.AddAsync(actor);
+            await this.actorsRepository.SaveChangesAsync();
+
+            return actor.Id;
+        }
+
+        public T GetById<T>(string id)
+        {
+            var actor = this.actorsRepository.All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+
+            return actor;
+        }
     }
 }

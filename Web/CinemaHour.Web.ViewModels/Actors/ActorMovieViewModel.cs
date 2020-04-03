@@ -8,11 +8,13 @@
 
     public class ActorMovieViewModel : IMapFrom<MovieActors>, IHaveCustomMappings
     {
+        public int MovieId { get; set; }
+
         public string Name { get; set; }
 
         public DateTime ReleaseDate { get; set; }
 
-        //public byte[] Poster { get; set; }
+        public string PosterUrl { get; set; }
 
         public float? Rating { get; set; }
 
@@ -36,7 +38,10 @@
                     opt => opt.MapFrom(x => x.Movie.IMDBLink))
                 .ForMember(
                     m => m.TrailerLink,
-                    opt => opt.MapFrom(x => x.Movie.TrailerLink));
+                    opt => opt.MapFrom(x => x.Movie.TrailerLink))
+                .ForMember(
+                    m => m.PosterUrl,
+                    opt => opt.MapFrom(x => x.Movie.PosterUrl));
         }
     }
 }

@@ -29,10 +29,10 @@
         public int Length { get; set; }
 
         // Release Date of the Movie
-        public DateTime? ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; }
 
         // Movie Poster with default picture
-        public byte[] Poster { get; set; }
+        public string PosterUrl { get; set; }
 
         // Movie Language dub
         public string Language { get; set; }

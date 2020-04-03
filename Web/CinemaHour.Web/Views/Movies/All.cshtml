@@ -1,0 +1,23 @@
+﻿@model CinemaHour.Web.ViewModels.Movies.AllMoviesViewModel
+@{
+    this.ViewData["Title"] = "All Movies";
+}
+
+<div class="row">
+    @foreach (var movie in Model.Movies.OrderBy(x => x.ReleaseDate))
+    {
+        <div class="col-md-4 media" style="margin-top:10px">
+            <div class="media-body">
+                <h3 class="mt-0">
+                    @movie.Name
+                </h3>
+                <img src="@movie.PosterUrl" width="250" />
+                <p><strong>Categories: </strong>@movie.GenreString</p>
+                <p><strong>Premiere Date: </strong>@movie.ReleaseDate.ToShortDateString()</p>
+                <div class="button-holder">
+                    <a href="/Movies/Details?id=@movie.Id" class="btn btn-info text-uppercase">View More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

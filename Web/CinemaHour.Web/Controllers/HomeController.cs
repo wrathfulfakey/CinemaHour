@@ -3,25 +3,36 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
-
+    using CinemaHour.Services.Data;
     using CinemaHour.Web.CloudinaryHelper;
     using CinemaHour.Web.ViewModels;
+    using CinemaHour.Web.ViewModels.Home;
     using CloudinaryDotNet;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
-        private readonly Cloudinary cloudinary;
+        private readonly IActorsService actorsService;
+        private readonly IMoviesService moviesService;
 
-        public HomeController(Cloudinary cloudinary)
+        public HomeController(
+            IActorsService actorsService,
+            IMoviesService moviesService)
         {
-            this.cloudinary = cloudinary;
+            this.actorsService = actorsService;
+            this.moviesService = moviesService;
         }
 
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = new IndexViewModel
+            {
+                Actors = this.actorsService.GetAll<IndexActorsViewModel>(3),
+                Movies = this.moviesService.GetAll<IndexMoviesViewModel>(6),
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

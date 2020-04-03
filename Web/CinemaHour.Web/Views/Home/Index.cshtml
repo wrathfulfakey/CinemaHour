@@ -1,14 +1,61 @@
 ﻿@using CinemaHour.Common
 @using CinemaHour.Data.Models
 @using Microsoft.AspNetCore.Identity
+@model CinemaHour.Web.ViewModels.Home.IndexViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+    <hr />
     <div>
         <p>Browse all the actors and information about them <a href="/Actors/All"><strong>here</strong></a>.</p>
     </div>
+    <hr />
+</div>
+
+<div class="row">
+    @foreach (var actor in Model.Actors)
+    {
+        <div class="col-md-4 media">
+            <div class="media-body">
+                <h5 class="mt-0 d-inline-block">
+                    <img src="@actor.ImageUrl" alt="actorImg" width="50" />
+                    <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FullName</a>
+                </h5>
+                <div>
+                    <p><strong>Gender: </strong>@actor.Gender</p>
+                    <p><strong>Short Information: </strong>@actor.ShortInfo</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="text-center">
+    <hr />
+    <div>
+        <p>Browse all the movies and information about them <a href="/Movies/All"><strong>here</strong></a>.</p>
+    </div>
+    <hr />
+</div>
+
+<div class="row">
+    @foreach (var movie in Model.Movies)
+    {
+        <div class="col-md-4 media">
+            <div class="media-body">
+                <h5 class="mt-0 d-inline-block">
+                    <img src="@movie.PosterUrl" alt="moviePoster" width="50" />
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a>
+                </h5>
+                <div>
+                    <p><strong>Short Summary: </strong>@movie.ShortSummary</p>
+                </div>
+            </div>
+        </div>
+    }
 </div>

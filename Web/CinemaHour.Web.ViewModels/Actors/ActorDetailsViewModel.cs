@@ -7,15 +7,13 @@ namespace CinemaHour.Web.ViewModels.Actors
     using AutoMapper;
     using CinemaHour.Data.Models;
     using CinemaHour.Services.Mapping;
+    using Ganss.XSS;
 
     public class ActorDetailsViewModel : IMapFrom<Actor>, IHaveCustomMappings
     {
-        public ActorDetailsViewModel()
-        {
-            this.Movies = new HashSet<ActorMovieViewModel>();
-        }
-
         public string Id { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public string FirstName { get; set; }
 
@@ -23,9 +21,13 @@ namespace CinemaHour.Web.ViewModels.Actors
 
         public string Info { get; set; }
 
+        public string SanitizedContent => new HtmlSanitizer().Sanitize(this.Info);
+
         public string Gender { get; set; }
 
         public DateTime BirthDate { get; set; }
+
+        public IEnumerable<ActorMovieViewModel> Movies { get; set; }
 
         public int Age()
         {
@@ -37,8 +39,6 @@ namespace CinemaHour.Web.ViewModels.Actors
 
             return age;
         }
-
-        public IEnumerable<ActorMovieViewModel> Movies { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

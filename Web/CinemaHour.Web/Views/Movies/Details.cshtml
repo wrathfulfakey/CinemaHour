@@ -1,0 +1,47 @@
+﻿@model CinemaHour.Web.ViewModels.Movies.MovieDetailsViewModel
+@{
+    this.ViewData["Title"] = "Movie Details";
+}
+
+<div class="col-md-12 media">
+    <div class="media-body">
+        <div class="row">
+            <div class="col-md-8 media-body">
+                <p>
+                    @Html.Raw(Model.SanitizedSummary)
+                </p>
+            </div>
+            <div class="col-md-4 media-body">
+                <img src="@Model.PosterUrl" width="250" style="margin-left:auto; margin-right:auto;" />
+                <h2 class="mt-0" style="text-align:center;">
+                    @Model.Name
+                </h2>
+                <p><strong>Genres: </strong>@Model.GenreString</p>
+                <p><strong>Rating: </strong>@Model.Rating</p>
+                <p><strong>Premiere Date: </strong>@Model.ReleaseDate.ToShortDateString()</p>
+                <p><strong>Language: </strong>@Model.Language</p>
+                <p><strong>Length: </strong>@Model.Length minutes</p>
+                <p><strong><a href="@Model.TrailerLink">Trailer Link</a></strong></p>
+                <p><strong><a href="@Model.IMDBLink">IMDB Link</a></strong></p>
+                <h5>Directors</h5>
+                @foreach (var director in Model.Directors.OrderBy(x => x.Director.FullName))
+                {
+                    <p>@director.Director.FullName</p>
+                }
+            </div>
+        </div>
+        <hr />
+        <h5 align="center">Actors:</h5>
+        <hr />
+        <div id="ActorMovieDetails" class="row">
+            <hr />
+            @foreach (var actor in Model.Actors.OrderBy(x => x.Actor.FirstName))
+            {
+                <div class="col-md-3">
+                    <img src="@actor.Actor.ImageUrl" alt="actorImageUrl" width="150" />
+                    <p><a href="/Actors/Details?id=@actor.ActorId">@actor.Actor.FirstName @actor.Actor.LastName</a></p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

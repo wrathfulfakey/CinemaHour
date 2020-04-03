@@ -1,6 +1,7 @@
 ﻿namespace CinemaHour.Web.ViewModels.Actors
 {
     using System;
+    using System.Globalization;
 
     using AutoMapper;
 
@@ -10,6 +11,8 @@
     public class ActorViewModel : IMapFrom<Actor>, IHaveCustomMappings
     {
         public string Id { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public string FirstName { get; set; }
 
