@@ -1,7 +1,7 @@
-﻿@*@model CinemaHour.Web.ViewModels.Actors.MovieCreateInputModel
+﻿@model CinemaHour.Web.ViewModels.Movies.MovieCreateInputModel
 
 @{
-    ViewData["Title"] = "Create Actor";
+    ViewData["Title"] = "Create Movie";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -19,16 +19,80 @@
 <form method="post" asp-action="Create">
     <div class="row">
         <div class="col-md-12 top-buffer form-group" style="align-content:center">
-            <label asp-for="@Model.Image"></label>
-            <input asp-for="@Model.Image" class="form-control" placeholder="Image URL..." />
-            <span asp-validation-for="@Model.Image" class="text-danger"></span>
+            <label asp-for="@Model.PosterUrl"></label>
+            <input asp-for="@Model.PosterUrl" class="form-control" placeholder="Poster URL..." />
+            <span asp-validation-for="@Model.PosterUrl" class="text-danger"></span>
         </div>
         <div class="col-md-6 top-buffer form-group">
-            <label asp-for="@Model.FirstName"></label>
-            <input asp-for="@Model.FirstName" class="form-control" placeholder="First Name..." />
-            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            <label asp-for="@Model.Name"></label>
+            <input asp-for="@Model.Name" class="form-control" placeholder="Movie Name..." />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
         </div>
-
+        <div class="col-md-3 top-buffer form-group">
+            <label asp-for="@Model.Length"></label>
+            <input asp-for="@Model.Length" class="form-control" placeholder="Length..." />
+            <span asp-validation-for="@Model.Length" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 top-buffer form-group">
+            <label asp-for="@Model.ReleaseDate"></label>
+            <input asp-for="@Model.ReleaseDate" class="form-control" placeholder="Premiere Date..." type="date" />
+            <span asp-validation-for="@Model.ReleaseDate" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 top-buffer form-group">
+            <label asp-for="@Model.Rating"></label>
+            <input asp-for="@Model.Rating" class="form-control" placeholder="Rating..." />
+            <span asp-validation-for="@Model.Rating" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 top-buffer form-group">
+            <label asp-for="@Model.IMDBLink"></label>
+            <input asp-for="@Model.IMDBLink" class="form-control" placeholder="IMDB Link..." />
+            <span asp-validation-for="@Model.IMDBLink" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 top-buffer form-group">
+            <label asp-for="@Model.TrailerLink"></label>
+            <input asp-for="@Model.TrailerLink" class="form-control" placeholder="Trailer Link..."></input>
+            <span asp-validation-for="@Model.TrailerLink" class="text-danger"></span>
+        </div>
+        <div class="col-md-3 top-buffer form-group">
+            <label asp-for="@Model.Language"></label>
+            <input asp-for="@Model.Language" class="form-control" placeholder="Language..."></input>
+            <span asp-validation-for="@Model.Language" class="text-danger"></span>
+        </div>
+        <div class="col-md-12 top-buffer form-group">
+            <label asp-for="@Model.Summary"></label>
+            <textarea asp-for="@Model.Summary" class="form-control" placeholder="Summary..."></textarea>
+            <span asp-validation-for="@Model.Summary" class="text-danger"></span>
+        </div>
+        <h5 class="col-md-12">Select Genres:</h5>
+        <br />
+        @foreach (var genre in Model.Genres)
+        {
+            <div class="col-md-2">
+                <input type="checkbox" name="genreName" value="@(genre.Id)" />
+                @(genre.Name)
+            </div>
+        }
+        <h5 class="col-md-12">Select Actors:</h5>
+        <br />
+        @foreach (var actor in Model.Actors)
+        {
+            <div class="col-md-2">
+                <input type="checkbox" name="actorName" value="@(actor.Id)" />
+                @(actor.FirstName + " " + actor.LastName)
+            </div>
+        }
+        <h5 class="col-md-12">Select Directors:</h5>
+        <br />
+        @foreach (var director in Model.Directors)
+        {
+            <div class="col-md-2">
+                <input type="checkbox" name="directorName" value="@(director.Id)" />
+                @director.FullName
+            </div>
+        }
+        @*how to add Genres/Actors/Directors*@
+    </div>
+    <div>
         <input type="submit" class="btn btn-primary" />
     </div>
-</form>*@
+</form>

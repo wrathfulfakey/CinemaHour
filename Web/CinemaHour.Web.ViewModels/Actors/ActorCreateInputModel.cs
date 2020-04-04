@@ -31,7 +31,5 @@
         [Required]
         [Display(Name = "Date of Birth")]
         public DateTime BirthDate { get; set; }
-
-
     }
 }

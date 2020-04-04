@@ -20,7 +20,7 @@
             this.actorsRepository = actorsRepository;
         }
 
-        public IEnumerable<T> GetAll<T>(int? count = null)
+        public ICollection<T> GetAll<T>(int? count = null)
         {
             IQueryable<Actor> query = this.actorsRepository.All()
                 .OrderBy(x => x.FirstName)

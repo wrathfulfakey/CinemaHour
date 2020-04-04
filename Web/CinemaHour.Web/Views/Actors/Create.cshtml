@@ -42,9 +42,10 @@
             <label asp-for="@Model.Gender"></label>
             <input asp-for="@Model.Gender" class="form-control" placeholder="Male or Female..." />
             <span asp-validation-for="@Model.Gender" class="text-danger"></span>
-        </div><div class="col-md-6 top-buffer form-group">
+        </div>
+        <div class="col-md-6 top-buffer form-group">
             <label asp-for="@Model.BirthDate"></label>
-            <input asp-for="@Model.BirthDate" class="form-control" placeholder="Date of Birth..." type="date"/>
+            <input asp-for="@Model.BirthDate" class="form-control" placeholder="Date of Birth..." type="date" />
             <span asp-validation-for="@Model.BirthDate" class="text-danger"></span>
         </div>
 

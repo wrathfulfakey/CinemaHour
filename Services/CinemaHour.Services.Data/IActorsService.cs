@@ -8,7 +8,7 @@
 
     public interface IActorsService
     {
-        IEnumerable<T> GetAll<T>(int? count = null);
+        ICollection<T> GetAll<T>(int? count = null);
 
         T GetById<T>(string id);
 

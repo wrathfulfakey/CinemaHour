@@ -42,6 +42,7 @@
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpGet]
         public IActionResult Create()
         {
             return this.View();
