@@ -35,6 +35,11 @@
                 Movies = this.genresService.GetAllMovies<MovieDetailsGenreViewModel>(id),
             };
 
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
             return this.View(viewModel);
         }
     }

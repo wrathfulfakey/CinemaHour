@@ -8,6 +8,8 @@
 
     public class MovieDetailsGenreViewModel : IMapFrom<Movie>
     {
+        public int Id { get; set; }
+
         public string PosterUrl { get; set; }
 
         public string Name { get; set; }
@@ -15,6 +17,7 @@
         public float Rating { get; set; }
 
         public string Summary { get; set; }
+
         public string ShortSummary
         {
             get

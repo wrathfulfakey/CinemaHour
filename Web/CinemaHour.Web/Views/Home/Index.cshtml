@@ -22,10 +22,8 @@
     {
         <div class="col-md-4 media">
             <div class="media-body">
-                <h5 class="mt-0 d-inline-block">
-                    <img src="@actor.ImageUrl" alt="actorImg" width="50" />
-                    <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FullName</a>
-                </h5>
+                <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id"><h5>@actor.FullName</h5></a>
+                <img src="@actor.ImageUrl" alt="actorImg" width="100" style="margin-top: 10px" />
                 <div>
                     <p><strong>Gender: </strong>@actor.Gender</p>
                     <p><strong>Short Information: </strong>@actor.ShortInfo</p>
@@ -48,10 +46,8 @@
     {
         <div class="col-md-4 media">
             <div class="media-body">
-                <h5 class="mt-0 d-inline-block">
-                    <img src="@movie.PosterUrl" alt="moviePoster" width="50" />
-                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a>
-                </h5>
+                <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><h5>@movie.Name</h5></a>
+                <img src="@movie.PosterUrl" alt="moviePoster" width="100" style="margin-top: 10px" />
                 <div>
                     <p><strong>Short Summary: </strong>@movie.ShortSummary</p>
                 </div>

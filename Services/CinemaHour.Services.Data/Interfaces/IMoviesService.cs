@@ -8,7 +8,7 @@
 
     public interface IMoviesService
     {
-        IEnumerable<T> GetAll<T>(int? count = null);
+        ICollection<T> GetAll<T>(int? count = null);
 
         T GetById<T>(int id);
 

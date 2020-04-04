@@ -58,7 +58,7 @@
                     MovieId = movie.Id,
                 });
             }
-            
+
             // Add directors
             var directors = input.Directors;
             foreach (var director in directors)
@@ -76,7 +76,7 @@
             return movie.Id;
         }
 
-        public IEnumerable<T> GetAll<T>(int? count = null)
+        public ICollection<T> GetAll<T>(int? count = null)
         {
             IQueryable<Movie> query = this.moviesRepository.All()
                 .OrderBy(x => x.Name);

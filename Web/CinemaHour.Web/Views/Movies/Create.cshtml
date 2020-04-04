@@ -71,6 +71,7 @@
                 @(genre.Name)
             </div>
         }
+        <br />
         <h5 class="col-md-12">Select Actors:</h5>
         <br />
         @foreach (var actor in Model.Actors)
@@ -80,11 +81,12 @@
                 @(actor.FirstName + " " + actor.LastName)
             </div>
         }
+        <br />
         <h5 class="col-md-12">Select Directors:</h5>
         <br />
         @foreach (var director in Model.Directors)
         {
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <input type="checkbox" name="directorName" value="@(director.Id)" />
                 @director.FullName
             </div>

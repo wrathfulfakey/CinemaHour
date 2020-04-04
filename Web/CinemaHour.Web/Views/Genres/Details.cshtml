@@ -1,11 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinemaHour.Web.Views.Genres
-{
-    public class Details
-    {
-    }
+﻿@model CinemaHour.Web.ViewModels.Genres.DetailsGenreViewModel
+@{
+    this.ViewData["Title"] = "Actor Details";
 }
+
+<div class="col-md-12 media">
+    <div class="media-body">
+        <div class="row">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="col-md-3">
+                    <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
+                    <p align="center"><a href="/Movies/Details?@movie.Id">@movie.Name</a></p>
+                    <p><strong>Rating: </strong>@movie.Rating</p>
+                    <p><strong>Summary :</strong>@movie.ShortSummary</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -3,6 +3,9 @@
     this.ViewData["Title"] = "All Actors";
 }
 
+<hr />
+<h2 style="text-align:center">All Actors</h2>
+<hr />
 <div class="row">
     @foreach (var actor in Model.Actors.OrderBy(x => x.FirstName))
     {

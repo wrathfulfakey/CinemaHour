@@ -11,14 +11,14 @@
     public class GenresService : IGenresService
     {
         private readonly IDeletableEntityRepository<Genre> genreRepository;
-        private readonly IRepository<MovieGenre> movieGenresRepository;
+        private readonly IRepository<MovieGenre> movieGenreRepository;
 
         public GenresService(
             IDeletableEntityRepository<Genre> genreRepository,
-            IRepository<MovieGenre> movieGenresRepository)
+            IRepository<MovieGenre> movieGenreRepository)
         {
             this.genreRepository = genreRepository;
-            this.movieGenresRepository = movieGenresRepository;
+            this.movieGenreRepository = movieGenreRepository;
         }
 
         public ICollection<T> GetAll<T>(int? count = null)
@@ -34,11 +34,11 @@
             return query.To<T>().ToList();
         }
 
-        public ICollection<T> GetAllMovies<T>(int genreId)
+        public ICollection<T> GetAllMovies<T>(int id)
         {
-            IQueryable<MovieGenre> query = this.movieGenresRepository.All()
-                .Where(x => x.GenreId == genreId)
-                .OrderBy(x => x.Movie.Name);
+            IQueryable<Movie> query = this.movieGenreRepository.All()
+                .Where(g => g.GenreId == id)
+                .Select(m => m.Movie);
 
             return query.To<T>().ToList();
         }

@@ -6,6 +6,6 @@
     {
         ICollection<T> GetAll<T>(int? count = null);
 
-        ICollection<T> GetAllMovies<T>(int genreId);
+        ICollection<T> GetAllMovies<T>(int id);
     }
 }
