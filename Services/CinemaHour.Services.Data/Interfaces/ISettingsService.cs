@@ -1,4 +1,4 @@
-﻿namespace CinemaHour.Services.Data
+﻿namespace CinemaHour.Services.Data.Interfaces
 {
     using System.Collections.Generic;
 

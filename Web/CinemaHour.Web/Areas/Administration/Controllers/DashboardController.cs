@@ -1,6 +1,6 @@
 ﻿namespace CinemaHour.Web.Areas.Administration.Controllers
 {
-    using CinemaHour.Services.Data;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;

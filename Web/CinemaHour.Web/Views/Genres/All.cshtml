@@ -1,0 +1,21 @@
+﻿@model CinemaHour.Web.ViewModels.Genres.AllGenresViewModel
+@{
+    ViewData["Title"] = "All Genres";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    @foreach (var genre in Model.Genres.OrderBy(x => x.Name))
+    {
+        <div class="col-md-3 media" style="margin-top:10px">
+            <div class="media-body">
+                <a href="/Genres/Details?id=@genre.Id" class="btn btn-info text-uppercase">
+                    <h5 class="mt-0">
+                        @genre.Name
+                    </h5>
+                </a> (@genre.MoviesCount)
+            </div>
+        </div>
+    }
+</div>

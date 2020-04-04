@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using CinemaHour.Common;
-    using CinemaHour.Services.Data;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Data.ViewModels.Actors;
     using CinemaHour.Web.ViewModels.Actors;
     using Microsoft.AspNetCore.Authorization;

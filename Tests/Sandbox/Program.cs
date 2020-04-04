@@ -12,6 +12,7 @@
     using CinemaHour.Data.Repositories;
     using CinemaHour.Data.Seeding;
     using CinemaHour.Services.Data;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Messaging;
 
     using CommandLine;

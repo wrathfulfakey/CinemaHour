@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using CinemaHour.Services.Data;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Web.CloudinaryHelper;
     using CinemaHour.Web.ViewModels;
     using CinemaHour.Web.ViewModels.Home;

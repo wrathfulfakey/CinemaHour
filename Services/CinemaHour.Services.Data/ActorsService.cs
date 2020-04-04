@@ -8,6 +8,7 @@
     using CinemaHour.Data.Common.Repositories;
     using CinemaHour.Data.Models;
     using CinemaHour.Data.Models.Enum;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Data.ViewModels.Actors;
     using CinemaHour.Services.Mapping;
 

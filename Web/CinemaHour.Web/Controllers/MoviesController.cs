@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using CinemaHour.Common;
     using CinemaHour.Data.Models;
-    using CinemaHour.Services.Data;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Data.ViewModels.Movies;
     using CinemaHour.Web.ViewModels.Movies;
     using Microsoft.AspNetCore.Authorization;
@@ -95,7 +95,7 @@
                 Directors = directors,
             });
 
-            return this.RedirectToAction(nameof(this.Details), new { id = movie.Id });
+            return this.RedirectToAction(nameof(this.Details), new { id = movie });
         }
     }
 }

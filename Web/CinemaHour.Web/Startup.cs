@@ -10,6 +10,7 @@
     using CinemaHour.Data.Seeding;
     using CinemaHour.Services;
     using CinemaHour.Services.Data;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Mapping;
     using CinemaHour.Services.Messaging;
     using CinemaHour.Web.ViewModels;

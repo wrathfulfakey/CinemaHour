@@ -5,6 +5,7 @@
 
     using CinemaHour.Data.Common.Repositories;
     using CinemaHour.Data.Models;
+    using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Mapping;
 
     public class SettingsService : ISettingsService
