@@ -42,5 +42,15 @@
 
             return query.To<T>().ToList();
         }
+
+        public T GetById<T>(int id)
+        {
+            var genre = this.genreRepository.All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+
+            return genre;
+        }
     }
 }

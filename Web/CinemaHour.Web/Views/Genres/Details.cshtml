@@ -3,6 +3,8 @@
     this.ViewData["Title"] = "Actor Details";
 }
 
+<h1 class="display-4 text-center">@Model.Name Movies</h1>
+<hr />
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
@@ -10,7 +12,7 @@
             {
                 <div class="col-md-3">
                     <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
-                    <p align="center"><a href="/Movies/Details?@movie.Id">@movie.Name</a></p>
+                    <p align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></p>
                     <p><strong>Rating: </strong>@movie.Rating</p>
                     <p><strong>Summary :</strong>@movie.ShortSummary</p>
                 </div>

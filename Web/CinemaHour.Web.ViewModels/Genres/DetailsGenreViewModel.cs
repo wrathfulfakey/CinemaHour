@@ -12,5 +12,5 @@
         public string Name { get; set; }
 
         public ICollection<MovieDetailsGenreViewModel> Movies { get; set; }
-    }
+    } 
 }

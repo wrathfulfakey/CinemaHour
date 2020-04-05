@@ -3,7 +3,6 @@
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Web.ViewModels.Genres;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
 
     public class GenresController : Controller
     {
@@ -30,8 +29,11 @@
 
         public IActionResult Details(int id)
         {
+            var genre = this.genresService.GetById<GenreViewModel>(id);
+
             var viewModel = new DetailsGenreViewModel
             {
+                Name = genre.Name,
                 Movies = this.genresService.GetAllMovies<MovieDetailsGenreViewModel>(id),
             };
 

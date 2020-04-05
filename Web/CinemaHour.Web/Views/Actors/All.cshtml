@@ -3,20 +3,19 @@
     this.ViewData["Title"] = "All Actors";
 }
 
-<hr />
-<h2 style="text-align:center">All Actors</h2>
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
 <hr />
 <div class="row">
     @foreach (var actor in Model.Actors.OrderBy(x => x.FirstName))
     {
-        <div class="col-md-3 media" style="margin-top:10px">
+        <div class="col-md-3 media" style="margin-top: 10px">
             <div class="media-body">
                 <img src="@actor.ImageUrl" width="200" />
                 <h5 class="mt-0">
                     @(actor.FirstName + " " + actor.LastName)
                 </h5>
-                <p>Gender: @actor.Gender</p>
-                <p>Birthdate: @actor.BirthDate.Date.ToShortDateString()</p>
+                <p><strong>Gender: </strong>@actor.Gender</p>
+                <p><strong>Birthdate: </strong>@actor.BirthDate.Date.ToShortDateString()</p>
                 <div class="button-holder">
                     <a href="/Actors/Details?id=@actor.Id" class="btn btn-info text-uppercase">View More</a>
                 </div>

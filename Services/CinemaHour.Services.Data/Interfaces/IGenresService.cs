@@ -7,5 +7,7 @@
         ICollection<T> GetAll<T>(int? count = null);
 
         ICollection<T> GetAllMovies<T>(int id);
+
+        T GetById<T>(int id);
     }
 }

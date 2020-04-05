@@ -3,8 +3,8 @@
     ViewData["Title"] = "All Genres";
 }
 
-<h1>@ViewData["Title"]</h1>
-
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
+<hr />
 <div class="row">
     @foreach (var genre in Model.Genres.OrderBy(x => x.Name))
     {

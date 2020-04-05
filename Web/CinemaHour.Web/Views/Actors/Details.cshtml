@@ -26,9 +26,9 @@
             <h3 align="center">Movies</h3>
             <hr />
             <div class="row">
-                @foreach (var movie in @Model.Movies.OrderBy(x => x.Rating))
+                @foreach (var movie in @Model.Movies.OrderBy(x => x.Rating).ThenBy(x => x.ReleaseDate))
                 {
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="border:thin 5px red">
                         <h4 align="center"> <a href="/Movies/Details?id=@movie.MovieId">@movie.Name</a> </h4>
                         <img style="float: left; margin-right:5px;" src="@movie.PosterUrl" width="150" />
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.Rating</p>

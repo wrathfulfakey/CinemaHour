@@ -3,6 +3,8 @@
     this.ViewData["Title"] = "All Movies";
 }
 
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
+<hr />
 <div class="row">
     @foreach (var movie in Model.Movies.OrderBy(x => x.ReleaseDate))
     {
