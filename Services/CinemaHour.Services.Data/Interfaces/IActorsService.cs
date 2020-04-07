@@ -15,5 +15,9 @@
         Task EditActorAsync(EditActorInputModel input);
 
         Task<string> CreateActorAsync(CreateActorViewModel input);
+
+        Task DeleteActorAsync(string id);
+
+        Task HardDeleteActorAsync(string id);
     }
 }

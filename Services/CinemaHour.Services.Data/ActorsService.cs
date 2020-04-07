@@ -82,5 +82,21 @@
             this.actorsRepository.Update(actor);
             await this.actorsRepository.SaveChangesAsync();
         }
+
+        public async Task DeleteActorAsync(string id)
+        {
+            var actor = await this.actorsRepository.GetByIdWithDeletedAsync(id);
+
+            this.actorsRepository.Delete(actor);
+            await this.actorsRepository.SaveChangesAsync();
+        }
+
+        public async Task HardDeleteActorAsync(string id)
+        {
+            var actor = await this.actorsRepository.GetByIdWithDeletedAsync(id);
+
+            this.actorsRepository.HardDelete(actor);
+            await this.actorsRepository.SaveChangesAsync();
+        }
     }
 }

@@ -98,5 +98,19 @@
 
             return this.RedirectToAction(nameof(this.Details), new { id = input.Id });
         }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.actorsService.DeleteActorAsync(id);
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        public async Task<IActionResult> HardDelete(string id)
+        {
+            await this.actorsService.HardDeleteActorAsync(id);
+
+            return this.RedirectToAction(nameof(this.All));
+        }
     }
 }
