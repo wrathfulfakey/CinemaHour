@@ -13,6 +13,7 @@
             </div>
             <div class="col-md-4 media-body">
                 <img src="@Model.ImageUrl" width="250" class="center" />
+                <h6 align="center"><a href="/Actors/Edit?id=@Model.Id">Edit Actor</a></h6>
                 <h2 class="mt-0" style="text-align:center;">
                     @(Model.FirstName + " " + Model.LastName)
                 </h2>
@@ -29,7 +30,7 @@
                 @foreach (var movie in @Model.Movies.OrderBy(x => x.Rating).ThenBy(x => x.ReleaseDate))
                 {
                     <div class="col-md-4" style="border:thin 5px red">
-                        <h4 align="center"> <a href="/Movies/Details?id=@movie.MovieId">@movie.Name</a> </h4>
+                        <h4 align="center"><a href="/Movies/Details?id=@movie.MovieId">@movie.Name</a></h4>
                         <img style="float: left; margin-right:5px;" src="@movie.PosterUrl" width="150" />
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.Rating</p>
                         <p><a href="@movie.TrailerLink">Trailer</a></p>

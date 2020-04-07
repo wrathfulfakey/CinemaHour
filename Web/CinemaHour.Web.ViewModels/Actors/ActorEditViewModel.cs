@@ -6,10 +6,12 @@
     using CinemaHour.Data.Models;
     using CinemaHour.Services.Mapping;
 
-    public class ActorCreateInputModel : IMapFrom<Actor>
+    public class ActorEditViewModel : IMapFrom<Actor>
     {
+        public string Id { get; set; }
+
         [Display(Name = "Actor Image URL")]
-        public string Image { get; set; }
+        public string ImageUrl { get; set; }
 
         [Required]
         [StringLength(25, MinimumLength = 2)]

@@ -12,6 +12,8 @@
 
         T GetById<T>(string id);
 
+        Task EditActorAsync(EditActorInputModel input);
+
         Task<string> CreateActorAsync(CreateActorViewModel input);
     }
 }

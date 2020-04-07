@@ -35,7 +35,8 @@
             return query.To<T>().ToList();
         }
 
-        // Admins can [create], [delete] AND [edit] (same with directors, movies, comments, users) new actors (movies can be added AFTER we add actors and directors)
+        // Admins can [create], [delete] AND [edit] (same with directors, movies, comments, users)
+        // new actors (movies can be added AFTER we add actors and directors)
         public async Task<string> CreateActorAsync(CreateActorViewModel input)
         {
             var genderAsEnum = Enum.Parse<Gender>(input.Gender);
@@ -64,6 +65,22 @@
                 .FirstOrDefault();
 
             return actor;
+        }
+
+        public async Task EditActorAsync(EditActorInputModel input)
+        {
+            var actor = await this.actorsRepository.GetByIdWithDeletedAsync(input.Id);
+
+            actor.ImageUrl = input.ImageUrl;
+            actor.Info = input.Info;
+            actor.FirstName = input.FirstName;
+            actor.LastName = input.LastName;
+            var genderAsEnum = Enum.Parse<Gender>(input.Gender);
+            actor.Gender = genderAsEnum;
+            actor.BirthDate = input.BirthDate;
+
+            this.actorsRepository.Update(actor);
+            await this.actorsRepository.SaveChangesAsync();
         }
     }
 }

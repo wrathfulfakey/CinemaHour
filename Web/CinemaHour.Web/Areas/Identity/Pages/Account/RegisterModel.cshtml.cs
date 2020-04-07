@@ -135,7 +135,7 @@
                     }
                     else
                     {
-                        await this._signInManager.SignInAsync(user, isPersistent: false);
+                        //await this._signInManager.SignInAsync(user, isPersistent: false);
                         return this.LocalRedirect(returnUrl);
                     }
                 }

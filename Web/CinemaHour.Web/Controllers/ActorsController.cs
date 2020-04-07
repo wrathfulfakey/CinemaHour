@@ -69,5 +69,34 @@
 
             return this.RedirectToAction(nameof(this.Details), new { id = actor });
         }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            var actor = this.actorsService
+                .GetById<ActorEditViewModel>(id);
+
+            if (actor == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(actor);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, EditActorInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.actorsService.EditActorAsync(input);
+
+            return this.RedirectToAction(nameof(this.Details), new { id = input.Id });
+        }
     }
 }
