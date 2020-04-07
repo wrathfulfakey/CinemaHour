@@ -13,5 +13,9 @@
         T GetById<T>(int id);
 
         Task<int> CreaterMovieAsync(CreateMovieServiceInputModel input);
+
+        Task DeleteActorAsync(int id);
+
+        Task HardDeleteActorAsync(int id);
     }
 }

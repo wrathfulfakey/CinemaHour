@@ -97,5 +97,22 @@
 
             return this.RedirectToAction(nameof(this.Details), new { id = movie });
         }
+
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.moviesService.DeleteActorAsync(id);
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> HardDelete(int id)
+        {
+            await this.moviesService.HardDeleteActorAsync(id);
+
+            return this.RedirectToAction(nameof(this.All));
+        }
     }
 }

@@ -99,6 +99,7 @@
             return this.RedirectToAction(nameof(this.Details), new { id = input.Id });
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
             await this.actorsService.DeleteActorAsync(id);
@@ -106,6 +107,7 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> HardDelete(string id)
         {
             await this.actorsService.HardDeleteActorAsync(id);

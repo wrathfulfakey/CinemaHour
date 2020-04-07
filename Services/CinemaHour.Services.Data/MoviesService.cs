@@ -13,11 +13,23 @@
     public class MoviesService : IMoviesService
     {
         private readonly IDeletableEntityRepository<Movie> moviesRepository;
+        private readonly IRepository<MovieActors> actorsMovieRepository;
+        private readonly IRepository<MovieGenre> genreMoviesRepository;
+        private readonly IRepository<MovieDirector> directorMovieRepository;
+        private readonly IRepository<MovieComment> commentsMoviesRepository;
 
         public MoviesService(
-            IDeletableEntityRepository<Movie> moviesRepository)
+            IDeletableEntityRepository<Movie> moviesRepository,
+            IRepository<MovieActors> actorsMovieRepository,
+            IRepository<MovieGenre> genreMoviesRepository,
+            IRepository<MovieDirector> directorMovieRepository,
+            IRepository<MovieComment> commentsMoviesRepository)
         {
             this.moviesRepository = moviesRepository;
+            this.actorsMovieRepository = actorsMovieRepository;
+            this.genreMoviesRepository = genreMoviesRepository;
+            this.directorMovieRepository = directorMovieRepository;
+            this.commentsMoviesRepository = commentsMoviesRepository;
         }
 
         public async Task<int> CreaterMovieAsync(CreateMovieServiceInputModel input)
@@ -76,6 +88,7 @@
             return movie.Id;
         }
 
+
         public ICollection<T> GetAll<T>(int? count = null)
         {
             IQueryable<Movie> query = this.moviesRepository.All()
@@ -97,6 +110,45 @@
                 .FirstOrDefault();
 
             return movie;
+        }
+
+        public async Task DeleteActorAsync(int id)
+        {
+            var movie = await this.moviesRepository.GetByIdWithDeletedAsync(id);
+
+            this.moviesRepository.Delete(movie);
+            await this.moviesRepository.SaveChangesAsync();
+        }
+
+        public async Task HardDeleteActorAsync(int id)
+        {
+            var movie = await this.moviesRepository.GetByIdWithDeletedAsync(id);
+            var actorMoviesToDelete = this.actorsMovieRepository.All().Where(x => x.MovieId == id);
+            foreach (var actorMovie in actorMoviesToDelete)
+            {
+                this.actorsMovieRepository.Delete(actorMovie);
+            }
+
+            var genreMoviesToDelete = this.genreMoviesRepository.All().Where(x => x.MovieId == id);
+            foreach (var genreMovie in genreMoviesToDelete)
+            {
+                this.genreMoviesRepository.Delete(genreMovie);
+            }
+
+            var directorMoviesToDelete = this.directorMovieRepository.All().Where(x => x.MovieId == id);
+            foreach (var directorMovie in directorMoviesToDelete)
+            {
+                this.directorMovieRepository.Delete(directorMovie);
+            }
+
+            var commentsMoviesToDelete = this.commentsMoviesRepository.All().Where(x => x.MovieId == id);
+            foreach (var commentsMovie in commentsMoviesToDelete)
+            {
+                this.commentsMoviesRepository.Delete(commentsMovie);
+            }
+
+            this.moviesRepository.HardDelete(movie);
+            await this.moviesRepository.SaveChangesAsync();
         }
     }
 }
