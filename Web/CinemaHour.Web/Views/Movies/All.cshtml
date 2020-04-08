@@ -1,12 +1,13 @@
 ﻿@model CinemaHour.Web.ViewModels.Movies.AllMoviesViewModel
 @{
     this.ViewData["Title"] = "All Movies";
+    var sortedMovies = Model.Movies.OrderByDescending(x => x.ReleaseDate);
 }
 
 <h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
 <hr />
 <div class="row">
-    @foreach (var movie in Model.Movies.OrderBy(x => x.ReleaseDate))
+    @foreach (var movie in sortedMovies)
     {
         <div class="col-md-4 media" style="margin-top:10px">
             <div class="media-body">

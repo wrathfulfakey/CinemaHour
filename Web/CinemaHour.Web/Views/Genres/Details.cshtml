@@ -1,16 +1,28 @@
 ﻿@model CinemaHour.Web.ViewModels.Genres.DetailsGenreViewModel
 @{
-    this.ViewData["Title"] = "Actor Details";
+    this.ViewData["Title"] = "Genre Details";
 }
 
 <h1 class="display-4 text-center">@Model.Name Movies</h1>
+<p>
+    @if (this.User.IsInRole("Administrator"))
+    {
+        <h6 align="center"><a href="/Genres/Edit?id=@Model.Id">Edit Genre</a></h6>  
+        <br />
+        <h6 align="center"><a href="/Genres/Delete?id=@Model.Id" onclick="confirmDelete()">Delete Genre</a></h6>
+        <br />
+        <h6 align="center"><a href="/Genres/HardDelete?id=@Model.Id" onclick="confirmHardDelete()">Hard Delete Genre</a></h6>
+    }
+</p>
 <hr />
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
+
             @foreach (var movie in Model.Movies)
             {
                 <div class="col-md-3">
+
                     <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
                     <p align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></p>
                     <p><strong>Rating: </strong>@movie.Rating</p>
@@ -20,3 +32,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        confirm("Are you sure you want to delete this movie?");
+    }
+    function confirmHardDelete() {
+        confirm("Are you sure you want to hard delete this movie?");
+    }
+</script>

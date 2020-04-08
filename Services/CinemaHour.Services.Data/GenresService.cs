@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using CinemaHour.Data.Common.Repositories;
     using CinemaHour.Data.Models;
@@ -19,6 +20,34 @@
         {
             this.genreRepository = genreRepository;
             this.movieGenreRepository = movieGenreRepository;
+        }
+
+        public async Task DeleteGenreAsync(int id)
+        {
+            var genre = await this.genreRepository.GetByIdWithDeletedAsync(id);
+
+            this.genreRepository.Delete(genre);
+            await this.genreRepository.SaveChangesAsync();
+        }
+
+        public async Task HardDeleteGenreAsync(int id)
+        {
+            var genre = await this.genreRepository.GetByIdWithDeletedAsync(id);
+
+            this.genreRepository.HardDelete(genre);
+            await this.genreRepository.SaveChangesAsync();
+        }
+
+        public async Task<int> EditGenreAsync(int id, string genreName)
+        {
+            var genre = await this.genreRepository.GetByIdWithDeletedAsync(id);
+
+            genre.Name = genreName;
+
+            this.genreRepository.Update(genre);
+            await this.genreRepository.SaveChangesAsync();
+
+            return genre.Id;
         }
 
         public ICollection<T> GetAll<T>(int? count = null)

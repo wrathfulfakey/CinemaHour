@@ -1,0 +1,20 @@
+﻿@model CinemaHour.Web.ViewModels.Genres.GenreEditViewModel
+@{
+    ViewData["Title"] = "Edit Genre";
+}
+
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
+<hr />
+<form method="post" asp-action="Edit">
+    <div class="row">
+        <input hidden asp-for="@Model.Id" />
+        <div class="col-md-12 top-buffer form-group" style="align-content:center; width: 50;">
+            <label asp-for="@Model.Name"></label>
+            <input asp-for="@Model.Name" class="form-control" placeholder="Name..." />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="Edit" />
+        </div>
+    </div>
+</form>

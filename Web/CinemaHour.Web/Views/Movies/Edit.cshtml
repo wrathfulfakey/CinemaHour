@@ -1,9 +1,7 @@
 ﻿@model CinemaHour.Web.ViewModels.Movies.MovieEditViewModel
 @{
-    ViewData["Title"] = "Create Movie";
+    ViewData["Title"] = "Edit Movie";
 }
-
-<h1>@ViewData["Title"]</h1>
 
 <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -15,6 +13,8 @@
     });
 </script>
 
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
+<hr />
 <form method="post" asp-action="Edit">
     <div class="row">
         <input hidden asp-for="@Model.Id" />

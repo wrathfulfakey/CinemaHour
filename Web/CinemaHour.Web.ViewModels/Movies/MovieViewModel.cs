@@ -22,6 +22,8 @@
 
         public int Length { get; set; }
 
+        public float Rating { get; set; }
+
         public string Summary { get; set; }
 
         public ICollection<GenreMovieViewModel> Genres { get; set; }
