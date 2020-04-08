@@ -7,6 +7,7 @@
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Data.ViewModels.Movies;
     using CinemaHour.Web.ViewModels.Movies;
+    using CinemaHour.Web.ViewModels.Movies.Edit;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -98,11 +99,62 @@
             return this.RedirectToAction(nameof(this.Details), new { id = movie });
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var movie = this.moviesService.GetById<MovieEditViewModel>(id);
+
+            var viewModel = new MovieEditViewModel
+            {
+                IMDBLink = movie.IMDBLink,
+                Language = movie.Language,
+                Length = movie.Length,
+                TrailerLink = movie.TrailerLink,
+                Name = movie.Name,
+                Rating = movie.Rating,
+                Summary = movie.Summary,
+                ReleaseDate = movie.ReleaseDate,
+                PosterUrl = movie.PosterUrl,
+                Actors = this.actorsService.GetAll<MovieActorsEditInputModel>(),
+                Genres = this.genresService.GetAll<MovieGenresEditInputModel>(),
+                Directors = this.directorsService.GetAll<MovieDirectorEditInputModel>(),
+            };
+
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(viewModel);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditMovieInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            var actors = this.Request.Form["actorName"];
+            var genres = this.Request.Form["genreName"];
+            var directors = this.Request.Form["directorName"];
+
+            input.Actors = actors;
+            input.Genres = genres;
+            input.Directors = directors;
+
+            await this.moviesService.EditActorAsync(input);
+
+            return this.RedirectToAction(nameof(this.Details), new { id = id });
+        }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.moviesService.DeleteActorAsync(id);
+            await this.moviesService.DeleteMovieAsync(id);
 
             return this.RedirectToAction(nameof(this.All));
         }
@@ -110,7 +162,7 @@
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> HardDelete(int id)
         {
-            await this.moviesService.HardDeleteActorAsync(id);
+            await this.moviesService.HardDeleteMovieAsync(id);
 
             return this.RedirectToAction(nameof(this.All));
         }

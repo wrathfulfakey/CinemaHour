@@ -15,7 +15,7 @@
                 <img src="@Model.PosterUrl" width="250" class="center" />
                 @if (this.User.IsInRole("Administrator"))
                 {
-                    <h6 align="center"><a href="/Movies/Edit?id=@Model.Id">Edit Actor</a></h6>
+                    <h6 align="center"><a href="/Movies/Edit?id=@Model.Id">Edit Movie</a></h6>
                     <h6 align="center"><a href="/Movies/Delete?id=@Model.Id" onclick="confirmDelete()">Delete Movie</a></h6>
                     <h6 align="center"><a href="/Movies/HardDelete?id=@Model.Id" onclick="confirmHardDelete()">Hard Delete Movie</a></h6>
                 }

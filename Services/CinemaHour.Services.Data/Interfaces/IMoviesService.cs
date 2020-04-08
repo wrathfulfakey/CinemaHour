@@ -14,8 +14,10 @@
 
         Task<int> CreaterMovieAsync(CreateMovieServiceInputModel input);
 
-        Task DeleteActorAsync(int id);
+        Task DeleteMovieAsync(int id);
 
-        Task HardDeleteActorAsync(int id);
+        Task HardDeleteMovieAsync(int id);
+
+        Task EditActorAsync(EditMovieInputModel input);
     }
 }

@@ -1,4 +1,4 @@
-﻿@model CinemaHour.Web.ViewModels.Movies.MovieCreateInputModel
+﻿@model CinemaHour.Web.ViewModels.Movies.MovieEditViewModel
 @{
     ViewData["Title"] = "Create Movie";
 }
@@ -15,9 +15,9 @@
     });
 </script>
 
-<form method="post" asp-action="Create">
+<form method="post" asp-action="Edit">
     <div class="row">
-        <input hidden asp-for="@Model.Id"/>
+        <input hidden asp-for="@Model.Id" />
         <div class="col-md-12 top-buffer form-group" style="align-content:center">
             <label asp-for="@Model.PosterUrl"></label>
             <input asp-for="@Model.PosterUrl" class="form-control" placeholder="Poster URL..." />
@@ -63,16 +63,6 @@
             <textarea asp-for="@Model.Summary" class="form-control" placeholder="Summary..."></textarea>
             <span asp-validation-for="@Model.Summary" class="text-danger"></span>
         </div>
-        <h5 class="col-md-12">Select Genres:</h5>
-        <br />
-        @foreach (var genre in Model.Genres)
-        {
-            <div class="col-md-2">
-                <input type="checkbox" name="genreName" value="@(genre.Id)" />
-                @(genre.Name)
-            </div>
-        }
-        <br />
         <h5 class="col-md-12">Select Actors:</h5>
         <br />
         @foreach (var actor in Model.Actors)
@@ -82,19 +72,26 @@
                 @(actor.FirstName + " " + actor.LastName)
             </div>
         }
+        <h5 class="col-md-12">Select Genres:</h5>
         <br />
+        @foreach (var genre in Model.Genres)
+        {
+            <div class="col-md-2">
+                <input type="checkbox" name="genreName" value="@(genre.Id)" />
+                @(genre.Name)
+            </div>
+        }
         <h5 class="col-md-12">Select Directors:</h5>
         <br />
         @foreach (var director in Model.Directors)
         {
             <div class="col-md-3">
                 <input type="checkbox" name="directorName" value="@(director.Id)" />
-                @director.FullName
+                @(director.FullName)
             </div>
         }
-        @*how to add Genres/Actors/Directors*@
     </div>
     <div>
-        <input type="submit" class="btn btn-primary" />
+        <input type="submit" class="btn btn-primary" value="Edit" />
     </div>
 </form>

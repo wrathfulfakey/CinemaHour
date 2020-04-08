@@ -88,6 +88,105 @@
             return movie.Id;
         }
 
+        public async Task EditActorAsync(EditMovieInputModel input)
+        {
+            var entity = this.moviesRepository.All()
+                .Where(x => x.Id == input.Id)
+                .FirstOrDefault();
+
+            entity.Actors = this.actorsMovieRepository.All()
+                .Where(x => x.MovieId == input.Id)
+                .ToList();
+            entity.Directors = this.directorMovieRepository.All()
+                .Where(x => x.MovieId == input.Id)
+                .ToList();
+            entity.Genres = this.genreMoviesRepository.All()
+                .Where(x => x.MovieId == input.Id)
+                .ToList();
+
+            ICollection<MovieActors> inputActors = new HashSet<MovieActors>();
+            foreach (var actor in input.Actors)
+            {
+                var actorMovie = new MovieActors
+                {
+                    ActorId = actor,
+                    MovieId = entity.Id,
+                };
+
+                if (entity.Actors.Contains(actorMovie))
+                {
+                    continue;
+                }
+
+                if (!input.Actors.Contains(actorMovie.ActorId))
+                {
+                    entity.Actors.Remove(actorMovie);
+                }
+
+                inputActors.Add(actorMovie);
+            }
+
+            ICollection<MovieGenre> inputGenres = new HashSet<MovieGenre>();
+            foreach (var genre in input.Genres)
+            {
+                var parsedGenreId = int.Parse(genre);
+                var genreMovie = new MovieGenre
+                {
+                    GenreId = parsedGenreId,
+                    MovieId = entity.Id,
+                };
+
+                if (entity.Genres.Contains(genreMovie))
+                {
+                    continue;
+                }
+
+                if (!input.Genres.Contains(genreMovie.GenreId.ToString()))
+                {
+                    entity.Genres.Remove(genreMovie);
+                }
+
+                inputGenres.Add(genreMovie);
+            }
+
+            ICollection<MovieDirector> inputDirectors = new HashSet<MovieDirector>();
+            foreach (var director in input.Directors)
+            {
+                var directorMovie = new MovieDirector
+                {
+                    DirectorId = director,
+                    MovieId = entity.Id,
+                };
+
+                if (entity.Directors.Contains(directorMovie))
+                {
+                    continue;
+                }
+
+                if (!input.Directors.Contains(directorMovie.DirectorId))
+                {
+                    entity.Directors.Remove(directorMovie);
+                }
+
+                inputDirectors.Add(directorMovie);
+            }
+
+            entity.Actors = inputActors;
+            entity.Genres = inputGenres;
+            entity.Directors = inputDirectors;
+
+            entity.IMDBLink = input.IMDBLink;
+            entity.Language = input.Language;
+            entity.Name = input.Name;
+            entity.PosterUrl = input.PosterUrl;
+            entity.Rating = input.Rating;
+            entity.ReleaseDate = input.ReleaseDate;
+            entity.TrailerLink = input.TrailerLink;
+            entity.Summary = input.Summary;
+
+            this.moviesRepository.Update(entity);
+            await this.moviesRepository.SaveChangesAsync();
+        }
 
         public ICollection<T> GetAll<T>(int? count = null)
         {
@@ -112,7 +211,7 @@
             return movie;
         }
 
-        public async Task DeleteActorAsync(int id)
+        public async Task DeleteMovieAsync(int id)
         {
             var movie = await this.moviesRepository.GetByIdWithDeletedAsync(id);
 
@@ -120,9 +219,10 @@
             await this.moviesRepository.SaveChangesAsync();
         }
 
-        public async Task HardDeleteActorAsync(int id)
+        public async Task HardDeleteMovieAsync(int id)
         {
             var movie = await this.moviesRepository.GetByIdWithDeletedAsync(id);
+
             var actorMoviesToDelete = this.actorsMovieRepository.All().Where(x => x.MovieId == id);
             foreach (var actorMovie in actorMoviesToDelete)
             {
@@ -150,5 +250,6 @@
             this.moviesRepository.HardDelete(movie);
             await this.moviesRepository.SaveChangesAsync();
         }
+
     }
 }
