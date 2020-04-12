@@ -15,10 +15,14 @@
     public class ActorsService : IActorsService
     {
         private readonly IDeletableEntityRepository<Actor> actorsRepository;
+        private readonly IRepository<MovieActors> movieActorsRepository;
 
-        public ActorsService(IDeletableEntityRepository<Actor> actorsRepository)
+        public ActorsService(
+            IDeletableEntityRepository<Actor> actorsRepository,
+            IRepository<MovieActors> movieActorsRepository)
         {
             this.actorsRepository = actorsRepository;
+            this.movieActorsRepository = movieActorsRepository;
         }
 
         public ICollection<T> GetAll<T>(int? count = null)
@@ -50,6 +54,14 @@
                 Gender = genderAsEnum,
                 BirthDate = input.BirthDate,
             };
+
+            if (this.actorsRepository.All().Any(x =>
+                x.FirstName == input.FirstName &&
+                x.LastName == input.LastName &&
+                x.BirthDate == input.BirthDate))
+            {
+                return "There is already an actor with the same name.";
+            }
 
             await this.actorsRepository.AddAsync(actor);
             await this.actorsRepository.SaveChangesAsync();
@@ -94,6 +106,13 @@
         public async Task HardDeleteActorAsync(string id)
         {
             var actor = await this.actorsRepository.GetByIdWithDeletedAsync(id);
+
+            var moviesToDeleteActor = this.movieActorsRepository.All()
+                .Where(x => x.ActorId == actor.Id);
+            foreach (var movie in moviesToDeleteActor)
+            {
+                this.movieActorsRepository.Delete(movie);
+            }
 
             this.actorsRepository.HardDelete(actor);
             await this.actorsRepository.SaveChangesAsync();

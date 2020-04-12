@@ -1,0 +1,32 @@
+﻿@model CinemaHour.Web.ViewModels.Directors.DetailsDirectorViewModel
+@{
+    this.ViewData["Title"] = "Director Details";
+}
+
+<h1 class="display-4 text-center">Movies directed by @Model.FullName</h1>
+<p>
+    @if (this.User.IsInRole("Administrator"))
+    {
+        <h6 align="center"><a href="/Directors/Edit?id=@Model.Id">Edit Director</a></h6>
+        <br />
+        <h6 align="center"><a href="/Directors/Delete?id=@Model.Id" onclick="confirmDelete()">Delete Director</a></h6>
+        <br />
+        <h6 align="center"><a href="/Directors/HardDelete?id=@Model.Id" onclick="confirmHardDelete()">Hard Delete Director</a></h6>
+    }
+</p>
+<hr />
+<div class="col-md-12 media">
+    <div class="media-body">
+        <div class="row">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="col-md-3">
+                    <p align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></p>
+                    <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
+                    <p><strong>Rating: </strong>@movie.Rating</p>
+                    <p><strong>Summary :</strong>@movie.ShortSummary</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

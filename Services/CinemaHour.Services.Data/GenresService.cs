@@ -34,6 +34,12 @@
         {
             var genre = await this.genreRepository.GetByIdWithDeletedAsync(id);
 
+            var genreMoviesToDelete = this.movieGenreRepository.All().Where(x => x.GenreId == id);
+            foreach (var genreToDelete in genreMoviesToDelete)
+            {
+                this.movieGenreRepository.Delete(genreToDelete);
+            }
+
             this.genreRepository.HardDelete(genre);
             await this.genreRepository.SaveChangesAsync();
         }
@@ -80,6 +86,24 @@
                 .FirstOrDefault();
 
             return genre;
+        }
+
+        public async Task<int> CreateGenreAsync(string name)
+        {
+            var genre = new Genre
+            {
+                Name = name,
+            };
+
+            if (this.genreRepository.All().Any(x => x.Name == name))
+            {
+                return 0;
+            }
+
+            await this.genreRepository.AddAsync(genre);
+            await this.genreRepository.SaveChangesAsync();
+
+            return genre.Id;
         }
     }
 }

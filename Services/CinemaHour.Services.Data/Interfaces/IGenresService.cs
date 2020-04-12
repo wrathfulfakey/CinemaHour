@@ -11,6 +11,8 @@
 
         T GetById<T>(int id);
 
+        Task<int> CreateGenreAsync(string name);
+
         Task<int> EditGenreAsync(int id, string genreName);
 
         Task DeleteGenreAsync(int id);

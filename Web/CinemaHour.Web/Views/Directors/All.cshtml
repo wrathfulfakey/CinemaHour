@@ -1,0 +1,21 @@
+﻿@model CinemaHour.Web.ViewModels.Directors.AllDirectorsViewModel
+@{
+    this.ViewData["Title"] = "All Directors";
+}
+
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    @foreach (var director in Model.Directors.OrderBy(x => x.FullName))
+    {
+    <div class="col-md-3 media" style="margin-top:10px">
+        <div class="media-body">
+            <a href="/Directors/Details?id=@director.Id" class="btn btn-info">
+                <h5 class="mt-0">
+                    @director.FullName
+                </h5>
+            </a>
+        </div>
+    </div>
+    }
+</div>

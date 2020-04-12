@@ -1,0 +1,19 @@
+﻿@model CinemaHour.Web.ViewModels.Genres.CreateGenreViewModel
+
+@{
+    ViewData["Title"] = "Create Genre";
+}
+
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
+<hr />
+<form method="post" asp-action="Create">
+    <div class="row">
+        <div class="col-md-12 top-buffer form-group" style="align-content:center">
+            <label asp-for="@Model.Name"></label>
+            <input asp-for="@Model.Name" class="form-control" placeholder="Genre name..." />
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Create" />
+    </div>
+</form>

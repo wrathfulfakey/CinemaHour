@@ -18,13 +18,11 @@
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
-
             @foreach (var movie in Model.Movies)
             {
                 <div class="col-md-3">
-
-                    <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
                     <p align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></p>
+                    <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
                     <p><strong>Rating: </strong>@movie.Rating</p>
                     <p><strong>Summary :</strong>@movie.ShortSummary</p>
                 </div>

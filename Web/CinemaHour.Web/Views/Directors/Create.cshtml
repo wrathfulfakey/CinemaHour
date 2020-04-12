@@ -1,0 +1,19 @@
+﻿@model CinemaHour.Web.ViewModels.Directors.CreateDirectorViewModel
+
+@{
+    ViewData["Title"] = "Create Director";
+}
+
+<h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
+<hr />
+<form method="post" asp-action="Create">
+    <div class="row">
+        <div class="col-md-12 top-buffer form-group" style="align-content:center">
+            <label asp-for="@Model.FullName"></label>
+            <input asp-for="@Model.FullName" class="form-control" placeholder="Director full name..." />
+            <span asp-validation-for="@Model.FullName" class="text-danger"></span>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Create" />
+    </div>
+</form>

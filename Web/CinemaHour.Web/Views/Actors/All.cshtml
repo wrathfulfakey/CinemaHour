@@ -10,10 +10,10 @@
     {
         <div class="col-md-3 media" style="margin-top: 10px">
             <div class="media-body">
-                <img src="@actor.ImageUrl" width="200" />
                 <h5 class="mt-0">
                     @(actor.FirstName + " " + actor.LastName)
                 </h5>
+                <img src="@actor.ImageUrl" width="200" />
                 <p><strong>Gender: </strong>@actor.Gender</p>
                 <p><strong>Birthdate: </strong>@actor.BirthDate.Date.ToShortDateString()</p>
                 <div class="button-holder">

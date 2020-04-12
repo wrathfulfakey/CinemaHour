@@ -1,11 +1,12 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using CinemaHour.Common;
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Web.ViewModels.Genres;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks;
 
     public class GenresController : Controller
     {
@@ -76,6 +77,25 @@
             var genreId = await this.genresService.EditGenreAsync(input.Id, input.Name);
 
             return this.RedirectToAction(nameof(this.Details), new { id = genreId });
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return this.View();
+        }
+
+        public async Task<IActionResult> Create(CreateGenreViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.genresService.CreateGenreAsync(input.Name);
+
+            return this.RedirectToAction(nameof(this.All));
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]

@@ -82,6 +82,11 @@
                 });
             }
 
+            if (this.moviesRepository.All().Any(x => x.Name == input.Name))
+            {
+                return 0;
+            }
+
             await this.moviesRepository.AddAsync(movie);
             await this.moviesRepository.SaveChangesAsync();
 
@@ -250,6 +255,5 @@
             this.moviesRepository.HardDelete(movie);
             await this.moviesRepository.SaveChangesAsync();
         }
-
     }
 }
