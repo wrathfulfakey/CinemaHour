@@ -1,9 +1,10 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
-    using System.Collections.Generic;
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
+
     using CinemaHour.Common;
-    using CinemaHour.Data.Models;
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Data.ViewModels.Movies;
     using CinemaHour.Web.ViewModels.Movies;
@@ -13,6 +14,8 @@
 
     public class MoviesController : Controller
     {
+        private const int MoviesPerPageDefaultValue = 9;
+
         private readonly IMoviesService moviesService;
         private readonly IActorsService actorsService;
         private readonly IGenresService genresService;
@@ -30,11 +33,20 @@
             this.directorsService = directorsService;
         }
 
-        public IActionResult All()
+        public IActionResult All(int page = 1, int perPage = MoviesPerPageDefaultValue)
         {
+            var pagesCount = (int)Math.Ceiling(this.moviesService.GetAll<MovieViewModel>().Count() / (decimal)perPage);
+
+            var movies = this.moviesService
+                .GetAll<MovieViewModel>()
+                .Skip(perPage * (page - 1))
+                .Take(perPage);
+
             var viewModel = new AllMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<MovieViewModel>(),
+                Movies = movies.ToList(),
+                CurrentPage = page,
+                PagesCount = pagesCount,
             };
 
             return this.View(viewModel);
@@ -148,7 +160,7 @@
 
             await this.moviesService.EditActorAsync(input);
 
-            return this.RedirectToAction(nameof(this.Details), new { id = id });
+            return this.RedirectToAction(nameof(this.Details), new { id });
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]

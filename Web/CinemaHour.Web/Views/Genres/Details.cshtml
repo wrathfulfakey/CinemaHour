@@ -21,7 +21,7 @@
             @foreach (var movie in Model.Movies)
             {
                 <div class="col-md-3">
-                    <p align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></p>
+                    <h4 align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></h4>
                     <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
                     <p><strong>Rating: </strong>@movie.Rating</p>
                     <p><strong>Summary :</strong>@movie.ShortSummary</p>

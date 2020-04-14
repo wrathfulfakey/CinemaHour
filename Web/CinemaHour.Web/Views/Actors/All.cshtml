@@ -1,4 +1,4 @@
-﻿@model CinemaHour.Web.ViewModels.Actors.AllActorsViewModel;
+﻿@model CinemaHour.Web.ViewModels.Actors.AllActorsViewModel
 @{
     this.ViewData["Title"] = "All Actors";
 }
@@ -21,5 +21,26 @@
                 </div>
             </div>
         </div>
+    }
+</div>
+
+<div style="margin-top: 5px;">
+    @if (Model.PagesCount > 0)
+    {
+        <ul class="pagination">
+            <li class="prev disabled"><a href="/Actors/All?page=@Model.PreviousPage"></a></li>
+            @for (int i = 1; i <= Model.PagesCount; i++)
+            {
+                if (i == Model.CurrentPage)
+                {
+                    <li class="active"><a href="/Actors/All?page=@i">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="/Actors/All?page=@i">@i</a></li>
+                }
+            }
+            <li class="next"><a href="/Actors/All?page=@Model.NextPage"></a></li>
+        </ul>
     }
 </div>

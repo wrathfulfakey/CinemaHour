@@ -1,13 +1,11 @@
 ﻿namespace CinemaHour.Web.Areas.Identity.Pages.Account
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Text;
-    using System.Text.Encodings.Web;
     using System.Threading.Tasks;
-    using CinemaHour.Common;
+
     using CinemaHour.Data.Models;
     using CinemaHour.Services.Messaging;
     using Microsoft.AspNetCore.Authentication;
@@ -21,10 +19,10 @@
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<RegisterModel> logger;
+        private readonly IEmailSender emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -32,10 +30,10 @@
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._logger = logger;
-            this._emailSender = emailSender;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
+            this.emailSender = emailSender;
         }
 
         [BindProperty]
@@ -89,37 +87,37 @@
             }
 
             this.ReturnUrl = returnUrl;
-            this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? this.Url.Content("~/");
-            this.ExternalLogins = (await this._signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (this.ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName };
 
-                if (this._userManager.Users.Any(x => x.UserName == user.UserName))
+                if (this.userManager.Users.Any(x => x.UserName == user.UserName))
                 {
                     this.ModelState.AddModelError(string.Empty, "Username already exists.");
                     return this.Page();
                 }
-                else if (this._userManager.Users.Any(x => x.Email == user.Email))
+                else if (this.userManager.Users.Any(x => x.Email == user.Email))
                 {
                     this.ModelState.AddModelError(string.Empty, "Email already exists.");
                     return this.Page();
                 }
 
-                var result = await this._userManager.CreateAsync(user, this.Input.Password);
+                var result = await this.userManager.CreateAsync(user, this.Input.Password);
 
                 if (result.Succeeded)
                 {
-                    this._logger.LogInformation("User created a new account with password.");
+                    this.logger.LogInformation("User created a new account with password.");
 
-                    var code = await this._userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = this.Url.Page(
                         "/Account/ConfirmEmail",
@@ -127,15 +125,15 @@
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: this.Request.Scheme);
 
-                    await this._emailSender.SendEmailAsync("rokudo3@gmail.com", "Cinema Hour", this.Input.Email, "Email Confirmation", callbackUrl);
+                    await this.emailSender.SendEmailAsync("rokudo3@gmail.com", "Cinema Hour", this.Input.Email, "Email Confirmation", callbackUrl);
 
-                    if (this._userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (this.userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return this.RedirectToPage("RegisterConfirmation", new { email = this.Input.Email });
                     }
                     else
                     {
-                        //await this._signInManager.SignInAsync(user, isPersistent: false);
+                        // await this._signInManager.SignInAsync(user, isPersistent: false);
                         return this.LocalRedirect(returnUrl);
                     }
                 }

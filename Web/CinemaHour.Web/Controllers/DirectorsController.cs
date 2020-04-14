@@ -1,5 +1,7 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CinemaHour.Common;
@@ -10,6 +12,7 @@
 
     public class DirectorsController : BaseController
     {
+        private const int DirectorsPerPageDefaultValue = 12;
         private readonly IDirectorsService directorsService;
 
         public DirectorsController(IDirectorsService directorsService)
@@ -17,11 +20,20 @@
             this.directorsService = directorsService;
         }
 
-        public IActionResult All()
+        public IActionResult All(int page = 1, int perPage = DirectorsPerPageDefaultValue)
         {
+            var pagesCount = (int)Math.Ceiling(this.directorsService.GetAll<DirectorViewModel>().Count() / (decimal)perPage);
+
+            var directors = this.directorsService
+               .GetAll<DirectorViewModel>()
+               .Skip(perPage * (page - 1))
+               .Take(perPage);
+
             var viewModel = new AllDirectorsViewModel
             {
-                Directors = this.directorsService.GetAll<DirectorViewModel>(),
+                Directors = directors,
+                CurrentPage = page,
+                PagesCount = pagesCount,
             };
 
             return this.View(viewModel);
@@ -91,7 +103,7 @@
                 return this.View(input);
             }
 
-            var directorId = await this.directorsService.EditDirectorAsync(id, input.Name);
+            var directorId = await this.directorsService.EditDirectorAsync(id, input.FullName);
 
             return this.RedirectToAction(nameof(this.Details), new { id = directorId });
         }

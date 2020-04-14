@@ -1,5 +1,7 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CinemaHour.Common;
@@ -11,6 +13,7 @@
 
     public class ActorsController : BaseController
     {
+        private const int ActorsPerPageDefaultValue = 12;
         private readonly IActorsService actorsService;
 
         public ActorsController(IActorsService actorsService)
@@ -18,11 +21,20 @@
             this.actorsService = actorsService;
         }
 
-        public IActionResult All()
+        public IActionResult All(int page = 1, int perPage = ActorsPerPageDefaultValue)
         {
+            var pagesCount = (int)Math.Ceiling(this.actorsService.GetAll<ActorViewModel>().Count() / (decimal)perPage);
+
+            var actors = this.actorsService
+               .GetAll<ActorViewModel>()
+               .Skip(perPage * (page - 1))
+               .Take(perPage);
+
             var viewModel = new AllActorsViewModel
             {
-                Actors = this.actorsService.GetAll<ActorViewModel>(),
+                Actors = actors,
+                CurrentPage = page,
+                PagesCount = pagesCount,
             };
 
             return this.View(viewModel);
