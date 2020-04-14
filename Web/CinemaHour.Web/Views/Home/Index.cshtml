@@ -7,6 +7,10 @@
     this.ViewData["Title"] = "Home Page";
 }
 
+@if (this.TempData["DeleteUser"] != null)
+{
+    <p class="alert alert-danger">@this.TempData["DeleteUser"]</p>
+}
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>

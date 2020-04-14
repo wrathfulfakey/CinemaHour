@@ -12,6 +12,13 @@
         <form id="profile-form" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row">
+                <div class="form-group col-md-12">
+                    <label asp-for="Input.AvatarUrl"></label>
+                    <input asp-for="Input.AvatarUrl"/>
+                    <span asp-validation-for="Input.AvatarUrl" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label asp-for="Username"></label>
                     <input asp-for="Username" class="form-control" disabled />

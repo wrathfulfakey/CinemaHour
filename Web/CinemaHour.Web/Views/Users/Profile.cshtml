@@ -9,20 +9,38 @@
 {
     <p class="alert alert-success">@this.TempData["RemoveMovieFromWatched"]</p>
 }
-
 @if (this.TempData["RemoveMovieFromFavourites"] != null)
 {
     <p class="alert alert-success">@this.TempData["RemoveMovieFromFavourites"]</p>
+}
+@if (this.TempData["AddAdminRoleToUser"] != null)
+{
+    <p class="alert alert-danger">@this.TempData["AddAdminRoleToUser"]</p>
+}
+@if (this.TempData["LockdownUser"] != null)
+{
+    <p class="alert alert-danger">@this.TempData["LockdownUser"]</p>
+}
+@if (this.TempData["RemoveLockdownUser"] != null)
+{
+    <p class="alert alert-danger">@this.TempData["RemoveLockdownUser"]</p>
 }
 
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
-            <div class="col-md-4 media-body">
+            <div class="col-md-4 media-body center">
                 <img src="@Model.AvatarUrl" width="250" class="center" />
                 @if (this.User.IsInRole("Administrator"))
                 {
                     // Make admin / delete account
+                    @if (this.User.Identity.Name != Model.UserName)
+                    {
+                        <h4 align="center"><a href="/Users/MakeAdmin?username=@Model.UserName">Make Administrator</a></h4>
+                        <h4 align="center"><a href="/Users/LockdownUser?username=@Model.UserName">Lockdown User</a></h4>
+                        <h4 align="center"><a href="/Users/RemoveLockdownUser?username=@Model.UserName">Remove Lockdown User</a></h4>
+                        <h4 align="center"><a href="/Users/DeleteUser?username=@Model.UserName">Delete User</a></h4>
+                    }
                 }
                 <h2 class="mt-0" style="text-align:center;">
                     @Model.UserName

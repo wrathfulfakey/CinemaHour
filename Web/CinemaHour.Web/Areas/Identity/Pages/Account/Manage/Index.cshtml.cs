@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using CinemaHour.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace CinemaHour.Web.Areas.Identity.Pages.Account.Manage
+﻿namespace CinemaHour.Web.Areas.Identity.Pages.Account.Manage
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using CinemaHour.Data.Models;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         public string Username { get; set; }
@@ -39,6 +39,10 @@ namespace CinemaHour.Web.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Url]
+            [Display(Name = "Change Avatar(url)")]
+            public string AvatarUrl { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -46,10 +50,11 @@ namespace CinemaHour.Web.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = await this._userManager.GetUserNameAsync(user);
-            var phoneNumber = await this._userManager.GetPhoneNumberAsync(user);
-            var firstName = this._userManager.Users.Where(x => x.UserName == userName).Select(x => x.FirstName).FirstOrDefault();
-            var lastName = this._userManager.Users.Where(x => x.UserName == userName).Select(x => x.LastName).FirstOrDefault();
+            var userName = await this.userManager.GetUserNameAsync(user);
+            var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
+            var firstName = this.userManager.Users.Where(x => x.UserName == userName).Select(x => x.FirstName).FirstOrDefault();
+            var lastName = this.userManager.Users.Where(x => x.UserName == userName).Select(x => x.LastName).FirstOrDefault();
+            var avatar = this.userManager.Users.Where(x => x.UserName == userName).Select(x => x.AvatarUrl).FirstOrDefault();
 
             this.Username = userName;
             this.FirstName = firstName;
@@ -57,16 +62,17 @@ namespace CinemaHour.Web.Areas.Identity.Pages.Account.Manage
 
             this.Input = new InputModel
             {
+                AvatarUrl = avatar,
                 PhoneNumber = phoneNumber,
             };
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await this._userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
             }
 
             await this.LoadAsync(user);
@@ -75,10 +81,10 @@ namespace CinemaHour.Web.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await this._userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this._userManager.GetUserId(this.User)}'.");
+                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
             }
 
             if (!this.ModelState.IsValid)
@@ -87,18 +93,25 @@ namespace CinemaHour.Web.Areas.Identity.Pages.Account.Manage
                 return this.Page();
             }
 
-            var phoneNumber = await this._userManager.GetPhoneNumberAsync(user);
+            var avatarUrl = this.userManager.Users.Where(x => x.UserName == user.UserName).Select(x => x.AvatarUrl).FirstOrDefault();
+            if (this.Input.AvatarUrl != avatarUrl)
+            {
+                user.AvatarUrl = this.Input.AvatarUrl;
+                await this.userManager.UpdateAsync(user);
+            }
+
+            var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
             if (this.Input.PhoneNumber != phoneNumber)
             {
-                var setPhoneResult = await this._userManager.SetPhoneNumberAsync(user, this.Input.PhoneNumber);
+                var setPhoneResult = await this.userManager.SetPhoneNumberAsync(user, this.Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    var userId = await this._userManager.GetUserIdAsync(user);
+                    var userId = await this.userManager.GetUserIdAsync(user);
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
 
-            await this._signInManager.RefreshSignInAsync(user);
+            await this.signInManager.RefreshSignInAsync(user);
             this.StatusMessage = "Your profile has been updated";
             return this.RedirectToPage();
         }

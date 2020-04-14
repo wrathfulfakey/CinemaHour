@@ -11,5 +11,13 @@
         Task<string> RemoveFromFavouritesAsync(int movieId, string username);
 
         Task<string> RemoveFromWatchedAsync(int movieId, string username);
+
+        Task<string> MakeUserAdminAsync(string username);
+
+        Task<string> LockdownUserAsync(string username);
+
+        Task<string> RemoveLockdownUserAsync(string username);
+
+        Task<string> DeleteUserAsync(string username);
     }
 }
