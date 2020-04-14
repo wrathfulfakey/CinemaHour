@@ -68,6 +68,7 @@
             return this.Redirect("/");
         }
 
+        [Authorize]
         public async Task<IActionResult> RemoveFromWatched(int movieId)
         {
             var user = this.User.Identity.Name;
@@ -79,6 +80,7 @@
             return this.RedirectToAction(nameof(this.Profile), new { username = user });
         }
 
+        [Authorize]
         public async Task<IActionResult> RemoveFromFavourites(int movieId)
         {
             var user = this.User.Identity.Name;
@@ -90,5 +92,24 @@
             return this.RedirectToAction(nameof(this.Profile), new { username = user });
         }
 
+        [Authorize]
+        public async Task<IActionResult> AddToUserFavourites(int movieId)
+        {
+            var result = await this.usersService.AddMovieToFavouritesAsync(movieId, this.User.Identity.Name);
+
+            this.TempData["UserAddToFavourite"] = result;
+
+            return this.Redirect($"/Movies/Details?id={movieId}");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AddToUserWatched(int movieId)
+        {
+            var result = await this.usersService.AddMovieToWatchedAsync(movieId, this.User.Identity.Name);
+
+            this.TempData["UserAddToWatched"] = result;
+
+            return this.Redirect($"/Movies/Details?id={movieId}");
+        }
     }
 }

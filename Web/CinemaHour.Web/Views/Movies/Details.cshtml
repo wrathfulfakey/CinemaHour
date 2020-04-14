@@ -37,8 +37,11 @@
                 <h2 class="mt-0" style="text-align:center;">
                     @Model.Name
                 </h2>
-                <h6 align="center"><a href="/Movies/AddToUserWatched?movieId=@Model.Id">Add to Watched</a></h6>
-                <h6 align="center"><a href="/Movies/AddToUserFavourites?movieId=@Model.Id">Add to Favourites</a></h6>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <h6 align="center"><a href="/Users/AddToUserWatched?movieId=@Model.Id">Add to Watched</a></h6>
+                    <h6 align="center"><a href="/Users/AddToUserFavourites?movieId=@Model.Id">Add to Favourites</a></h6>
+                }
                 <p><strong>Genres: </strong>@Model.GenreString</p>
                 <p><strong>Rating: </strong>@Model.Rating</p>
                 <p><strong>Premiere Date: </strong>@Model.ReleaseDate.ToShortDateString()</p>

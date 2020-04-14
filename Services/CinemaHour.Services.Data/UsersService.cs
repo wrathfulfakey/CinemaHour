@@ -179,5 +179,70 @@
 
             return $"You successfully removed '{movie.Name}' from your favourites list.";
         }
+
+        public async Task<string> AddMovieToWatchedAsync(int movieId, string username)
+        {
+            var user = this.usersRepository.All()
+                .Where(x => x.UserName == username)
+                .FirstOrDefault();
+
+            var movie = await this.moviesRepository.GetByIdWithDeletedAsync(movieId);
+
+            var checkIfExists = this.userWatchedRepository.All()
+                .Where(x => x.ApplicationUserId == user.Id && x.MovieId == movieId)
+                .FirstOrDefault();
+
+            user.Watched = this.userWatchedRepository.All().Where(x => x.ApplicationUserId == user.Id).ToList();
+
+            if (checkIfExists != null)
+            {
+                return $"You already have '{movie.Name}' in your watched list.";
+            }
+
+            var userWatched = new UserWatched
+            {
+                ApplicationUserId = user.Id,
+                MovieId = movieId,
+            };
+
+            user.Watched.Add(userWatched);
+
+            user.TotalTimeWatched += movie.Length;
+
+            await this.usersRepository.SaveChangesAsync();
+
+            return $"You have successfully added '{movie.Name}' to your watched list.";
+        }
+
+        public async Task<string> AddMovieToFavouritesAsync(int movieId, string username)
+        {
+            var user = this.usersRepository.All()
+                .Where(x => x.UserName == username)
+                .FirstOrDefault();
+
+            var checkIfExists = this.userFavouriteRepository.All()
+                .Where(x => x.ApplicationUserId == user.Id && x.MovieId == movieId)
+                .FirstOrDefault();
+
+            var movie = await this.moviesRepository.GetByIdWithDeletedAsync(movieId);
+
+            if (checkIfExists != null)
+            {
+                return $"You already have '{movie.Name}' in your favourites list.";
+            }
+
+            var userFavourite = new UserFavourite
+            {
+                ApplicationUserId = user.Id,
+                MovieId = movieId,
+            };
+
+            user.Favourites.Add(userFavourite);
+
+            await this.usersRepository.SaveChangesAsync();
+
+            return $"You have successfully added '{movie.Name}' to your favourites list.";
+        }
+
     }
 }

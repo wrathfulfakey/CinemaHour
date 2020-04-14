@@ -36,7 +36,7 @@
                     // Make admin / delete account
                     @if (this.User.Identity.Name != Model.UserName)
                     {
-                        <h4 align="center"><a href="/Users/MakeAdmin?username=@Model.UserName">Make Administrator</a></h4>
+                        <h4 align="center"><a href="/Users/MakeAdmin?username=@Model.UserName">Promote to Administrator</a></h4>
                         <h4 align="center"><a href="/Users/LockdownUser?username=@Model.UserName">Lockdown User</a></h4>
                         <h4 align="center"><a href="/Users/RemoveLockdownUser?username=@Model.UserName">Remove Lockdown User</a></h4>
                         <h4 align="center"><a href="/Users/DeleteUser?username=@Model.UserName">Delete User</a></h4>

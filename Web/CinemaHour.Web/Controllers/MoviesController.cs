@@ -185,22 +185,5 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public async Task<IActionResult> AddToUserWatched(int movieId)
-        {
-            var result = await this.moviesService.AddMovieToWatchedAsync(movieId, this.User.Identity.Name);
-
-            this.TempData["UserAddToWatched"] = result;
-
-            return this.RedirectToAction(nameof(this.Details), new { id = movieId });
-        }
-
-        public async Task<IActionResult> AddToUserFavourites(int movieId)
-        {
-            var result = await this.moviesService.AddMovieToFavouritesAsync(movieId, this.User.Identity.Name);
-
-            this.TempData["UserAddToFavourite"] = result;
-
-            return this.RedirectToAction(nameof(this.Details), new { id = movieId });
-        }
     }
 }
