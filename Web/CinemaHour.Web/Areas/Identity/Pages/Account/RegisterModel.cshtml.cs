@@ -93,7 +93,7 @@
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? this.Url.Content("~/");
+            returnUrl ??= this.Url.Content("~/");
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (this.ModelState.IsValid)
@@ -122,7 +122,7 @@
                     var callbackUrl = this.Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code },
+                        values: new { area = "Identity", userId = user.Id, code },
                         protocol: this.Request.Scheme);
 
                     await this.emailSender.SendEmailAsync("rokudo3@gmail.com", "Cinema Hour", this.Input.Email, "Email Confirmation", callbackUrl);

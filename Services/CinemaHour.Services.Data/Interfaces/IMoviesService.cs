@@ -19,5 +19,9 @@
         Task HardDeleteMovieAsync(int id);
 
         Task EditActorAsync(EditMovieInputModel input);
+
+        Task<string> AddMovieToWatched(int movieId, string username);
+
+        Task<string> AddMovieToFavourites(int movieId, string username);
     }
 }

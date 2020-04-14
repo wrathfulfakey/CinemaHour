@@ -80,6 +80,7 @@
             services.AddTransient<IActorsService, ActorsService>();
             services.AddTransient<IMoviesService, MoviesService>();
             services.AddTransient<IGenresService, GenresService>();
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IDirectorsService, DirectorsService>();
         }
 

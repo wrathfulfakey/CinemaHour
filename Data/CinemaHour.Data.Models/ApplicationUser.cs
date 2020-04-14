@@ -3,6 +3,7 @@ namespace CinemaHour.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     using CinemaHour.Data.Common.Models;
@@ -23,8 +24,10 @@ namespace CinemaHour.Data.Models
 
         public string AvatarUrl { get; set; }
 
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Your first name must be between 3 and 20 characters.")]
         public string FirstName { get; set; }
 
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Your last name must be between 3 and 20 characters.")]
         public string LastName { get; set; }
 
         // Audit info
@@ -37,7 +40,7 @@ namespace CinemaHour.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public int TotalTimeWatched => this.Watched.Sum(m => m.Movie.Length);
+        public int TotalTimeWatched { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

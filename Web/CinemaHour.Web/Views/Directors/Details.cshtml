@@ -3,6 +3,11 @@
     this.ViewData["Title"] = "Director Details";
 }
 
+@if (this.TempData["CreateDirectorTemp"] != null)
+{
+    <p class="alert alert-success">@this.TempData["CreateDirectorTemp"]</p>
+}
+
 <h1 class="display-4 text-center">Movies directed by @Model.FullName</h1>
 <p>
     @if (this.User.IsInRole("Administrator"))

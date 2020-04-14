@@ -1,0 +1,56 @@
+﻿@model CinemaHour.Web.ViewModels.Users.UserViewModel
+@{
+    this.ViewData["Title"] = $"{Model.UserName} Profile";
+    TimeSpan span = TimeSpan.FromMinutes(Model.TotalTimeWatched);
+    string totalTimeWatched = span.ToString(@"hh\:mm\:ss");
+}
+
+<div class="col-md-12 media">
+    <div class="media-body">
+        <div class="row">
+            <div class="col-md-4 media-body">
+                <img src="@Model.AvatarUrl" width="250" class="center" />
+                @if (this.User.IsInRole("Administrator"))
+                {
+                    // Make admin / delete account
+                }
+                <h2 class="mt-0" style="text-align:center;">
+                    @Model.UserName
+                </h2>
+                <p><strong>Name: </strong>@(Model.FirstName + " " + Model.LastName)</p>
+                <p><strong>Total Watch Time: </strong>@totalTimeWatched <span style="font-size: 10px;">(hours/minutes/seconds)</span></p>
+            </div>
+        </div>
+        <div>
+            <hr />
+            <h3 align="center">Favourite Movies</h3>
+            <hr />
+            <div class="row">
+                @foreach (var movie in @Model.Favourites)
+                {
+                    <div class="col-md-4" style="border:thin 5px red">
+                        <h4 align="center"><a href="/Movies/Details?id=@movie.MovieId">@movie.MovieName</a></h4>
+                        <img style="float: left; margin-right:5px;" src="@movie.MoviePosterUrl" width="150" />
+                        <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.MovieRating</p>
+                        <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
+                    </div>
+                }
+            </div>
+            <hr />
+            <h3 align="center">Watched Movies</h3>
+            <hr />
+            <div class="row">
+                @foreach (var movie in @Model.Watched)
+                {
+                    <div class="col-md-4" style="border:thin 5px red">
+                        <h4 align="center"><a href="/Movies/Details?id=@movie.MovieId">@movie.MovieName</a></h4>
+                        <img style="float: left; margin-right:5px;" src="@movie.MoviePosterUrl" width="150" />
+                        <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.MovieRating</p>
+                        <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

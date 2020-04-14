@@ -1,6 +1,21 @@
 ﻿@model CinemaHour.Web.ViewModels.Movies.MovieDetailsViewModel
 @{
-    this.ViewData["Title"] = "Movie Details";
+    this.ViewData["Title"] = $"{Model.Name} Details";
+}
+
+@if (this.TempData["CreateMovieTemp"] != null)
+{
+    <p class="alert alert-success">@this.TempData["CreateMovieTemp"]</p>
+}
+
+@if (this.TempData["UserAddToFavourite"] != null)
+{
+    <p class="alert alert-success">@this.TempData["UserAddToFavourite"]</p>
+}
+
+@if (this.TempData["UserAddToWatched"] != null)
+{
+    <p class="alert alert-success">@this.TempData["UserAddToWatched"]</p>
 }
 
 <div class="col-md-12 media">
@@ -22,6 +37,8 @@
                 <h2 class="mt-0" style="text-align:center;">
                     @Model.Name
                 </h2>
+                <h6 align="center"><a href="/Movies/AddToUserWatched?movieId=@Model.Id">Add to Watched</a></h6>
+                <h6 align="center"><a href="/Movies/AddToUserFavourites?movieId=@Model.Id">Add to Favourites</a></h6>
                 <p><strong>Genres: </strong>@Model.GenreString</p>
                 <p><strong>Rating: </strong>@Model.Rating</p>
                 <p><strong>Premiere Date: </strong>@Model.ReleaseDate.ToShortDateString()</p>

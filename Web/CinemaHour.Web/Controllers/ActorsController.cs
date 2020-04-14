@@ -79,6 +79,8 @@
                 Gender = input.Gender.ToString(),
             });
 
+            this.TempData["CreateActorTemp"] = "You have added a new actor to the database.";
+
             return this.RedirectToAction(nameof(this.Details), new { id = actor });
         }
 
@@ -116,6 +118,8 @@
         {
             await this.actorsService.DeleteActorAsync(id);
 
+            this.TempData["DeleteActorTemp"] = "You have deleted an actor from the database.";
+
             return this.RedirectToAction(nameof(this.All));
         }
 
@@ -123,6 +127,8 @@
         public async Task<IActionResult> HardDelete(string id)
         {
             await this.actorsService.HardDeleteActorAsync(id);
+
+            this.TempData["HardDeleteActorTemp"] = "You have hard deleted an actor from the database.";
 
             return this.RedirectToAction(nameof(this.All));
         }

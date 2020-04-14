@@ -3,6 +3,11 @@
     this.ViewData["Title"] = "Actor Details";
 }
 
+@if (this.TempData["CreateActorTemp"] != null)
+{
+    <p class="alert alert-success">@this.TempData["CreateActorTemp"]</p>
+}
+
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
@@ -15,7 +20,7 @@
                 <img src="@Model.ImageUrl" width="250" class="center" />
                 @if (this.User.IsInRole("Administrator"))
                 {
-                    <h6 align="center"><a href="/Actors/Edit?id=@Model.Id" >Edit Actor</a></h6>
+                    <h6 align="center"><a href="/Actors/Edit?id=@Model.Id">Edit Actor</a></h6>
                     <h6 align="center"><a href="/Actors/Delete?id=@Model.Id" onclick="confirmDelete()">Delete Actor</a></h6>
                     <h6 align="center"><a href="/Actors/HardDelete?id=@Model.Id" onclick="confirmHardDelete()">Hard Delete Actor</a></h6>
                 }

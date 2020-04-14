@@ -108,6 +108,8 @@
                 Directors = directors,
             });
 
+            this.TempData["CreateMovieTemp"] = "You have added a new movie to the database.";
+
             return this.RedirectToAction(nameof(this.Details), new { id = movie });
         }
 
@@ -168,6 +170,8 @@
         {
             await this.moviesService.DeleteMovieAsync(id);
 
+            this.TempData["DeleteMovieTemp"] = "You have successfully deleted a movie from the database.";
+
             return this.RedirectToAction(nameof(this.All));
         }
 
@@ -176,7 +180,27 @@
         {
             await this.moviesService.HardDeleteMovieAsync(id);
 
+            this.TempData["HardDeleteMovieTemp"] = "You have successfully hard deleted a movie from the database.";
+
             return this.RedirectToAction(nameof(this.All));
+        }
+
+        public async Task<IActionResult> AddToUserWatched(int movieId)
+        {
+            var result = await this.moviesService.AddMovieToWatched(movieId, this.User.Identity.Name);
+
+            this.TempData["UserAddToWatched"] = result;
+
+            return this.RedirectToAction(nameof(this.Details), new { id = movieId });
+        }
+
+        public async Task<IActionResult> AddToUserFavourites(int movieId)
+        {
+            var result = await this.moviesService.AddMovieToFavourites(movieId, this.User.Identity.Name);
+
+            this.TempData["UserAddToFavourite"] = result;
+
+            return this.RedirectToAction(nameof(this.Details), new { id = movieId });
         }
     }
 }

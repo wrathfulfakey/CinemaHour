@@ -76,6 +76,8 @@
 
             await this.directorsService.CreateDirectorAsync(input.FullName);
 
+            this.TempData["CreateDirectorTemp"] = "You have added a new director to the database.";
+
             return this.RedirectToAction(nameof(this.All));
         }
 
@@ -113,6 +115,8 @@
         {
             await this.directorsService.DeleteDirectorAsync(id);
 
+            this.TempData["DeleteDirectorTemp"] = "You have deleted a director from the database.";
+
             return this.RedirectToAction(nameof(this.All));
         }
 
@@ -120,6 +124,8 @@
         public async Task<IActionResult> HardDelete(string id)
         {
             await this.directorsService.HardDeleteDirectorAsync(id);
+
+            this.TempData["HardDeleteDirectorTemp"] = "You have hard deleted a director from the database.";
 
             return this.RedirectToAction(nameof(this.All));
         }
