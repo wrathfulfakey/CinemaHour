@@ -20,8 +20,8 @@
 
         Task EditActorAsync(EditMovieInputModel input);
 
-        Task<string> AddMovieToWatched(int movieId, string username);
+        Task<string> AddMovieToWatchedAsync(int movieId, string username);
 
-        Task<string> AddMovieToFavourites(int movieId, string username);
+        Task<string> AddMovieToFavouritesAsync(int movieId, string username);
     }
 }

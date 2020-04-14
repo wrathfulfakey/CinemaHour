@@ -187,7 +187,7 @@
 
         public async Task<IActionResult> AddToUserWatched(int movieId)
         {
-            var result = await this.moviesService.AddMovieToWatched(movieId, this.User.Identity.Name);
+            var result = await this.moviesService.AddMovieToWatchedAsync(movieId, this.User.Identity.Name);
 
             this.TempData["UserAddToWatched"] = result;
 
@@ -196,7 +196,7 @@
 
         public async Task<IActionResult> AddToUserFavourites(int movieId)
         {
-            var result = await this.moviesService.AddMovieToFavourites(movieId, this.User.Identity.Name);
+            var result = await this.moviesService.AddMovieToFavouritesAsync(movieId, this.User.Identity.Name);
 
             this.TempData["UserAddToFavourite"] = result;
 

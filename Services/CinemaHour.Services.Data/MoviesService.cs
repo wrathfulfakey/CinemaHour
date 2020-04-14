@@ -41,7 +41,7 @@
             this.usersWatchedRepository = usersWatchedRepository;
         }
 
-        public async Task<string> AddMovieToWatched(int movieId, string username)
+        public async Task<string> AddMovieToWatchedAsync(int movieId, string username)
         {
             var user = this.usersRepository.All()
                 .Where(x => x.UserName == username)
@@ -75,7 +75,7 @@
             return $"You have successfully added {movie.Name} to your watched list.";
         }
 
-        public async Task<string> AddMovieToFavourites(int movieId, string username)
+        public async Task<string> AddMovieToFavouritesAsync(int movieId, string username)
         {
             var user = this.usersRepository.All()
                 .Where(x => x.UserName == username)

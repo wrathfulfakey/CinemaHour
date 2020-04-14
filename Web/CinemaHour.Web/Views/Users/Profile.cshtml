@@ -5,6 +5,16 @@
     string totalTimeWatched = span.ToString(@"hh\:mm\:ss");
 }
 
+@if (this.TempData["RemoveMovieFromWatched"] != null)
+{
+    <p class="alert alert-success">@this.TempData["RemoveMovieFromWatched"]</p>
+}
+
+@if (this.TempData["RemoveMovieFromFavourites"] != null)
+{
+    <p class="alert alert-success">@this.TempData["RemoveMovieFromFavourites"]</p>
+}
+
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
@@ -33,6 +43,10 @@
                         <img style="float: left; margin-right:5px;" src="@movie.MoviePosterUrl" width="150" />
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.MovieRating</p>
                         <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
+                        @if (this.User.Identity.Name == Model.UserName)
+                        {
+                            <a href="/Users/RemoveFromFavourites?movieId=@movie.MovieId">Remove from Favourites</a>
+                        }
                     </div>
                 }
             </div>
@@ -47,6 +61,10 @@
                         <img style="float: left; margin-right:5px;" src="@movie.MoviePosterUrl" width="150" />
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.MovieRating</p>
                         <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
+                        @if (this.User.Identity.Name == Model.UserName)
+                        {
+                            <a href="/Users/RemoveFromWatched?movieId=@movie.MovieId">Remove from Watched</a>
+                        }
                     </div>
                 }
             </div>
