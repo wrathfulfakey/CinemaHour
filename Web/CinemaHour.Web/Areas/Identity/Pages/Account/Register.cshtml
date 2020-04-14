@@ -18,6 +18,13 @@
 
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row">
+                <div class="col-md-12 top-buffer form-group">
+                    <label asp-for="Input.AvatarUrl"></label>
+                    <input asp-for="Input.AvatarUrl" class="form-control" placeholder="Avatar Link..." />
+                    <span asp-validation-for="Input.AvatarUrl" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 top-buffer form-group">
                     <label asp-for="Input.UserName"></label>
                     <input asp-for="Input.UserName" class="form-control" placeholder="Username..." />

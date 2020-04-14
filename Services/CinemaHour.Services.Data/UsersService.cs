@@ -56,15 +56,16 @@
                 return "You cannot ban another administrator";
             }
 
+            if (user.LockoutEnabled && user.LockoutEnd != null)
+            {
+                return $"'{user.UserName}' is already banned until {user.LockoutEnd.Value:yyyy/MMM/dd/HH}";
+            }
+
             if (user.LockoutEnd == null || user.LockoutEnd <= DateTime.UtcNow)
             {
                 user.LockoutEnd = DateTime.UtcNow.AddDays(7);
                 user.LockoutEnabled = true;
-            }
-
-            if (user.LockoutEnabled)
-            {
-                return $"'{user.UserName}' is already banned until {user.LockoutEnd.Value:yyyy/MMM/dd/HH}";
+                await this.usersRepository.SaveChangesAsync();
             }
 
             await this.usersRepository.SaveChangesAsync();
@@ -178,6 +179,5 @@
 
             return $"You successfully removed '{movie.Name}' from your favourites list.";
         }
-
     }
 }

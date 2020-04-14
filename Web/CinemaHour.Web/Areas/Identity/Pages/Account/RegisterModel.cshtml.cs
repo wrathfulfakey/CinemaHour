@@ -45,9 +45,8 @@
 
         public class InputModel
         {
-            // [Display(Name = "Avatar")]
-            // [DataType(DataType.Upload)]
-            // public byte[] Avatar { get; set; }
+            [Display(Name = "Avatar(URL)")]
+            public string AvatarUrl { get; set; }
 
             [StringLength(20, MinimumLength = 3, ErrorMessage = "Your first name must be between 3 and 20 characters.")]
             [Display(Name = "First Name")]
@@ -98,7 +97,7 @@
 
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName };
+                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName, AvatarUrl = this.Input.AvatarUrl };
 
                 if (this.userManager.Users.Any(x => x.UserName == user.UserName))
                 {
