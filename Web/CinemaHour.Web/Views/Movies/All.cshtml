@@ -57,22 +57,30 @@
     }
 </div>
 
-<div style="margin-top:5px">
+<div class="wrapper" style="margin-top:5px">
     @if (Model.PagesCount > 0)
     {
-        <ul class="pagination">
-            <li class="prev">
-                <a asp-action="All"
+        <ul class="pager justify-content-center">
+            <li class="pager__item pager__item--prev">
+                <a class="pager__link" 
+                   asp-action="All"
                    asp-route-sortOrder="@ViewData["CurrentSort"]"
                    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                   asp-route-page="@Model.PreviousPage"></a>
+                   asp-route-page="@Model.PreviousPage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
+                        <g fill="none" fill-rule="evenodd">
+                            <path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
+                        </g>
+                    </svg>
+                </a>
             </li>
             @for (int i = 1; i <= Model.PagesCount; i++)
             {
                 if (i == Model.CurrentPage)
                 {
-                    <li class="active">
-                        <a asp-action="All"
+                    <li class="active pager__item">
+                        <a class="pager__link" 
+                           asp-action="All"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-currentFilter="@ViewData["CurrentFilter"]"
                            asp-route-page="@i">@i</a>
@@ -80,19 +88,28 @@
                 }
                 else
                 {
-                    <li>
-                        <a asp-action="All"
+                    <li class="pager__item">
+                        <a class="pager__link" 
+                           asp-action="All"
                            asp-route-sortOrder="@ViewData["CurrentSort"]"
                            asp-route-currentFilter="@ViewData["CurrentFilter"]"
                            asp-route-page="@i">@i</a>
                     </li>
                 }
             }
-            <li class="next">
-                <a asp-action="All"
+
+            <li class="pager__item pager__item--next">
+                <a class="pager__link" 
+                   asp-action="All"
                    asp-route-sortOrder="@ViewData["CurrentSort"]"
                    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                   asp-route-page="@Model.NextPage"></a>
+                   asp-route-page="@Model.NextPage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
+                        <g fill="none" fill-rule="evenodd">
+                            <path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
+                        </g>
+                    </svg>
+                </a>
             </li>
         </ul>
     }

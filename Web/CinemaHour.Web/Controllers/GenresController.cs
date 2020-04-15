@@ -1,5 +1,7 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CinemaHour.Common;
@@ -10,6 +12,8 @@
 
     public class GenresController : Controller
     {
+        private const int MoviesPerPageDefaultValue = 1;
+
         private readonly IGenresService genresService;
         private readonly IMoviesService moviesService;
 
@@ -31,15 +35,30 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(
+            int id,
+            int page = 1,
+            int perPage = MoviesPerPageDefaultValue)
         {
             var genre = this.genresService.GetById<GenreViewModel>(id);
+
+            var movies = this.genresService
+                .GetAllMovies<MovieDetailsGenreViewModel>(id);
+
+            var pagesCount = (int)Math.Ceiling(movies.Count() / (decimal)perPage);
+
+            movies = movies
+                .Skip(perPage * (page - 1))
+                .Take(perPage)
+                .ToList();
 
             var viewModel = new DetailsGenreViewModel
             {
                 Id = genre.Id,
                 Name = genre.Name,
-                Movies = this.genresService.GetAllMovies<MovieDetailsGenreViewModel>(id),
+                Movies = movies,
+                CurrentPage = page,
+                PagesCount = pagesCount,
             };
 
             if (viewModel == null)

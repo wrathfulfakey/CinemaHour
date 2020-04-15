@@ -1,13 +1,14 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
     using System.Threading.Tasks;
+
     using CinemaHour.Common;
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class UsersController : BaseController
+    public class UsersController : Controller
     {
         private readonly IUsersService usersService;
 

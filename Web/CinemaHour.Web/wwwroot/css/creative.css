@@ -41,179 +41,99 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 /*Pagination*/
-html {
-    padding: 40px;
+.wrapper {
+    width: 400px;
+    padding: 20px;
+    margin: 20px auto;
+    background-color: rgb(220, 210, 250);
+    box-shadow: 0 1px 2px 0 #c9ced1;
+    border-radius: 4px;
 }
 
-a {
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    transition: all 0.2s linear;
-}
-
-@font-face {
-    font-family: "Edmondsans";
-    src: url("http://designitcodeit.com/live/huP64P3jnA76/fonts/edmondsans-bold-webfont.eot");
-    src: url("http://designitcodeit.com/live/huP64P3jnA76/fonts/edmondsans-bold-webfont.eot?#iefix") format("embedded-opentype"), url("http://designitcodeit.com/live/huP64P3jnA76/fonts/edmondsans-bold-webfont.woff") format("woff"), url("http://designitcodeit.com/live/huP64P3jnA76/fonts/edmondsans-bold-webfont.ttf") format("truetype"), url("http://designitcodeit.com/live/huP64P3jnA76/fonts/edmondsans-bold-webfont.svg#EdmondsansBoldRegular") format("svg");
-    font-weight: bold;
-    font-style: normal;
-}
-
-.pagination li {
-    border-top-color: #282828;
-    border-bottom-color: #282828;
-}
-
-    .pagination li:before,
-    .pagination .active:after,
-    .pagination .active:before,
-    .pagination .active ~ li:before {
-        border-left-color: #282828;
-        border-right-color: #282828;
-    }
-
-.pagination a {
-    color: #888;
-    font-family: "Edmondsans";
-    font-size: 15px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.pagination .active a {
-    color: #ccc;
-}
-
-.pagination .disabled a,
-.pagination .disabled:hover a {
-    color: #333;
-    cursor: default;
-}
-
-.pagination li:hover a {
-    color: #c9282d;
-}
-
-/*
- * Basic style
- */
-.pagination {
+/* ------------------------------ PAGINTION BEGIN ------------------------------ */
+.pager {
+    margin: 0 0 3.75rem;
+    font-size: 0;
     text-align: center;
 }
 
-    .pagination ul {
-        display: inline-block;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        text-align: center;
+.pager__item {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin: 0 2px;
+}
+
+    .pager__item.active .pager__link {
+        background-color: #ffb74d;
+        border-color: #ffb74d;
+        color: #fff;
+        text-decoration: none;
     }
 
-    .pagination li {
-        border-right: 10px solid transparent;
-        border-bottom-width: 17px;
-        border-top-width: 17px;
-        border-style: solid;
-        transform: rotate(360deg);
-        border-left: 0;
-        height: 0;
-        float: left;
-        margin-right: 3px;
-        position: relative;
+.pager__item--prev svg, .pager__item--next svg {
+    width: 8px;
+    height: 12px;
+}
+
+.pager__item--next .pager__link svg {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+}
+
+.pager__link {
+    position: relative;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+    width: 2.625rem;
+    height: 2.625rem;
+    line-height: 2.625rem;
+    margin-left: -1px;
+    color: #2f3640;
+    text-decoration: none;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+    .pager__link:hover, .pager__link:focus, .pager__link:active {
+        background-color: #ffb74d;
+        border-color: #ffb74d;
+        color: #fff;
+        text-decoration: none;
     }
 
-        .pagination li:before {
-            border-bottom-color: transparent;
-            border-left-color: transparent;
-            border-top-color: transparent;
-            border-width: 17px 10px 17px 0;
-            border-style: solid;
-            position: absolute;
-            content: "";
-            left: -10px;
-            height: 0px;
-            top: -17px;
-            width: 0px;
+        .pager__link:hover svg path, .pager__link:focus svg path, .pager__link:active svg path {
+            fill: #fff;
         }
 
-    .pagination .active ~ li:before {
-        border-bottom-color: transparent;
-        border-top-color: transparent;
-        border-width: 17px 0 17px 10px;
-        right: -10px;
-        left: auto;
+.pager .pager__item.active + .pager__item .pager__link, .pager .pager__item:hover + .pager__item .pager__link {
+    border-left-color: #ffb74d;
+}
+
+@media screen and (max-width: 576px) {
+    .pager__item {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
     }
 
-    .pagination .active ~ li {
-        border-left: 10px solid transparent;
-        border-right: 0;
-    }
-
-    .pagination .active {
-        border-right: 0;
-        border-left: 0;
-    }
-
-        .pagination .active:after,
-        .pagination .active:before {
-            border-bottom-color: transparent;
-            border-top-color: transparent;
-            border-width: 17px 10px 17px 0;
-            border-style: solid;
-            position: absolute;
-            content: "";
-            height: 0px;
-            width: 0px;
-            top: -17px;
-            left: -10px;
+        .pager__item.active, .pager__item:first-of-type, .pager__item:last-of-type, .pager__item:nth-of-type(2), .pager__item:nth-last-of-type(2) {
+            position: initial;
+            top: initial;
+            left: initial;
         }
 
-        .pagination .active:after {
-            border-bottom-color: transparent;
-            border-right-color: transparent;
-            border-top-color: transparent;
-            border-width: 17px 0 17px 10px;
-            left: 100%;
-        }
-
-    .pagination a {
-        line-height: 36px;
-        margin-top: -17px;
-        display: block;
-        height: 34px;
-        width: 30px;
-    }
-
-    .pagination .prev {
-        -webkit-border-radius: 20px 0 0 20px;
-        -moz-border-radius: 20px 0 0 20px;
-        border-radius: 20px 0 0 20px;
-    }
-
-    .pagination .next {
-        -webkit-border-radius: 0 20px 20px 0;
-        -moz-border-radius: 0 20px 20px 0;
-        border-radius: 0 20px 20px 0;
-        border-right: 0;
-    }
-
-        .pagination .prev a,
-        .pagination .next a {
-            text-indent: -4px;
-            line-height: 38px;
-            font-size: 30px;
-        }
-
-    .pagination .prev a {
-        text-indent: 4px;
-    }
-
-    .pagination .prev:before,
-    .pagination .next:before {
-        content: none;
-    }
-
-/*End Pagination*/
+            .pager__item.active + li {
+                position: initial;
+                top: initial;
+                left: initial;
+            }
+}
+/* ------------------------------ PAGINTION END ------------------------------ */
 
 body {
     font-family: "Roboto", sans-serif;

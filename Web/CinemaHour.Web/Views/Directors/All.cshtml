@@ -18,35 +18,13 @@
     @foreach (var director in Model.Directors.OrderBy(x => x.FullName))
     {
         <div class="col-md-3 media" style="margin-top:10px; width: 50px;">
-            <div class="media-body">
-                <a href="/Directors/Details?id=@director.Id" class="btn btn-info">
+            <div class="media-body"> 
+                <a asp-action="Details" asp-route-id="@director.Id" class="btn btn-info">
                     <h5 class="mt-0">
                         @director.FullName
                     </h5>
                 </a>
             </div>
         </div>
-    }
-</div>
-
-
-<div style="margin-top:5px">
-    @if (Model.PagesCount > 0)
-    {
-        <ul class="pagination">
-            <li class="prev disabled"><a href="/Movies/All?page=@Model.PreviousPage"></a></li>
-            @for (int i = 1; i <= Model.PagesCount; i++)
-            {
-                if (i == Model.CurrentPage)
-                {
-                    <li class="active"><a href="/Movies/All?page=@i">@i</a></li>
-                }
-                else
-                {
-                    <li><a href="/Movies/All?page=@i">@i</a></li>
-                }
-            }
-            <li class="next"><a href="/Movies/All?page=@Model.NextPage"></a></li>
-        </ul>
     }
 </div>

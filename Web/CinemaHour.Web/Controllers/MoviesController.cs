@@ -14,7 +14,7 @@
 
     public class MoviesController : Controller
     {
-        private const int MoviesPerPageDefaultValue = 3;
+        private const int MoviesPerPageDefaultValue = 15;
 
         private readonly IMoviesService moviesService;
         private readonly IActorsService actorsService;

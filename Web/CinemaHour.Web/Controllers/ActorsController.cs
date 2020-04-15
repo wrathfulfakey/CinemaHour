@@ -11,7 +11,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ActorsController : BaseController
+    public class ActorsController : Controller
     {
         private const int ActorsPerPageDefaultValue = 12;
         private readonly IActorsService actorsService;

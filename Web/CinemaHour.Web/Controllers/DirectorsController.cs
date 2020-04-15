@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class DirectorsController : BaseController
+    public class DirectorsController : Controller
     {
         private const int DirectorsPerPageDefaultValue = 12;
         private readonly IDirectorsService directorsService;
@@ -20,20 +20,14 @@
             this.directorsService = directorsService;
         }
 
-        public IActionResult All(int page = 1, int perPage = DirectorsPerPageDefaultValue)
+        public IActionResult All()
         {
-            var pagesCount = (int)Math.Ceiling(this.directorsService.GetAll<DirectorViewModel>().Count() / (decimal)perPage);
-
             var directors = this.directorsService
-               .GetAll<DirectorViewModel>()
-               .Skip(perPage * (page - 1))
-               .Take(perPage);
+               .GetAll<DirectorViewModel>();
 
             var viewModel = new AllDirectorsViewModel
             {
                 Directors = directors,
-                CurrentPage = page,
-                PagesCount = pagesCount,
             };
 
             return this.View(viewModel);

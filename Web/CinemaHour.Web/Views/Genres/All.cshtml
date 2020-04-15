@@ -10,7 +10,7 @@
     {
         <div class="col-md-3 media" style="margin-top:10px">
             <div class="media-body">
-                <a href="/Genres/Details?id=@genre.Id" class="btn btn-info text-uppercase">
+                <a asp-action="Details" asp-route-id="@genre.Id" class="btn btn-info text-uppercase">
                     <h5 class="mt-0">
                         @genre.Name
                     </h5>

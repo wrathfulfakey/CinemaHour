@@ -36,10 +36,10 @@
                     // Make admin / delete account
                     @if (this.User.Identity.Name != Model.UserName)
                     {
-                        <h4 align="center"><a href="/Users/MakeAdmin?username=@Model.UserName">Promote to Administrator</a></h4>
-                        <h4 align="center"><a href="/Users/LockdownUser?username=@Model.UserName">Lockdown User</a></h4>
-                        <h4 align="center"><a href="/Users/RemoveLockdownUser?username=@Model.UserName">Remove Lockdown User</a></h4>
-                        <h4 align="center"><a href="/Users/DeleteUser?username=@Model.UserName">Delete User</a></h4>
+                        <h4 align="center"><a asp-action="MakeAdmin" asp-route-username="@Model.UserName">Promote to Administrator</a></h4>
+                        <h4 align="center"><a asp-action="LockdownUser" asp-route-username="@Model.UserName">Lockdown User</a></h4>
+                        <h4 align="center"><a asp-action="RemoveLockdownUser" asp-route-username="@Model.UserName">Remove Lockdown User</a></h4>
+                        <h4 align="center"><a asp-action="DeleteUser" asp-route-username="@Model.UserName">Delete User</a></h4>
                     }
                 }
                 <h2 class="mt-0" style="text-align:center;">
@@ -57,13 +57,13 @@
                 @foreach (var movie in @Model.Favourites)
                 {
                     <div class="col-md-4" style="border:thin 5px red">
-                        <h4 align="center"><a href="/Movies/Details?id=@movie.MovieId">@movie.MovieName</a></h4>
+                        <h4 align="center"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@movie.MovieName</a></h4>
                         <img style="float: left; margin-right:5px;" src="@movie.MoviePosterUrl" width="150" />
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.MovieRating</p>
                         <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
                         @if (this.User.Identity.Name == Model.UserName)
                         {
-                            <a href="/Users/RemoveFromFavourites?movieId=@movie.MovieId">Remove from Favourites</a>
+                            <a asp-action="RemoveFromFavourites" asp-route-movieId="@movie.MovieId">Remove from Favourites</a>
                         }
                     </div>
                 }
@@ -75,18 +75,17 @@
                 @foreach (var movie in @Model.Watched)
                 {
                     <div class="col-md-4" style="border:thin 5px red">
-                        <h4 align="center"><a href="/Movies/Details?id=@movie.MovieId">@movie.MovieName</a></h4>
+                        <h4 align="center"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@movie.MovieName</a></h4>
                         <img style="float: left; margin-right:5px;" src="@movie.MoviePosterUrl" width="150" />
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.MovieRating</p>
                         <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
                         @if (this.User.Identity.Name == Model.UserName)
                         {
-                            <a href="/Users/RemoveFromWatched?movieId=@movie.MovieId">Remove from Watched</a>
+                            <a asp-action="RemoveFromWatched" asp-route-movieId="@movie.MovieId">Remove from Watched</a>
                         }
                     </div>
                 }
             </div>
-
         </div>
     </div>
 </div>

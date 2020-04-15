@@ -7,11 +7,11 @@
 <p>
     @if (this.User.IsInRole("Administrator"))
     {
-        <h6 align="center"><a href="/Genres/Edit?id=@Model.Id">Edit Genre</a></h6>  
+        <h6 align="center"><a asp-action="Edit" asp-route-id="@Model.Id">Edit Genre</a></h6>
         <br />
-        <h6 align="center"><a href="/Genres/Delete?id=@Model.Id" onclick="confirmDelete()">Delete Genre</a></h6>
+        <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="confirmDelete()">Delete Genre</a></h6>
         <br />
-        <h6 align="center"><a href="/Genres/HardDelete?id=@Model.Id" onclick="confirmHardDelete()">Hard Delete Genre</a></h6>
+        <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id" onclick="confirmHardDelete()">Hard Delete Genre</a></h6>
     }
 </p>
 <hr />
@@ -21,7 +21,7 @@
             @foreach (var movie in Model.Movies)
             {
                 <div class="col-md-3">
-                    <h4 align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></h4>
+                    <h4 align="center"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a></h4>
                     <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
                     <p><strong>Rating: </strong>@movie.Rating</p>
                     <p><strong>Summary :</strong>@movie.ShortSummary</p>
@@ -29,6 +29,60 @@
             }
         </div>
     </div>
+</div>
+
+<div class="wrapper" style="margin-top:5px">
+    @if (Model.PagesCount > 0)
+    {
+        <ul class="pager justify-content-center">
+            <li class="pager__item pager__item--prev">
+                <a class="pager__link"
+                   asp-action="Details"
+                   asp-route-id="@Model.Id"
+                   asp-route-page="@Model.PreviousPage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
+                        <g fill="none" fill-rule="evenodd">
+                            <path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
+                        </g>
+                    </svg>
+                </a>
+            </li>
+            @for (int i = 1; i <= Model.PagesCount; i++)
+            {
+                if (i == Model.CurrentPage)
+                {
+                    <li class="active pager__item">
+                        <a class="pager__link"
+                           asp-action="Details"
+                           asp-route-id="@Model.Id"
+                           asp-route-page="@i">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="pager__item">
+                        <a class="pager__link"
+                           asp-action="Details"
+                           asp-route-id="@Model.Id"
+                           asp-route-page="@i">@i</a>
+                    </li>
+                }
+            }
+
+            <li class="pager__item pager__item--next">
+                <a class="pager__link"
+                   asp-action="Details"
+                   asp-route-id="@Model.Id"
+                   asp-route-page="@Model.NextPage">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
+                        <g fill="none" fill-rule="evenodd">
+                            <path fill="#33313C" d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z"></path>
+                        </g>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    }
 </div>
 
 <script>

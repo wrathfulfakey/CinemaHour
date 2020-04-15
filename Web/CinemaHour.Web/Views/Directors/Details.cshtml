@@ -12,11 +12,11 @@
 <p>
     @if (this.User.IsInRole("Administrator"))
     {
-        <h6 align="center"><a href="/Directors/Edit?id=@Model.Id">Edit Director</a></h6>
+        <h6 align="center"><a asp-action="Edit" asp-route-id="@Model.Id">Edit Director</a></h6>
         <br />
-        <h6 align="center"><a href="/Directors/Delete?id=@Model.Id" onclick="confirmDelete()">Delete Director</a></h6>
+        <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="confirmDelete()">Delete Director</a></h6>
         <br />
-        <h6 align="center"><a href="/Directors/HardDelete?id=@Model.Id" onclick="confirmHardDelete()">Hard Delete Director</a></h6>
+        <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id" onclick="confirmHardDelete()">Hard Delete Director</a></h6>
     }
 </p>
 <hr />
@@ -26,7 +26,7 @@
             @foreach (var movie in Model.Movies)
             {
                 <div class="col-md-3">
-                    <p align="center"><a href="/Movies/Details?id=@movie.Id">@movie.Name</a></p>
+                    <p align="center"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a></p>
                     <img src="@movie.PosterUrl" alt="moviePoster" width="220" class="center" />
                     <p><strong>Rating: </strong>@movie.Rating</p>
                     <p><strong>Summary :</strong>@movie.ShortSummary</p>

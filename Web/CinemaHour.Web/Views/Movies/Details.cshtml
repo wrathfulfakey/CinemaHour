@@ -21,6 +21,7 @@
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
+            @*Details*@
             <div class="col-md-8 media-body">
                 <p>
                     @Html.Raw(Model.SanitizedSummary)
@@ -30,17 +31,17 @@
                 <img src="@Model.PosterUrl" width="250" class="center" />
                 @if (this.User.IsInRole("Administrator"))
                 {
-                    <h6 align="center"><a href="/Movies/Edit?id=@Model.Id">Edit Movie</a></h6>
-                    <h6 align="center"><a href="/Movies/Delete?id=@Model.Id" onclick="confirmDelete()">Delete Movie</a></h6>
-                    <h6 align="center"><a href="/Movies/HardDelete?id=@Model.Id" onclick="confirmHardDelete()">Hard Delete Movie</a></h6>
+                    <h6 align="center"><a asp-action="Edit" asp-route-id="@Model.Id">Edit Movie</a></h6>
+                    <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="confirmDelete()">Delete Movie</a></h6>
+                    <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id"onclick="confirmHardDelete()">Hard Delete Movie</a></h6>
                 }
-                <h2 class="mt-0" style="text-align:center;">
+                <h2 style="text-align:center; margin-top:-40px; margin-bottom:-35px;">
                     @Model.Name
                 </h2>
                 @if (this.User.Identity.IsAuthenticated)
                 {
-                    <h6 align="center"><a href="/Users/AddToUserWatched?movieId=@Model.Id">Add to Watched</a></h6>
-                    <h6 align="center"><a href="/Users/AddToUserFavourites?movieId=@Model.Id">Add to Favourites</a></h6>
+                    <h6 align="center"><a asp-controller="Users" asp-action="AddToUserWatched" asp-route-movieId="@Model.Id">Add to Watched</a></h6>
+                    <h6 align="center"><a asp-controller="Users" asp-action="AddToUserFavourites" asp-route-movieId="@Model.Id">Add to Favourites</a></h6>
                 }
                 <p><strong>Genres: </strong>@Model.GenreString</p>
                 <p><strong>Rating: </strong>@Model.Rating</p>
@@ -52,24 +53,33 @@
                 <h5>Directors</h5>
                 @foreach (var director in Model.Directors.OrderBy(x => x.Director.FullName))
                 {
-                    <p>@director.Director.FullName</p>
+                    <a asp-controller="Directors" asp-action="Details" asp-route-id="@director.DirectorId">@director.Director.FullName</a>
                 }
             </div>
         </div>
-        <hr />
-        <h5 align="center">Actors:</h5>
-        <hr />
-        <div id="ActorMovieDetails" class="row">
-            <hr />
-            @foreach (var actor in Model.Actors.OrderBy(x => x.Actor.FirstName))
-            {
-                <div class="col-md-3">
-                    <img src="@actor.Actor.ImageUrl" alt="actorImageUrl" width="150" />
-                    <p><a href="/Actors/Details?id=@actor.ActorId">@actor.Actor.FirstName @actor.Actor.LastName</a></p>
-                </div>
-            }
-        </div>
     </div>
+</div>
+
+@*Actors*@
+<hr />
+<h5 align="center">Actors:</h5>
+<hr />
+<div class="row">
+    @foreach (var actor in Model.Actors.OrderBy(x => x.Actor.FirstName).Take(12))
+    {
+        <div class="col-md-3" style="margin-top:10px;">
+            <img src="@actor.Actor.ImageUrl" alt="actorImageUrl" width="50" />
+            <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FirstName @actor.Actor.LastName</a>
+        </div>
+    }
+</div>
+
+@*Comments*@
+<hr />
+<h5 align="center">Comments</h5>
+<hr />
+<div class="comment">
+
 </div>
 
 <script>
