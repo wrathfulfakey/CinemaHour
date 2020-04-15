@@ -21,14 +21,40 @@
             this.actorsService = actorsService;
         }
 
-        public IActionResult All(int page = 1, int perPage = ActorsPerPageDefaultValue)
+        public IActionResult All(
+            string searchString,
+            string currentFilter,
+            string sortOrder,
+            int page = 1,
+            int perPage = ActorsPerPageDefaultValue)
         {
-            var pagesCount = (int)Math.Ceiling(this.actorsService.GetAll<ActorViewModel>().Count() / (decimal)perPage);
+            this.ViewData["CurrentSort"] = sortOrder;
+            this.ViewData["NameSortParam"] = string.IsNullOrEmpty(sortOrder) ? "nameDesc" : string.Empty;
+
+            if (searchString == null)
+            {
+                searchString = currentFilter;
+            }
+
+            this.ViewData["CurrentFilter"] = searchString;
 
             var actors = this.actorsService
-               .GetAll<ActorViewModel>()
-               .Skip(perPage * (page - 1))
-               .Take(perPage);
+               .GetAll<ActorViewModel>();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                actors = actors.Where(x => x.FirstName.ToLower().Contains(searchString.ToLower())).ToList();
+            }
+
+            actors = sortOrder switch
+            {
+                "nameDesc" => actors.OrderByDescending(x => x.FirstName).ToList(),
+                _ => actors.OrderBy(x => x.FirstName).ToList(),
+            };
+
+            var pagesCount = (int)Math.Ceiling(this.actorsService.GetAll<ActorViewModel>().Count() / (decimal)perPage);
+
+            actors = actors.Skip(perPage * (page - 1)).Take(perPage).ToList();
 
             var viewModel = new AllActorsViewModel
             {

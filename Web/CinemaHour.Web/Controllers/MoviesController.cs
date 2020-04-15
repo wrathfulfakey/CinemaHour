@@ -44,11 +44,7 @@
             this.ViewData["NameSortParam"] = string.IsNullOrEmpty(sortOrder) ? "nameDesc" : string.Empty;
             this.ViewData["RatingSortParam"] = sortOrder == "rating" ? "ratingDesc" : "rating";
 
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
+            if (searchString == null)
             {
                 searchString = currentFilter;
             }

@@ -14,8 +14,26 @@
 
 <h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
 <hr />
+
 <div class="row">
-    @foreach (var actor in Model.Actors.OrderBy(x => x.FirstName))
+    <div class="col-md-4">
+        <form asp-action="All" method="get">
+            <p>Search: <input type="text" name="searchString" value="@this.ViewData["CurrentFilter"]" /></p>
+            <input type="submit" value="Search" class="btn btn-success" />
+            <a class="btn btn-info" asp-action="All">Back to full list.</a>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <p>
+            Sort by: <a class="btn btn-dark" asp-action="All" asp-route-sortOrder="@this.ViewData["NameSortParam"]" asp-route-currentFilter="@this.ViewData["CurrentFilter"]" style="margin-left:5px;">
+                Name
+            </a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var actor in Model.Actors)
     {
         <div class="col-md-3 media" style="margin-top: 10px">
             <div class="media-body">
@@ -26,7 +44,7 @@
                 <p><strong>Gender: </strong>@actor.Gender</p>
                 <p><strong>Birthdate: </strong>@actor.BirthDate.Date.ToShortDateString()</p>
                 <div class="button-holder">
-                    <a href="/Actors/Details?id=@actor.Id" class="btn btn-info text-uppercase">View More</a>
+                    <a asp-action="Details" asp-route-id="@actor.Id" class="btn btn-info text-uppercase">View More</a>
                 </div>
             </div>
         </div>
@@ -37,19 +55,39 @@
     @if (Model.PagesCount > 0)
     {
         <ul class="pagination">
-            <li class="prev disabled"><a href="/Actors/All?page=@Model.PreviousPage"></a></li>
+            <li class="prev">
+                <a asp-action="All"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-page="@Model.PreviousPage"></a>
+            </li>
             @for (int i = 1; i <= Model.PagesCount; i++)
             {
                 if (i == Model.CurrentPage)
                 {
-                    <li class="active"><a href="/Actors/All?page=@i">@i</a></li>
+                    <li class="active">
+                        <a asp-action="All"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           asp-route-page="@i">@i</a>
+                    </li>
                 }
                 else
                 {
-                    <li><a href="/Actors/All?page=@i">@i</a></li>
+                    <li>
+                        <a asp-action="All"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           asp-route-page="@i">@i</a>
+                    </li>
                 }
             }
-            <li class="next"><a href="/Actors/All?page=@Model.NextPage"></a></li>
+            <li class="next">
+                <a asp-action="All"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-page="@Model.NextPage"></a>
+            </li>
         </ul>
     }
 </div>

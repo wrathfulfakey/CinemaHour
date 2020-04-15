@@ -50,7 +50,7 @@
                 <p><strong>Rating: </strong>@movie.Rating</p>
                 <p><strong>Premiere Date: </strong>@movie.ReleaseDate.ToShortDateString()</p>
                 <div class="button-holder">
-                    <a href="/Movies/Details?id=@movie.Id" class="btn btn-info text-uppercase">View More</a>
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info text-uppercase">View More</a>
                 </div>
             </div>
         </div>
