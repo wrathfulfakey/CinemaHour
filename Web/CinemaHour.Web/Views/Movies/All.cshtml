@@ -1,7 +1,7 @@
 ﻿@model CinemaHour.Web.ViewModels.Movies.AllMoviesViewModel
 @{
     this.ViewData["Title"] = "All Movies";
-    var sortedMovies = Model.Movies.OrderByDescending(x => x.ReleaseDate);
+    //var sortedMovies = Model.Movies.OrderByDescending(x => x.ReleaseDate);
 }
 
 @if (this.TempData["DeleteMovieTemp"] != null)
@@ -16,8 +16,29 @@
 
 <h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
 <hr />
+
 <div class="row">
-    @foreach (var movie in sortedMovies)
+    <div class="col-md-4">
+        <form asp-action="All" method="get">
+            <p>Search: <input type="text" name="searchString" value="@this.ViewData["CurrentFilter"]" /></p>
+            <input type="submit" value="Search" class="btn btn-success" />
+            <a class="btn btn-info" asp-action="All">Back to full list.</a>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <p>
+            Sort by: <a class="btn btn-dark" asp-action="All" asp-route-sortOrder="@this.ViewData["NameSortParam"]" asp-route-currentFilter="@this.ViewData["CurrentFilter"]" style="margin-left:5px;">
+                Name
+            </a>
+            <a class="btn btn-dark" asp-action="All" asp-route-sortOrder="@this.ViewData["RatingSortParam"]" asp-route-currentFilter="@this.ViewData["CurrentFilter"]" style="margin-left:5px;">
+                Rating
+            </a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var movie in Model.Movies)
     {
         <div class="col-md-4 media" style="margin-top:10px">
             <div class="media-body">
@@ -26,6 +47,7 @@
                 </h4>
                 <img src="@movie.PosterUrl" width="200" />
                 <p><strong>Categories: </strong>@movie.GenreString</p>
+                <p><strong>Rating: </strong>@movie.Rating</p>
                 <p><strong>Premiere Date: </strong>@movie.ReleaseDate.ToShortDateString()</p>
                 <div class="button-holder">
                     <a href="/Movies/Details?id=@movie.Id" class="btn btn-info text-uppercase">View More</a>
@@ -39,19 +61,39 @@
     @if (Model.PagesCount > 0)
     {
         <ul class="pagination">
-            <li class="prev disabled"><a href="/Movies/All?page=@Model.PreviousPage"></a></li>
+            <li class="prev">
+                <a asp-action="All"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-page="@Model.PreviousPage"></a>
+            </li>
             @for (int i = 1; i <= Model.PagesCount; i++)
             {
                 if (i == Model.CurrentPage)
                 {
-                    <li class="active"><a href="/Movies/All?page=@i">@i</a></li>
+                    <li class="active">
+                        <a asp-action="All"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           asp-route-page="@i">@i</a>
+                    </li>
                 }
                 else
                 {
-                    <li><a href="/Movies/All?page=@i">@i</a></li>
+                    <li>
+                        <a asp-action="All"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           asp-route-page="@i">@i</a>
+                    </li>
                 }
             }
-            <li class="next"><a href="/Movies/All?page=@Model.NextPage"></a></li>
+            <li class="next">
+                <a asp-action="All"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-page="@Model.NextPage"></a>
+            </li>
         </ul>
     }
 </div>

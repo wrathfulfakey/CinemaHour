@@ -14,7 +14,7 @@
 
     public class MoviesController : Controller
     {
-        private const int MoviesPerPageDefaultValue = 9;
+        private const int MoviesPerPageDefaultValue = 3;
 
         private readonly IMoviesService moviesService;
         private readonly IActorsService actorsService;
@@ -33,14 +33,47 @@
             this.directorsService = directorsService;
         }
 
-        public IActionResult All(int page = 1, int perPage = MoviesPerPageDefaultValue)
+        public IActionResult All(
+            string searchString,
+            string currentFilter,
+            string sortOrder,
+            int page = 1,
+            int perPage = MoviesPerPageDefaultValue)
         {
-            var pagesCount = (int)Math.Ceiling(this.moviesService.GetAll<MovieViewModel>().Count() / (decimal)perPage);
+            this.ViewData["CurrentSort"] = sortOrder;
+            this.ViewData["NameSortParam"] = string.IsNullOrEmpty(sortOrder) ? "nameDesc" : string.Empty;
+            this.ViewData["RatingSortParam"] = sortOrder == "rating" ? "ratingDesc" : "rating";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            this.ViewData["CurrentFilter"] = searchString;
 
             var movies = this.moviesService
-                .GetAll<MovieViewModel>()
-                .Skip(perPage * (page - 1))
-                .Take(perPage);
+                .GetAll<MovieViewModel>();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+            }
+
+            movies = sortOrder switch
+            {
+                "rating" => movies.OrderBy(x => x.Rating).ToList(),
+                "ratingDesc" => movies.OrderByDescending(x => x.Rating).ToList(),
+                "nameDesc" => movies.OrderByDescending(x => x.Name).ToList(),
+                _ => movies.OrderBy(x => x.Name).ToList(),
+            };
+
+            var pagesCount = (int)Math.Ceiling(movies.Count() / (decimal)perPage);
+
+            movies = movies.Skip(perPage * (page - 1)).Take(perPage).ToList();
 
             var viewModel = new AllMoviesViewModel
             {
