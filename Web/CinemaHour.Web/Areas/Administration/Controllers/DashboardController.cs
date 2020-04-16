@@ -2,7 +2,6 @@
 {
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Web.ViewModels.Administration.Dashboard;
-
     using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
@@ -16,7 +15,10 @@
 
         public IActionResult Index()
         {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
+            var viewModel = new IndexViewModel()
+            {
+                SettingsCount = this.settingsService.GetCount(),
+            };
             return this.View(viewModel);
         }
     }

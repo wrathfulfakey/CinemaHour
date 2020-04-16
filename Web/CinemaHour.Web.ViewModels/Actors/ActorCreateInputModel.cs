@@ -1,6 +1,7 @@
 ﻿namespace CinemaHour.Web.ViewModels.Actors
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using CinemaHour.Data.Models;

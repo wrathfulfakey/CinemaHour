@@ -28,7 +28,7 @@
             var viewModel = new AllDirectorsViewModel
             {
                 Directors = directors,
-            }; 
+            };
             
             if (viewModel == null)
             {
