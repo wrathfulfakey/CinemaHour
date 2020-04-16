@@ -28,7 +28,12 @@
             var viewModel = new AllDirectorsViewModel
             {
                 Directors = directors,
-            };
+            }; 
+            
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
 
             return this.View(viewModel);
         }
@@ -77,7 +82,7 @@
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             var director = this.directorsService
                 .GetById<EditDirectorViewModel>(id);

@@ -38,8 +38,6 @@
 
         public DbSet<MovieActors> MovieActors { get; set; }
 
-        public DbSet<MovieComment> MovieComments { get; set; }
-
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<UserFavourite> Favourites { get; set; }
@@ -116,17 +114,6 @@
                     .HasOne(a => a.Actor)
                     .WithMany(m => m.Movies)
                     .HasForeignKey(a => a.ActorId);
-            });
-
-            // Movie Comments Relation
-            builder.Entity<MovieComment>(entity =>
-            {
-                entity.HasKey(m => new { m.MovieId, m.CommentId });
-
-                entity
-                    .HasOne(m => m.Movie)
-                    .WithMany(c => c.Comments)
-                    .HasForeignKey(m => m.MovieId);
             });
 
             // Movie Genre Relation

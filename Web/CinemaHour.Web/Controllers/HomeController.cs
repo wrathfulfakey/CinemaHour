@@ -1,14 +1,9 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Threading.Tasks;
     using CinemaHour.Services.Data.Interfaces;
-    using CinemaHour.Web.CloudinaryHelper;
     using CinemaHour.Web.ViewModels;
     using CinemaHour.Web.ViewModels.Home;
-    using CloudinaryDotNet;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
@@ -32,6 +27,11 @@
                 Movies = this.moviesService.GetAll<IndexMoviesViewModel>(6),
             };
 
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
             return this.View(viewModel);
         }
 
@@ -44,15 +44,6 @@
         {
             return this.View();
         }
-
-        // Cloudinary
-        // [HttpPost]
-        // public async Task<IActionResult> Upload(ICollection<IFormFile> files)
-        // {
-        //     var result = await CloudinaryExtension.UploadAsync(this.cloudinary, files);
-        //     this.ViewBag.Links = result;
-        //     return this.Redirect("/");
-        // }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

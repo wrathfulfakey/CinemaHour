@@ -41,6 +41,8 @@
 
         public ICollection<ActorsMovieViewModel> Actors { get; set; }
 
+        public ICollection<CommentsMovieViewModel> Comments { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Movie, MovieDetailsViewModel>()

@@ -12,7 +12,7 @@
                 User
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 100px">
-                <a class="dropdown-item" href="/Users/Profile?username=@this.User.Identity.Name">Profile</a>
+                <a class="dropdown-item" href="/Users/Profile?username=@this.User.Identity.Name">@this.User.Identity.Name</a>
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {

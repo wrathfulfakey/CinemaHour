@@ -14,7 +14,7 @@
 
     public class MoviesController : Controller
     {
-        private const int MoviesPerPageDefaultValue = 1;
+        private const int MoviesPerPageDefaultValue = 12;
 
         private readonly IMoviesService moviesService;
         private readonly IActorsService actorsService;
@@ -78,6 +78,11 @@
                 PagesCount = pagesCount,
             };
 
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
             return this.View(viewModel);
         }
 
@@ -104,6 +109,11 @@
                 Genres = this.genresService.GetAll<MovieGenresCreateViewModel>(),
                 Directors = this.directorsService.GetAll<MovieDirectorsCreateViewModel>(),
             };
+
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
 
             return this.View(viewModel);
         }

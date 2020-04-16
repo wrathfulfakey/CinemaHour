@@ -32,6 +32,11 @@
                 Genres = this.genresService.GetAll<GenreViewModel>(),
             };
 
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
             return this.View(viewModel);
         }
 

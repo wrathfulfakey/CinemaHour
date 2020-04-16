@@ -11,7 +11,6 @@
         public Movie()
         {
             this.Actors = new HashSet<MovieActors>();
-            this.Comments = new HashSet<MovieComment>();
             this.Genres = new HashSet<MovieGenre>();
             this.Directors = new HashSet<MovieDirector>();
             this.UsersFavourite = new HashSet<UserFavourite>();
@@ -53,7 +52,7 @@
 
         public virtual ICollection<MovieActors> Actors { get; set; }
 
-        public virtual ICollection<MovieComment> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<UserFavourite> UsersFavourite { get; set; }
 

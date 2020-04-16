@@ -1,7 +1,68 @@
 ﻿@model CinemaHour.Web.ViewModels.Movies.MovieDetailsViewModel
 @{
     this.ViewData["Title"] = $"{Model.Name} Details";
+    async Task DisplayComments(int? parentId)
+    {
+        var comments = this.Model.Comments.Where(x => x.ParentId == parentId).OrderByDescending(x => x.CreatedOn);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+        foreach (var comment in comments)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-2">
+                        <div class="comment-widgets">
+                            <!-- Comment Row -->
+                            <div class="d-flex flex-row comment-row">
+                                <div class="commenter-pic">
+                                    <img src="@comment.UserAvatarUrl" alt="user" width="75" height="75" class="rounded-circle">
+                                </div>
+                                <div class="comment-text w-100">
+                                    <div class="comment-username-border">
+                                        <div class="media-body ml-3">
+                                            <strong><a asp-controller="Users" asp-action="Profile" asp-route-username="@comment.UserUserName">@comment.UserUserName</a></strong>
+                                        </div>
+                                        <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                                    </div>
+                                    <span class="m-b-15 d-block">
+                                        @Html.Raw(comment.SanitizedContent)
+                                    </span>
+                                    @{ await DisplayComments(comment.Id); }
+
+                                    <hr />
+                                    <div class="comment-footer mb-0 d-inline-block float-right">
+                                        @if (this.User.Identity.Name == comment.UserUserName)
+                                        {
+                                            <form class="float-right" method="post" asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id">
+                                                <button formmethod="post" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        }
+                                        @if (this.User.Identity.IsAuthenticated)
+                                        {
+                                            <button type="button" class="btn btn-secondary btn-sm" onclick="showAddCommentForm(@comment.Id)"><i class="fa fa-plus"></i>&nbsp; Reply</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Comment Row -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 }
+
+<script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: ["image paste table link code media"]
+    });
+</script>
 
 @if (this.TempData["CreateMovieTemp"] != null)
 {
@@ -18,10 +79,10 @@
     <p class="alert alert-success">@this.TempData["UserAddToWatched"]</p>
 }
 
+@*Details*@
 <div class="col-md-12 media">
     <div class="media-body">
         <div class="row">
-            @*Details*@
             <div class="col-md-8 media-body">
                 <p>
                     @Html.Raw(Model.SanitizedSummary)
@@ -33,7 +94,7 @@
                 {
                     <h6 align="center"><a asp-action="Edit" asp-route-id="@Model.Id">Edit Movie</a></h6>
                     <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="confirmDelete()">Delete Movie</a></h6>
-                    <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id"onclick="confirmHardDelete()">Hard Delete Movie</a></h6>
+                    <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id" onclick="confirmHardDelete()">Hard Delete Movie</a></h6>
                 }
                 <h2 style="text-align:center; margin-top:-40px; margin-bottom:-35px;">
                     @Model.Name
@@ -53,7 +114,7 @@
                 <h5>Directors</h5>
                 @foreach (var director in Model.Directors.OrderBy(x => x.Director.FullName))
                 {
-                    <a asp-controller="Directors" asp-action="Details" asp-route-id="@director.DirectorId">@director.Director.FullName</a>
+                    <p><a asp-controller="Directors" asp-action="Details" asp-route-id="@director.DirectorId">@director.Director.FullName</a></p>
                 }
             </div>
         </div>
@@ -62,10 +123,10 @@
 
 @*Actors*@
 <hr />
-<h5 align="center">Actors:</h5>
+<h5 align="center">Actors</h5>
 <hr />
 <div class="row">
-    @foreach (var actor in Model.Actors.OrderBy(x => x.Actor.FirstName).Take(12))
+    @foreach (var actor in Model.Actors.OrderBy(x => x.Actor.FirstName).Take(16))
     {
         <div class="col-md-3" style="margin-top:10px;">
             <img src="@actor.Actor.ImageUrl" alt="actorImageUrl" width="50" />
@@ -76,13 +137,44 @@
 
 @*Comments*@
 <hr />
-<h5 align="center">Comments</h5>
-<hr />
-<div class="comment">
-
+<div class="card-body text-center">
+    <h4 class="card-title d-inline-block">Latest Comments</h4>
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <button type="button" class="btn btn-primary float-right d-inline-block" onclick="showAddCommentForm(0)">
+            <i class="fa fa-plus"></i>
+            &nbsp; Comment
+        </button>
+    }
 </div>
 
+<div>
+    <form asp-controller="Comments" asp-action="Create" method="post" id="AddCommentForm" style="display: none">
+        <input type="hidden" name="MovieId" value="@this.Model.Id" />
+        <input type="hidden" name="ParentId" value="0" />
+        <div>
+            <label for="Content"></label>
+            <textarea name="Content" id="Content" class="form-control"></textarea>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="Add comment" />
+        </div>
+        <hr />
+    </form>
+</div>
+
+@{ await DisplayComments(null); }
+
 <script>
+    function showAddCommentForm(parentId) {
+        $("#AddCommentForm input[name='ParentId']").val(parentId);
+        $("#AddCommentForm").show();
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#AddCommentForm").offset().top
+        }, 1000);
+    }
+
+
     function confirmDelete() {
         confirm("Are you sure you want to delete this movie?");
     }

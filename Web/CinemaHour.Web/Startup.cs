@@ -8,13 +8,11 @@
     using CinemaHour.Data.Models;
     using CinemaHour.Data.Repositories;
     using CinemaHour.Data.Seeding;
-    using CinemaHour.Services;
     using CinemaHour.Services.Data;
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Mapping;
     using CinemaHour.Services.Messaging;
     using CinemaHour.Web.ViewModels;
-    using CloudinaryDotNet;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -58,17 +56,6 @@
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);
-
-            // Account account = new Account(
-            //    this.configuration["Cloudinary:AppName"],
-            //    this.configuration["Cloudinary:AppKey"],
-            //    this.configuration["Cloudinary:AppSecret"]);
-
-            // Cloudinary cloudinary = new Cloudinary(account);
-
-            // Add cloudinary service
-            // services.AddSingleton(cloudinary);
-
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -82,6 +69,7 @@
             services.AddTransient<IGenresService, GenresService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IDirectorsService, DirectorsService>();
+            services.AddTransient<ICommentsService, CommentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -40,6 +40,117 @@
     --font-family-sans-serif: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+/*Comments*/
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: rgb(220, 210, 250);
+    border: 0px solid transparent;
+    border-radius: 0px
+}
+
+.card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem
+}
+
+.card .card-title {
+    position: relative; 
+    font-weight: 600;
+    margin-bottom: 10px
+}
+
+.comment-widgets {
+    position: relative;
+    /*margin-bottom: 10px*/
+}
+
+    .comment-widgets .comment-row {
+        border: 2px solid rgba(140, 140, 140, 0.4);
+        padding: 14px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+.comment-username-border {
+    border-bottom: 1px solid rgba(140, 140, 140, 0.4);
+    /*border-radius: 20px;*/
+}
+
+.p-2 {
+    padding: 0.5rem !important
+}
+
+.comment-text {
+    padding-left: 15px
+}
+
+.w-100 {
+    width: 100% !important
+}
+
+.m-b-15 {
+    margin-bottom: 15px
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.76563rem;
+    line-height: 1.5;
+    border-radius: 1px
+}
+
+.btn-cyan {
+    color: #fff;
+    background-color: #27a9e3;
+    border-color: #27a9e3
+}
+
+    .btn-cyan:hover {
+        color: #fff;
+        background-color: #1a93ca;
+        border-color: #198bbe
+    }
+
+.comment-widgets .comment-row:hover {
+    background: rgba(0, 0, 0, 0.05)
+}
+/*Comments End*/
+
+/*======Responsive CSS=======*/
+@media (max-width: 767px) {
+    .comments .commenter-name {
+        font-size: 13px;
+        top: -5px;
+    }
+
+    .comments .commenter-pic {
+        width: 40px;
+        height: 40px;
+    }
+
+    .comments .commenter-name a {
+        display: block;
+    }
+
+    .comments .commenter-name .comment-time {
+        display: block;
+        margin-left: 0px;
+    }
+}
+/*End comments CSS*/
+
 /*Pagination*/
 .wrapper {
     width: 400px;

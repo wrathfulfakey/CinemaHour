@@ -16,20 +16,17 @@
         private readonly IRepository<MovieActors> actorsMovieRepository;
         private readonly IRepository<MovieGenre> genreMoviesRepository;
         private readonly IRepository<MovieDirector> directorMovieRepository;
-        private readonly IRepository<MovieComment> commentsMoviesRepository;
 
         public MoviesService(
             IDeletableEntityRepository<Movie> moviesRepository,
             IRepository<MovieActors> actorsMovieRepository,
             IRepository<MovieGenre> genreMoviesRepository,
-            IRepository<MovieDirector> directorMovieRepository,
-            IRepository<MovieComment> commentsMoviesRepository)
+            IRepository<MovieDirector> directorMovieRepository)
         {
             this.moviesRepository = moviesRepository;
             this.actorsMovieRepository = actorsMovieRepository;
             this.genreMoviesRepository = genreMoviesRepository;
             this.directorMovieRepository = directorMovieRepository;
-            this.commentsMoviesRepository = commentsMoviesRepository;
         }
 
         public async Task<int> CreaterMovieAsync(CreateMovieServiceInputModel input)
@@ -244,12 +241,6 @@
             foreach (var directorMovie in directorMoviesToDelete)
             {
                 this.directorMovieRepository.Delete(directorMovie);
-            }
-
-            var commentsMoviesToDelete = this.commentsMoviesRepository.All().Where(x => x.MovieId == id);
-            foreach (var commentsMovie in commentsMoviesToDelete)
-            {
-                this.commentsMoviesRepository.Delete(commentsMovie);
             }
 
             this.moviesRepository.HardDelete(movie);
