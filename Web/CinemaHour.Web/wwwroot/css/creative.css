@@ -153,7 +153,7 @@
 
 /*Pagination*/
 .wrapper {
-    width: 400px;
+    width: auto;
     padding: 20px;
     margin: 20px auto;
     background-color: rgb(220, 210, 250);
