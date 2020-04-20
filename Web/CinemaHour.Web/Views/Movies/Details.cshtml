@@ -24,8 +24,8 @@
                                     <div class="comment-username-border">
                                         <div class="media-body ml-3">
                                             <strong><a asp-controller="Users" asp-action="Profile" asp-route-username="@comment.UserUserName">@comment.UserUserName</a></strong>
+                                                <i class="text-muted small float-right">@comment.CreatedOn.ToString("dd/MM/yyyy")</i>
                                         </div>
-                                        <time datetime="@comment.CreatedOn.ToString("O")"></time>
                                     </div>
                                     <span class="m-b-15 d-block">
                                         @Html.Raw(comment.SanitizedContent)

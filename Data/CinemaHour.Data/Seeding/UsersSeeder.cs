@@ -32,7 +32,7 @@
                 UserName = "admin",
                 Email = "wrathfulfakey@gmail.com",
                 EmailConfirmed = true,
-            }, "asdasd");
+            }, "CinemaAdmin1");
         }
     }
 }

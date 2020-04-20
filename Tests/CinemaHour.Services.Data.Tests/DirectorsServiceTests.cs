@@ -1,16 +1,13 @@
 ﻿namespace CinemaHour.Services.Data.Tests
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using CinemaHour.Data;
-    using CinemaHour.Data.Common.Repositories;
     using CinemaHour.Data.Models;
     using CinemaHour.Data.Repositories;
     using CinemaHour.Services.Mapping;
     using Microsoft.EntityFrameworkCore;
-    using Moq;
     using Xunit;
 
     public class DirectorsServiceTests
@@ -21,14 +18,14 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var repository = new EfDeletableEntityRepository<Director>(new ApplicationDbContext(options.Options));
-            var mdRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
+            var movieDiretorsRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
 
             await repository.AddAsync(new Director { FullName = "John Doe" });
             await repository.AddAsync(new Director { FullName = "John Doe2" });
             await repository.AddAsync(new Director { FullName = "John Doe3" });
 
             await repository.SaveChangesAsync();
-            var directorsService = new DirectorsService(repository, mdRepository);
+            var directorsService = new DirectorsService(repository, movieDiretorsRepository);
             AutoMapperConfig.RegisterMappings(typeof(DirectorTestModel).Assembly);
             var directorsCount = directorsService.GetAll<DirectorTestModel>().Count;
 
@@ -41,16 +38,37 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var repository = new EfDeletableEntityRepository<Director>(new ApplicationDbContext(options.Options));
-            var mdRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
+            var movieDiretorsRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
 
             await repository.AddAsync(new Director { Id = "1", FullName = "John Doe" });
 
             await repository.SaveChangesAsync();
-            var directorsService = new DirectorsService(repository, mdRepository);
+            var directorsService = new DirectorsService(repository, movieDiretorsRepository);
             AutoMapperConfig.RegisterMappings(typeof(DirectorTestModel).Assembly);
             var director = directorsService.GetById<DirectorTestModel>("1");
 
             Assert.Equal("John Doe", director.FullName);
+        }
+
+        [Fact]
+        public async Task GetDirectorByIdShouldReturnIncorrect()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var repository = new EfDeletableEntityRepository<Director>(new ApplicationDbContext(options.Options));
+            var movieDiretorsRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
+
+            await repository.AddAsync(new Director { Id = "1", FullName = "John Doe" });
+            await repository.AddAsync(new Director { Id = "2", FullName = "John Doe2" });
+
+            await repository.SaveChangesAsync();
+            var directorsService = new DirectorsService(repository, movieDiretorsRepository);
+            AutoMapperConfig.RegisterMappings(typeof(DirectorTestModel).Assembly);
+            var director = directorsService.GetById<DirectorTestModel>("2");
+
+            bool isTheSameDirector = director.FullName == "John Doe";
+
+            Assert.False(isTheSameDirector);
         }
 
         [Fact]
@@ -59,7 +77,7 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var repository = new EfDeletableEntityRepository<Director>(new ApplicationDbContext(options.Options));
-            var mdRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
+            var movieDiretorsRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
 
             var directorRep = new Director { FullName = "John DoeId" };
             await repository.AddAsync(directorRep);
@@ -67,7 +85,7 @@
             await repository.AddAsync(new Director { FullName = "John Doe" });
 
             await repository.SaveChangesAsync();
-            var directorsService = new DirectorsService(repository, mdRepository);
+            var directorsService = new DirectorsService(repository, movieDiretorsRepository);
             AutoMapperConfig.RegisterMappings(typeof(DirectorTestModel).Assembly);
             await directorsService.DeleteDirectorAsync(directorRep.Id);
             var directorsCount = directorsService.GetAll<DirectorTestModel>().Count;
@@ -81,12 +99,12 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var repository = new EfDeletableEntityRepository<Director>(new ApplicationDbContext(options.Options));
-            var mdRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
+            var movieDiretorsRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
 
             await repository.AddAsync(new Director { Id = "1", FullName = "John Doe" });
 
             await repository.SaveChangesAsync();
-            var directorsService = new DirectorsService(repository, mdRepository);
+            var directorsService = new DirectorsService(repository, movieDiretorsRepository);
             AutoMapperConfig.RegisterMappings(typeof(DirectorTestModel).Assembly);
             var directorRename = await directorsService.EditDirectorAsync("1", "Doe John");
             var directorNameAfterEdit = directorsService.GetById<DirectorTestModel>("1");
