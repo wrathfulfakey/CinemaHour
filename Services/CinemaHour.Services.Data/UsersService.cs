@@ -32,7 +32,7 @@
             this.userManager = userManager;
         }
 
-        public T GetById<T>(string username)
+        public T GetByUsername<T>(string username)
         {
             var user = this.usersRepository.All()
                 .Where(x => x.UserName == username)

@@ -48,7 +48,9 @@
                 }
             }
 
-            if (input.Content == null)
+            if (input.Content == null ||
+                input.Content.Length < 3 ||
+                input.Content.Length > 500)
             {
                 return this.NoContent();
             }
