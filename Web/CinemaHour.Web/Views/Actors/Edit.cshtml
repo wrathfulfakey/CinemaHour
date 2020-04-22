@@ -40,7 +40,10 @@
         </div>
         <div class="col-md-6 top-buffer form-group">
             <label asp-for="@Model.Gender"></label>
-            <input asp-for="@Model.Gender" class="form-control" placeholder="Male or Female..." />
+            <select asp-for="@Model.Gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
             <span asp-validation-for="@Model.Gender" class="text-danger"></span>
         </div>
         <div class="col-md-6 top-buffer form-group">

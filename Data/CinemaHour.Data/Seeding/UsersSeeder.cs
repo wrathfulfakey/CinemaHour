@@ -28,11 +28,12 @@
 
             var result = await userManager.CreateAsync(
                 new ApplicationUser
-            {
-                UserName = "admin",
-                Email = "wrathfulfakey@gmail.com",
-                EmailConfirmed = true,
-            }, "CinemaAdmin1");
+                {
+                    AvatarUrl = "https://orbra.institute/wp-content/uploads/avatars/6/5a09e74b09ecc-bpfull.png",
+                    UserName = "admin",
+                    Email = "wrathfulfakey@gmail.com",
+                    EmailConfirmed = true,
+                }, "CinemaAdmin1");
         }
     }
 }

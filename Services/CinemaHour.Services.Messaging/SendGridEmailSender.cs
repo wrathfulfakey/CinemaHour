@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using CinemaHour.Common;
-
     using SendGrid;
     using SendGrid.Helpers.Mail;
 

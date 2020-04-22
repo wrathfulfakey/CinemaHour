@@ -19,7 +19,7 @@
 
         public IActionResult Profile(string username)
         {
-            var user = this.usersService.GetById<UserViewModel>(username);
+            var user = this.usersService.GetByUsername<UserViewModel>(username);
 
             if (user == null)
             {

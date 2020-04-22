@@ -9,9 +9,9 @@
     {
         <h6 align="center"><a asp-action="Edit" asp-route-id="@Model.Id">Edit Genre</a></h6>
         <br />
-        <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="confirmDelete()">Delete Genre</a></h6>
+        <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete this genre?')">Delete Genre</a></h6>
         <br />
-        <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id" onclick="confirmHardDelete()">Hard Delete Genre</a></h6>
+        <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to hard delete this genre?')">Hard Delete Genre</a></h6>
     }
 </p>
 <hr />
@@ -137,12 +137,3 @@
         }
     </ul>
 </div>
-
-<script>
-    function confirmDelete() {
-        confirm("Are you sure you want to delete this movie?");
-    }
-    function confirmHardDelete() {
-        confirm("Are you sure you want to hard delete this movie?");
-    }
-</script>

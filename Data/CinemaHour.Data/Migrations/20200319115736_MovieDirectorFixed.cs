@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace CinemaHour.Data.Migrations
+﻿namespace CinemaHour.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class MovieDirectorFixed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace CinemaHour.Data.Migrations
+﻿namespace CinemaHour.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class FixedBugsToWatchedAndFavouritesEntities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +18,7 @@ namespace CinemaHour.Data.Migrations
                     FirstName = table.Column<string>(maxLength: 25, nullable: false),
                     LastName = table.Column<string>(maxLength: 25, nullable: false),
                     Gender = table.Column<int>(nullable: false),
-                    BirthDate = table.Column<DateTime>(nullable: false)
+                    BirthDate = table.Column<DateTime>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -35,7 +36,7 @@ namespace CinemaHour.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -67,7 +68,7 @@ namespace CinemaHour.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -81,7 +82,7 @@ namespace CinemaHour.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    FullName = table.Column<string>(maxLength: 100, nullable: false)
+                    FullName = table.Column<string>(maxLength: 100, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -98,7 +99,7 @@ namespace CinemaHour.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 15, nullable: false)
+                    Name = table.Column<string>(maxLength: 15, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -120,7 +121,7 @@ namespace CinemaHour.Data.Migrations
                     Poster = table.Column<byte[]>(nullable: true),
                     Language = table.Column<string>(nullable: true),
                     Rating = table.Column<float>(nullable: true),
-                    DirectorId = table.Column<string>(nullable: true)
+                    DirectorId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -138,7 +139,7 @@ namespace CinemaHour.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -153,7 +154,7 @@ namespace CinemaHour.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -174,7 +175,7 @@ namespace CinemaHour.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -194,7 +195,7 @@ namespace CinemaHour.Data.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -212,7 +213,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -238,7 +239,7 @@ namespace CinemaHour.Data.Migrations
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -264,7 +265,7 @@ namespace CinemaHour.Data.Migrations
                     Content = table.Column<string>(maxLength: 255, nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     MovieId = table.Column<int>(nullable: false),
-                    CommentId = table.Column<int>(nullable: true)
+                    CommentId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -294,7 +295,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
-                    MovieId = table.Column<int>(nullable: false)
+                    MovieId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -318,7 +319,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<int>(nullable: false),
-                    ActorId = table.Column<string>(nullable: false)
+                    ActorId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -342,7 +343,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<int>(nullable: false),
-                    DirectorId = table.Column<string>(nullable: false)
+                    DirectorId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -366,7 +367,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<int>(nullable: false),
-                    GenreId = table.Column<int>(nullable: false)
+                    GenreId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -390,7 +391,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
-                    MovieId = table.Column<int>(nullable: false)
+                    MovieId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -414,7 +415,7 @@ namespace CinemaHour.Data.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<int>(nullable: false),
-                    CommentId = table.Column<int>(nullable: false)
+                    CommentId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {

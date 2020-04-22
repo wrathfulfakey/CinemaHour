@@ -6,7 +6,7 @@
 
     public interface IUsersService
     {
-        T GetById<T>(string username);
+        T GetByUsername<T>(string username);
 
         Task<string> RemoveFromFavouritesAsync(int movieId, string username);
 

@@ -1,6 +1,7 @@
 ﻿namespace CinemaHour.Services.Data.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using CinemaHour.Data;
@@ -18,18 +19,17 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var repository = new EfDeletableEntityRepository<Director>(new ApplicationDbContext(options.Options));
-            var movieDiretorsRepository = new EfRepository<MovieDirector>(new ApplicationDbContext(options.Options));
 
-            await repository.AddAsync(new Director { FullName = "John Doe" });
-            await repository.AddAsync(new Director { FullName = "John Doe2" });
-            await repository.AddAsync(new Director { FullName = "John Doe3" });
+            await repository.AddAsync(new Director { Id = "1", FullName = "John Doe" });
+            await repository.AddAsync(new Director { Id = "2", FullName = "John Doe2" });
+            await repository.AddAsync(new Director { Id = "3", FullName = "John Doe3" });
 
             await repository.SaveChangesAsync();
-            var directorsService = new DirectorsService(repository, movieDiretorsRepository);
+            var directorsService = new DirectorsService(repository, null);
             AutoMapperConfig.RegisterMappings(typeof(DirectorTestModel).Assembly);
-            var directorsCount = directorsService.GetAll<DirectorTestModel>().Count;
+            ICollection<DirectorTestModel> directorsCount = directorsService.GetAll<DirectorTestModel>();
 
-            Assert.Equal(3, directorsCount);
+            Assert.Equal(3, directorsCount.Count);
         }
 
         [Fact]
@@ -106,7 +106,9 @@
             await repository.SaveChangesAsync();
             var directorsService = new DirectorsService(repository, movieDiretorsRepository);
             AutoMapperConfig.RegisterMappings(typeof(DirectorTestModel).Assembly);
-            var directorRename = await directorsService.EditDirectorAsync("1", "Doe John");
+
+            await directorsService.EditDirectorAsync("1", "Doe John");
+
             var directorNameAfterEdit = directorsService.GetById<DirectorTestModel>("1");
 
             Assert.Equal("Doe John", directorNameAfterEdit.FullName);

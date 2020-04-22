@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace CinemaHour.Data.Migrations
+﻿namespace CinemaHour.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class FixedTotalTimeWatchedToUsers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
