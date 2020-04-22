@@ -36,10 +36,10 @@
                     // Make admin / delete account
                     @if (this.User.Identity.Name != Model.UserName)
                     {
-                        <h4 align="center"><a asp-action="MakeAdmin" asp-route-username="@Model.UserName">Promote to Administrator</a></h4>
-                        <h4 align="center"><a asp-action="LockdownUser" asp-route-username="@Model.UserName">Lockdown User</a></h4>
-                        <h4 align="center"><a asp-action="RemoveLockdownUser" asp-route-username="@Model.UserName">Remove Lockdown User</a></h4>
-                        <h4 align="center"><a asp-action="DeleteUser" asp-route-username="@Model.UserName">Delete User</a></h4>
+                        <h4 align="center"><a asp-action="MakeAdmin" asp-route-username="@Model.UserName" onclick="return confirm('Are you sure you want to promote this user to Administrator?')">Promote to Administrator</a></h4>
+                        <h4 align="center"><a asp-action="LockdownUser" asp-route-username="@Model.UserName" onclick="return confirm('Are you sure you want to ban this user for 7 days?')">Lockdown User</a></h4>
+                        <h4 align="center"><a asp-action="RemoveLockdownUser" asp-route-username="@Model.UserName" onclick="return confirm('Are you sure you want to remove the ban for this user?')">Remove Lockdown User</a></h4>
+                        <h4 align="center"><a asp-action="DeleteUser" asp-route-username="@Model.UserName" onclick="return confirm('Are you sure you want to delete this user?')">Delete User</a></h4>
                     }
                 }
                 <h2 class="mt-0" style="text-align:center;">
@@ -63,7 +63,7 @@
                         <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
                         @if (this.User.Identity.Name == Model.UserName)
                         {
-                            <a asp-action="RemoveFromFavourites" asp-route-movieId="@movie.MovieId">Remove from Favourites</a>
+                            <a onclick="return confirm('Are you sure you want to remove @movie.MovieName from favourites?')" asp-action="RemoveFromFavourites" asp-route-movieId="@movie.MovieId">Remove from Favourites</a>
                         }
                     </div>
                 }
@@ -81,7 +81,7 @@
                         <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
                         @if (this.User.Identity.Name == Model.UserName)
                         {
-                            <a asp-action="RemoveFromWatched" asp-route-movieId="@movie.MovieId">Remove from Watched</a>
+                            <a onclick="return confirm('Are you sure you want to remove @movie.MovieName from watched?')" asp-action="RemoveFromWatched" asp-route-movieId="@movie.MovieId">Remove from Watched</a>
                         }
                     </div>
                 }

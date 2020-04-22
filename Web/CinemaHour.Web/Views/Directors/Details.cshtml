@@ -14,9 +14,9 @@
     {
         <h6 align="center"><a asp-action="Edit" asp-route-id="@Model.Id">Edit Director</a></h6>
         <br />
-        <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="confirmDelete()">Delete Director</a></h6>
+        <h6 align="center"><a asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to delete this director?')">Delete Director</a></h6>
         <br />
-        <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id" onclick="confirmHardDelete()">Hard Delete Director</a></h6>
+        <h6 align="center"><a asp-action="HardDelete" asp-route-id="@Model.Id" onclick="return confirm('Are you sure you want to hard delete this director?')">Hard Delete Director</a></h6>
     }
 </p>
 <hr />
