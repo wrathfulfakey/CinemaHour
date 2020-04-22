@@ -26,6 +26,7 @@
                 MovieId = movieId,
                 UserId = userId,
             };
+
             await this.commentsRepository.AddAsync(comment);
             await this.commentsRepository.SaveChangesAsync();
         }

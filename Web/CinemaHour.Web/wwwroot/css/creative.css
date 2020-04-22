@@ -72,7 +72,6 @@
 
 .comment-widgets {
     position: relative;
-    /*margin-bottom: 10px*/
 }
 
     .comment-widgets .comment-row {
@@ -85,7 +84,6 @@
 
 .comment-username-border {
     border-bottom: 1px solid rgba(140, 140, 140, 0.4);
-    /*border-radius: 20px;*/
 }
 
 .p-2 {
