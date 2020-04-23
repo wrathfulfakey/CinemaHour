@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
+
     using CinemaHour.Data;
     using CinemaHour.Data.Models;
     using CinemaHour.Data.Repositories;
@@ -119,6 +119,118 @@
             Assert.Equal("User not found", outputMessage);
         }
 
+        [Fact]
+        public async Task RemoveLockdownUserAsyncShouldRemoveBanForUser()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(UserTestModel).Assembly);
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var repository = new EfDeletableEntityRepository<ApplicationUser>(new ApplicationDbContext(options.Options));
+
+            await repository.AddAsync(new ApplicationUser { Id = "test1", UserName = "TestUser1" });
+
+            await repository.SaveChangesAsync();
+
+            var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
+
+            await service.LockdownUserAsync("TestUser1");
+            var user = service.GetByUsername<UserTestModel>("TestUser1");
+            Assert.True(user.LockoutEnabled);
+
+            await service.RemoveLockdownUserAsync("TestUser1");
+            user = service.GetByUsername<UserTestModel>("TestUser1");
+            Assert.False(user.LockoutEnabled);
+        }
+
+        [Theory]
+        [InlineData("Test")]
+        [InlineData("anotherTest")]
+        public async Task RemoveLockdownUserAsyncShouldReturnUserNotFoundMessage(string output)
+        {
+            AutoMapperConfig.RegisterMappings(typeof(UserTestModel).Assembly);
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var repository = new EfDeletableEntityRepository<ApplicationUser>(new ApplicationDbContext(options.Options));
+
+            await repository.AddAsync(new ApplicationUser { Id = "test1", UserName = "TestUser1" });
+
+            await repository.SaveChangesAsync();
+            var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
+
+            var outputMessage = await service.RemoveLockdownUserAsync(output);
+
+            Assert.Equal("User not found", outputMessage);
+        }
+
+        [Fact]
+        public async Task RemoveLockdownUserAsyncShouldReturnUserNotCurrentlyBannedMessage()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(UserTestModel).Assembly);
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var repository = new EfDeletableEntityRepository<ApplicationUser>(new ApplicationDbContext(options.Options));
+
+            await repository.AddAsync(new ApplicationUser { Id = "test1", UserName = "TestUser1" });
+
+            await repository.SaveChangesAsync();
+            var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
+
+            var outputMessage = await service.RemoveLockdownUserAsync("TestUser1");
+
+            Assert.Equal("The user is not currently banned.", outputMessage);
+        }
+
+        [Fact]
+        public async Task DeleteUserShouldRemoveUserFromService()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(UserTestModel).Assembly);
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var repository = new EfDeletableEntityRepository<ApplicationUser>(new ApplicationDbContext(options.Options));
+
+            await repository.AddAsync(new ApplicationUser { Id = "test1", UserName = "TestUser1" });
+            await repository.AddAsync(new ApplicationUser { Id = "test2", UserName = "TestUser2" });
+            await repository.AddAsync(new ApplicationUser { Id = "test3", UserName = "TestUser3" });
+
+            await repository.SaveChangesAsync();
+            var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
+
+            var outputMessage = await service.DeleteUserAsync("TestUser2");
+
+            Assert.Equal($"User 'TestUser2' successfully deleted.", outputMessage);
+            Assert.Equal(2, repository.All().Count());
+        }
+
+        [Fact]
+        public async Task DeleteUserShouldReturnUserNotFoundMessage()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(UserTestModel).Assembly);
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                  .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var repository = new EfDeletableEntityRepository<ApplicationUser>(new ApplicationDbContext(options.Options));
+
+            await repository.AddAsync(new ApplicationUser { Id = "test1", UserName = "TestUser1" });
+            await repository.AddAsync(new ApplicationUser { Id = "test2", UserName = "TestUser2" });
+            await repository.AddAsync(new ApplicationUser { Id = "test3", UserName = "TestUser3" });
+
+            await repository.SaveChangesAsync();
+            var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
+
+            var outputMessage = await service.DeleteUserAsync("TestUser4");
+
+            Assert.Equal("User not found.", outputMessage);
+        }
+
         public class UserTestModel : IMapFrom<ApplicationUser>
         {
             public string Id { get; set; }
@@ -126,6 +238,8 @@
             public string UserName { get; set; }
 
             public bool LockoutEnabled { get; set; }
+
+            public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
         }
     }
 }
