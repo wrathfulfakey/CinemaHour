@@ -39,6 +39,11 @@
                 .To<T>()
                 .FirstOrDefault();
 
+            if (user == null)
+            {
+                throw new NullReferenceException("No user with the given username was found.");
+            }
+
             return user;
         }
 

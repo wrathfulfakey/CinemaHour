@@ -46,6 +46,12 @@
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -64,6 +70,8 @@
             {
                 AvatarUrl = avatar,
                 PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName,
             };
         }
 
@@ -97,6 +105,20 @@
             if (this.Input.AvatarUrl != avatarUrl)
             {
                 user.AvatarUrl = this.Input.AvatarUrl;
+                await this.userManager.UpdateAsync(user);
+            }
+
+            var firstName = this.userManager.Users.Where(x => x.UserName == user.UserName).Select(x => x.FirstName).FirstOrDefault();
+            if (this.Input.AvatarUrl != firstName)
+            {
+                user.FirstName = this.Input.FirstName;
+                await this.userManager.UpdateAsync(user);
+            }
+
+            var lastName = this.userManager.Users.Where(x => x.UserName == user.UserName).Select(x => x.LastName).FirstOrDefault();
+            if (this.Input.AvatarUrl != firstName)
+            {
+                user.LastName = this.Input.LastName;
                 await this.userManager.UpdateAsync(user);
             }
 

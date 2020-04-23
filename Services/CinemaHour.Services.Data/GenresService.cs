@@ -1,5 +1,6 @@
 ﻿namespace CinemaHour.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -8,6 +9,7 @@
     using CinemaHour.Data.Models;
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Mapping;
+    using Xunit.Sdk;
 
     public class GenresService : IGenresService
     {
@@ -47,6 +49,11 @@
         public async Task<int> EditGenreAsync(int id, string genreName)
         {
             var genre = await this.genreRepository.GetByIdWithDeletedAsync(id);
+
+            if (genreName.Length < 2 || genreName.Length > 15)
+            {
+                throw new ArgumentOutOfRangeException("Name should be between 2 and 15 characters");
+            }
 
             genre.Name = genreName;
 
