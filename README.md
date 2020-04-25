@@ -1,6 +1,8 @@
 # CinemaHour
 Web Project for SoftUni 
 
+https://cinemahour.azurewebsites.net/
+
 This project has been made with:
 1. Asp.Net Core
 2. xUnit
@@ -8,3 +10,4 @@ This project has been made with:
 4. HtmlSanitizer
 5. MSSQL Express
 6. EntityFramework Core
+7. Azure Deployment (Web App + SQL)
