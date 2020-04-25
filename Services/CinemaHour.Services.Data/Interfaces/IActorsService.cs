@@ -10,6 +10,8 @@
     {
         ICollection<T> GetAll<T>(int? count = null);
 
+        bool CheckifExists(string firstName, string lastName);
+
         T GetById<T>(string id);
 
         Task EditActorAsync(EditActorInputModel input);

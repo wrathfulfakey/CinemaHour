@@ -102,7 +102,15 @@
                     this.Input.AvatarUrl = "https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png";
                 }
 
-                var user = new ApplicationUser { UserName = this.Input.UserName, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName, AvatarUrl = this.Input.AvatarUrl };
+                var user = new ApplicationUser
+                {
+                    UserName = this.Input.UserName,
+                    Email = this.Input.Email,
+                    FirstName = this.Input.FirstName,
+                    LastName = this.Input.LastName,
+                    AvatarUrl = this.Input.AvatarUrl,
+                    EmailConfirmed = true,
+                };
 
                 if (this.userManager.Users.Any(x => x.UserName == user.UserName))
                 {

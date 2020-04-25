@@ -12,11 +12,11 @@
                 User
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 100px">
-                <a class="dropdown-item" href="/Users/Profile?username=@this.User.Identity.Name">@this.User.Identity.Name</a>
-                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Profile" asp-route-username="@this.User.Identity.Name">Hi, @this.User.Identity.Name</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
-                    <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+                    <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Administration</a>
                 }
             </div>
         </li>

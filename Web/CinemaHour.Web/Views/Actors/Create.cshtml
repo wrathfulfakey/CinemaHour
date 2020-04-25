@@ -4,6 +4,11 @@
     ViewData["Title"] = "Create Actor";
 }
 
+@if (this.TempData["ExistingActorTemp"] != null)
+{
+    <p class="alert alert-success">@this.TempData["ExistingActorTemp"]</p>
+}
+
 <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     tinymce.init({

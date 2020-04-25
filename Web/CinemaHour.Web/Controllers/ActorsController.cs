@@ -100,6 +100,13 @@
                 return this.View(input);
             }
 
+            var exists = this.actorsService.CheckifExists(input.FirstName, input.LastName);
+            if (exists)
+            {
+                this.TempData["ExistingActorTemp"] = "Actor with the same name already exists in the database.";
+                return this.View(input);
+            }
+
             var actor = await this.actorsService.CreateActorAsync(new CreateActorViewModel
             {
                 Image = input.Image,

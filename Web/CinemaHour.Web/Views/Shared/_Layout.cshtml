@@ -15,7 +15,7 @@
     <environment names="Staging,Production">
         <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/creative.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/creative.css" rel="stylesheet" asp-append-version="true" />
         <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
     </environment>
 </head>
@@ -39,10 +39,10 @@
                                 Browse
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 100px">
-                                <a class="dropdown-item" asp-area="" asp-controller="Actors" asp-action="All">Actors</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Movies" asp-action="All">Movies</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Directors" asp-action="All">Directors</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Genres" asp-action="All">Genres</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Actors" asp-action="All">Actors</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="All">Movies</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Directors" asp-action="All">Directors</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="All">Genres</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -90,7 +90,7 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-        <script src="~/js/creative.min.js" asp-append-version="true"></script>
+        <script src="~/js/creative.js" asp-append-version="true"></script>
         <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
         @*FontAwesome*@

@@ -39,6 +39,21 @@
             return query.To<T>().ToList();
         }
 
+        // Non-generic Get All Method
+        public bool CheckifExists(string firstName, string lastName)
+        {
+            var actor = this.actorsRepository.All()
+                .Where(x => x.FirstName == firstName && x.LastName == lastName)
+                .FirstOrDefault();
+
+            if (actor == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         // Admins can [create], [delete] AND [edit] (same with directors, movies, comments, users)
         // new actors (movies can be added AFTER we add actors and directors)
         public async Task<string> CreateActorAsync(CreateActorViewModel input)

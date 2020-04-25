@@ -45,7 +45,11 @@
                 <h2 class="mt-0" style="text-align:center;">
                     @Model.UserName
                 </h2>
-                <p><strong>Name: </strong>@(Model.FirstName + " " + Model.LastName)</p>
+                @if (!string.IsNullOrWhiteSpace(Model.FirstName) && !string.IsNullOrWhiteSpace(Model.LastName))
+                {
+                    <p><strong>Name: </strong>@(Model.FirstName + " " + Model.LastName)</p>
+                }
+
                 <p><strong>Total Watch Time: </strong>@totalTimeWatched <span style="font-size: 10px;">(hours/minutes/seconds)</span></p>
             </div>
         </div>

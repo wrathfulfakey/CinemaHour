@@ -1,7 +1,6 @@
 ﻿namespace CinemaHour.Services.Data.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -10,10 +9,7 @@
     using CinemaHour.Data.Repositories;
     using CinemaHour.Services.Data.ViewModels.Movies;
     using CinemaHour.Services.Mapping;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Internal;
-    using Moq;
     using Xunit;
 
     public class MoviesServiceTests
