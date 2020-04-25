@@ -1,9 +1,9 @@
 ﻿namespace CinemaHour.Services.Data.Interfaces
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using CinemaHour.Data.Models;
     using CinemaHour.Services.Data.ViewModels.Movies;
 
     public interface IMoviesService

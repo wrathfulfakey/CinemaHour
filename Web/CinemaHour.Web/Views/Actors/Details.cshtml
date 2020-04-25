@@ -45,7 +45,7 @@
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.Rating</p>
                         <p><a href="@movie.TrailerLink">Trailer</a></p>
                         <p><a href="@movie.IMDBLink">IMDB</a></p>
-                        <p><strong>Premiere: </strong>@movie.ReleaseDate.ToShortDateString()</p>
+                        <p><strong>Premiere: </strong>@movie.ReleaseDate.ToString("dd/MMM/yyyy")</p>
                     </div>
                 }
             </div>
