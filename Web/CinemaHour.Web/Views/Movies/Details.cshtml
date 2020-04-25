@@ -24,7 +24,7 @@
                                     <div class="comment-username-border">
                                         <div class="media-body ml-3">
                                             <strong><a asp-controller="Users" asp-action="Profile" asp-route-username="@comment.UserUserName">@comment.UserUserName</a></strong>
-                                            <i class="text-muted small float-right">Posted on: @comment.CreatedOn.ToString("dd/MM/yyyy")</i>
+                                            <i class="text-muted small float-right">Posted on: @comment.CreatedOn.ToString("dd/MMM/yyyy")</i>
                                         </div>
                                     </div>
                                     <span class="m-b-15 d-block">

@@ -20,7 +20,7 @@
         <form asp-action="All" method="get">
             <p>Search: <input type="text" name="searchString" value="@this.ViewData["CurrentFilter"]" /></p>
             <input type="submit" value="Search" class="btn btn-success" />
-            <a class="btn btn-info" asp-action="All">Back to full list.</a>
+            <a class="btn btn-info" asp-action="All" asp-route-sortOrder="@this.ViewData["NameSortParam"]" asp-route-currentFilter="@this.ViewData["CurrentFilter"]">Back to full list.</a>
         </form>
     </div>
     <div class="col-md-5">
