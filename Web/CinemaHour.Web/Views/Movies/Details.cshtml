@@ -107,7 +107,7 @@
                 }
                 <p><strong>Genres: </strong>@Model.GenreString</p>
                 <p><strong>Rating: </strong>@Model.Rating</p>
-                <p><strong>Premiere Date: </strong>@Model.ReleaseDate.ToShortDateString()</p>
+                <p><strong>Premiere Date: </strong>@Model.ReleaseDate.ToString("dd/MMM/yyyy")</p>
                 <p><strong>Language: </strong>@Model.Language</p>
                 <p><strong>Length: </strong>@Model.Length minutes</p>
                 <p><strong><a href="@Model.TrailerLink">Trailer Link</a></strong></p>

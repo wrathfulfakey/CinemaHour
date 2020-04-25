@@ -42,7 +42,7 @@
                 </h5>
                 <img src="@actor.ImageUrl" width="200" />
                 <p><strong>Gender: </strong>@actor.Gender</p>
-                <p><strong>Birthdate: </strong>@actor.BirthDate.Date.ToShortDateString()</p>
+                <p><strong>Birthdate: </strong>@actor.BirthDate.Date.ToString("dd/MMM/yyyy")</p>
                 <div class="button-holder">
                     <a asp-action="Details" asp-route-id="@actor.Id" class="btn btn-info text-uppercase">View More</a>
                 </div>
