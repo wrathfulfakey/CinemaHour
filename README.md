@@ -8,6 +8,7 @@ This project has been made with:
 2. xUnit
 3. SendGrid
 4. HtmlSanitizer
-5. MSSQL Express
-6. EntityFramework Core
-7. Azure Deployment (Web App + SQL)
+5. TinyMCE
+6. MSSQL Express
+7. EntityFramework Core
+8. Azure Deployment (Web App + SQL)
