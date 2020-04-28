@@ -52,9 +52,12 @@
                 _ => actors.OrderBy(x => x.FirstName).ToList(),
             };
 
-            var pagesCount = (int)Math.Ceiling(this.actorsService.GetAll<ActorViewModel>().Count() / (decimal)perPage);
+            var pagesCount = (int)Math.Ceiling(actors.Count() / (decimal)perPage);
 
-            actors = actors.Skip(perPage * (page - 1)).Take(perPage).ToList();
+            actors = actors
+                .Skip(perPage * (page - 1))
+                .Take(perPage)
+                .ToList();
 
             var viewModel = new AllActorsViewModel
             {

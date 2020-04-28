@@ -12,7 +12,7 @@
 
     public class GenresController : Controller
     {
-        private const int MoviesPerPageDefaultValue = 1;
+        private const int MoviesPerPageDefaultValue = 12;
 
         private readonly IGenresService genresService;
         private readonly IMoviesService moviesService;

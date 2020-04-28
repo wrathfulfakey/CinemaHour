@@ -18,18 +18,39 @@
                             <!-- Comment Row -->
                             <div class="d-flex flex-row comment-row">
                                 <div class="commenter-pic">
-                                    <img src="@comment.UserAvatarUrl" alt="user" width="75" height="75" class="rounded-circle">
+                                    @if (comment.UserAvatarUrl == null)
+                                    {
+                                        <img src="https://www.jing.fm/clipimg/full/261-2619679_user-delete-big-image-delete-user-logo-png.png" alt="user" width="75" height="75" class="rounded-circle">
+                                    }
+                                    else
+                                    {
+                                        <img src="@comment.UserAvatarUrl" alt="user" width="75" height="75" class="rounded-circle">
+                                    }
                                 </div>
                                 <div class="comment-text w-100">
                                     <div class="comment-username-border">
                                         <div class="media-body ml-3">
-                                            <strong><a asp-controller="Users" asp-action="Profile" asp-route-username="@comment.UserUserName">@comment.UserUserName</a></strong>
+                                            @if (comment.UserUserName == null)
+                                            {
+                                                <strong>Deleted User</strong>
+                                            }
+                                            else
+                                            {
+                                                <strong><a asp-controller="Users" asp-action="Profile" asp-route-username="@comment.UserUserName">@comment.UserUserName</a></strong>
+                                            }
                                             <i class="text-muted small float-right">Posted on: @comment.CreatedOn.ToString("dd/MMM/yyyy")</i>
                                         </div>
                                     </div>
-                                    <span class="m-b-15 d-block">
-                                        @Html.Raw(comment.SanitizedContent)
-                                    </span>
+                                    @if (comment.UserUserName == null)
+                                    {
+                                        <span style="color: red;">This user is deleted.</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="m-b-15 d-block">
+                                            @Html.Raw(comment.SanitizedContent)
+                                        </span>
+                                    }
                                     @{ await DisplayComments(comment.Id); }
 
 
@@ -37,7 +58,8 @@
                                     {
                                         <hr />
                                         <div class="comment-footer mb-0 d-inline-block float-right">
-                                            @if (this.User.Identity.Name == comment.UserUserName)
+                                            @if (this.User.Identity.Name == comment.UserUserName
+                                            || this.User.IsInRole("Administrator"))
                                             {
                                                 <form class="float-right" method="post" asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id">
                                                     <button onclick="return confirm('Are you sure you want to delete this comment?')" formmethod="post" class="btn btn-danger btn-sm">Delete</button>

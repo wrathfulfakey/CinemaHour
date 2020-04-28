@@ -14,6 +14,7 @@
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IDeletableEntityRepository<Movie> moviesRepository;
+        private readonly IDeletableEntityRepository<Comment> commentsRepository;
         private readonly IRepository<UserFavourite> userFavouriteRepository;
         private readonly IRepository<UserWatched> userWatchedRepository;
         private readonly UserManager<ApplicationUser> userManager;
@@ -21,12 +22,14 @@
         public UsersService(
             IDeletableEntityRepository<ApplicationUser> usersRepository,
             IDeletableEntityRepository<Movie> moviesRepository,
+            IDeletableEntityRepository<Comment> commentsRepository,
             IRepository<UserFavourite> userFavouriteRepository,
             IRepository<UserWatched> userWatchedRepository,
             UserManager<ApplicationUser> userManager)
         {
             this.usersRepository = usersRepository;
             this.moviesRepository = moviesRepository;
+            this.commentsRepository = commentsRepository;
             this.userFavouriteRepository = userFavouriteRepository;
             this.userWatchedRepository = userWatchedRepository;
             this.userManager = userManager;
@@ -134,6 +137,7 @@
             }
 
             string name = user.UserName;
+
             this.usersRepository.Delete(user);
             await this.usersRepository.SaveChangesAsync();
             return $"User '{name}' successfully deleted.";

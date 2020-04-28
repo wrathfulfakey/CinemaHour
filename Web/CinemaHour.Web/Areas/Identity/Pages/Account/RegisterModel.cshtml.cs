@@ -109,7 +109,6 @@
                     FirstName = this.Input.FirstName,
                     LastName = this.Input.LastName,
                     AvatarUrl = this.Input.AvatarUrl,
-                    EmailConfirmed = true,
                 };
 
                 if (this.userManager.Users.Any(x => x.UserName == user.UserName))

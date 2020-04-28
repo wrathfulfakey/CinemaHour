@@ -69,7 +69,10 @@
 
             var pagesCount = (int)Math.Ceiling(movies.Count() / (decimal)perPage);
 
-            movies = movies.Skip(perPage * (page - 1)).Take(perPage).ToList();
+            movies = movies
+                .Skip(perPage * (page - 1))
+                .Take(perPage)
+                .ToList();
 
             var viewModel = new AllMoviesViewModel
             {
