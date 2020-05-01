@@ -9,5 +9,7 @@
         Task<int> Delete(int id);
 
         bool IsInMovieId(int commentId, int movieId);
+
+        bool CommentByUserId(string userId, int commentId);
     }
 }

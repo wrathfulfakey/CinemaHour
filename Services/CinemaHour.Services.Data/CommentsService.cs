@@ -31,6 +31,22 @@
             await this.commentsRepository.SaveChangesAsync();
         }
 
+        public bool CommentByUserId(string userId, int commentId)
+        {
+            var comment = this.commentsRepository
+                .All()
+                .Where(x => x.UserId == userId
+                            && x.Id == commentId)
+                .FirstOrDefault();
+
+            if (comment == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public async Task<int> Delete(int id)
         {
             var commentMovie = this.commentsRepository.All().Where(x => x.Id == id)
@@ -46,7 +62,8 @@
 
         public bool IsInMovieId(int commentId, int movieId)
         {
-            var commentMovieId = this.commentsRepository.All().Where(x => x.Id == commentId)
+            var commentMovieId = this.commentsRepository.All()
+                .Where(x => x.Id == commentId)
                 .Select(x => x.MovieId).FirstOrDefault();
 
             return commentMovieId == movieId;

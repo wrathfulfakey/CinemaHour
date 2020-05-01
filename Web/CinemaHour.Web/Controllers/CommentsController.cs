@@ -26,6 +26,15 @@
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
+            var userId = this.userManager.GetUserId(this.User);
+
+            var isCommentToUserId = this.commentsService.CommentByUserId(userId, id);
+
+            if (!isCommentToUserId)
+            {
+                return this.BadRequest();
+            }
+
             var movieId = await this.commentsService.Delete(id);
 
             return this.RedirectToAction("Details", "Movies", new { id = movieId });
