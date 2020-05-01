@@ -250,7 +250,7 @@
         {
             IQueryable<ApplicationUser> query = this.usersRepository
                .AllAsNoTrackingWithDeleted()
-               .Where(x => x.CreatedOn >= DateTime.UtcNow.AddDays(-2))
+               .Where(x => x.CreatedOn >= DateTime.UtcNow.AddDays(-30))
                .OrderByDescending(x => x.CreatedOn);
 
             return query.To<T>().ToList();
