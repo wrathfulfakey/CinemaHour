@@ -1,13 +1,14 @@
 ﻿namespace CinemaHour.Web.Controllers
 {
     using System.Threading.Tasks;
-
+    using CinemaHour.Common;
     using CinemaHour.Data.Models;
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Web.ViewModels.Comments;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     public class CommentsController : Controller
     {
@@ -32,7 +33,10 @@
 
             if (!isCommentToUserId)
             {
-                return this.BadRequest();
+                if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    return this.BadRequest();
+                }
             }
 
             var movieId = await this.commentsService.Delete(id);
