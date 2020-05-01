@@ -1,6 +1,7 @@
 ﻿namespace CinemaHour.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -14,7 +15,6 @@
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IDeletableEntityRepository<Movie> moviesRepository;
-        private readonly IDeletableEntityRepository<Comment> commentsRepository;
         private readonly IRepository<UserFavourite> userFavouriteRepository;
         private readonly IRepository<UserWatched> userWatchedRepository;
         private readonly UserManager<ApplicationUser> userManager;
@@ -22,14 +22,12 @@
         public UsersService(
             IDeletableEntityRepository<ApplicationUser> usersRepository,
             IDeletableEntityRepository<Movie> moviesRepository,
-            IDeletableEntityRepository<Comment> commentsRepository,
             IRepository<UserFavourite> userFavouriteRepository,
             IRepository<UserWatched> userWatchedRepository,
             UserManager<ApplicationUser> userManager)
         {
             this.usersRepository = usersRepository;
             this.moviesRepository = moviesRepository;
-            this.commentsRepository = commentsRepository;
             this.userFavouriteRepository = userFavouriteRepository;
             this.userWatchedRepository = userWatchedRepository;
             this.userManager = userManager;
@@ -41,11 +39,6 @@
                 .Where(x => x.UserName == username)
                 .To<T>()
                 .FirstOrDefault();
-
-            if (user == null)
-            {
-                throw new NullReferenceException("No user with the given username was found.");
-            }
 
             return user;
         }
@@ -253,5 +246,14 @@
             return $"You have successfully added '{movie.Name}' to your favourites list.";
         }
 
+        public ICollection<T> GetAllWithDeleted<T>()
+        {
+            IQueryable<ApplicationUser> query = this.usersRepository
+               .AllAsNoTrackingWithDeleted()
+               .Where(x => x.CreatedOn >= DateTime.UtcNow.AddDays(-2))
+               .OrderByDescending(x => x.CreatedOn);
+
+            return query.To<T>().ToList();
+        }
     }
 }

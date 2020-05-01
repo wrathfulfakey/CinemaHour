@@ -32,7 +32,9 @@ namespace CinemaHour.Web.ViewModels.Actors
         public int Age()
         {
             int age = DateTime.UtcNow.Year - this.BirthDate.Year;
-            if ((this.BirthDate.Month > DateTime.UtcNow.Month) || (this.BirthDate.Month == DateTime.UtcNow.Month && this.BirthDate.Day > DateTime.UtcNow.Day))
+            if ((this.BirthDate.Month > DateTime.UtcNow.Month)
+                || (this.BirthDate.Month == DateTime.UtcNow.Month
+                && this.BirthDate.Day > DateTime.UtcNow.Day))
             {
                 age--;
             }

@@ -1,0 +1,47 @@
+﻿@model CinemaHour.Web.ViewModels.Administration.Dashboard.AllNewUsersViewModel
+
+@{
+    this.ViewData["Title"] = "New Users";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h1>@this.ViewData["Title"]</h1>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Avatar</th>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Created On</th>
+        <th>Is Deleted?</th>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td width="20">@user.Id</td>
+            <td><img src="@user.AvatarUrl" width="70" /></td>
+            <td>@user.UserName</td>
+            <td>@user.FullName</td>
+            <td>@user.CreatedOn</td>
+            <td>@user.IsDeleted</td>
+        </tr>
+    }
+</table>

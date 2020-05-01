@@ -10,6 +10,10 @@
     {
         ICollection<T> GetAll<T>(int? count = null);
 
+        ICollection<T> GetAllWithDeleted<T>();
+
+        Task RecoverMovie(int movieId);
+
         T GetById<T>(int id);
 
         Task<int> CreaterMovieAsync(CreateMovieServiceInputModel input);

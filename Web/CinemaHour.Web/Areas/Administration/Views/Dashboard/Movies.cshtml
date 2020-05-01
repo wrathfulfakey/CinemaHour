@@ -1,0 +1,47 @@
+﻿@model CinemaHour.Web.ViewModels.Administration.Dashboard.AllMoviesViewModel
+
+@{
+    this.ViewData["Title"] = "Deleted Movies";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h1>@this.ViewData["Title"]</h1>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Poster</th>
+        <th>Name</th>
+        <th>IsDeleted</th>
+        <th>Deleted On</th>
+        <th>Recover?</th>
+    </tr>
+    @foreach (var movie in Model.Movies)
+    {
+        <tr>
+            <td>@movie.Id</td>
+            <td><img src="@movie.PosterUrl" width="50" /></td>
+            <td>@movie.Name</td>
+            <td>@movie.IsDeleted</td>
+            <td>@movie.DeletedOn</td>
+            <td><a class="btn btn-group btn-danger" asp-area="Administration" asp-controller="Dashboard" asp-action="RecoverMovie" asp-route-movieId="@movie.Id">Recover</a></td>
+        </tr>
+    }
+</table>

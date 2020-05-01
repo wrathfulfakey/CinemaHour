@@ -10,6 +10,7 @@
     using CinemaHour.Services.Data.Interfaces;
     using CinemaHour.Services.Data.ViewModels.Movies;
     using CinemaHour.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class MoviesService : IMoviesService
     {
@@ -189,6 +190,34 @@
 
             this.moviesRepository.Update(entity);
             await this.moviesRepository.SaveChangesAsync();
+        }
+
+        public async Task RecoverMovie(int movieId)
+        {
+            var movie = this.moviesRepository
+                .AllAsNoTrackingWithDeleted()
+                .Where(x => x.Id == movieId && x.IsDeleted == true)
+                .FirstOrDefault();
+
+            if (movie == null)
+            {
+                return;
+            }
+
+            movie.IsDeleted = false;
+
+            this.moviesRepository.Update(movie);
+            await this.moviesRepository.SaveChangesAsync();
+        }
+
+        public ICollection<T> GetAllWithDeleted<T>()
+        {
+            IQueryable<Movie> query = this.moviesRepository
+                .AllAsNoTrackingWithDeleted()
+                .Where(x => x.IsDeleted)
+                .OrderBy(x => x.DeletedOn);
+
+            return query.To<T>().ToList();
         }
 
         public ICollection<T> GetAll<T>(int? count = null)

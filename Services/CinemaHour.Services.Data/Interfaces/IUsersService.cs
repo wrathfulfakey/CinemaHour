@@ -1,5 +1,6 @@
 ﻿namespace CinemaHour.Services.Data.Interfaces
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using CinemaHour.Data.Models;
@@ -7,6 +8,8 @@
     public interface IUsersService
     {
         T GetByUsername<T>(string username);
+
+        ICollection<T> GetAllWithDeleted<T>();
 
         Task<string> RemoveFromFavouritesAsync(int movieId, string username);
 
