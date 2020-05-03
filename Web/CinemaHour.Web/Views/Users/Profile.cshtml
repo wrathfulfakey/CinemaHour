@@ -82,7 +82,7 @@
                         <h4 align="center"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@movie.MovieName</a></h4>
                         <img style="float: left; margin-right:5px;" src="@movie.MoviePosterUrl" width="150" />
                         <p style="margin-left:auto; margin-right:0;"><strong>Rating: </strong>@movie.MovieRating</p>
-                        <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToShortDateString()</p>
+                        <p><strong>Premiere: </strong>@movie.MovieReleaseDate.ToString("dd/MMM/yyyy")</p>
                         @if (this.User.Identity.Name == Model.UserName)
                         {
                             <a onclick="return confirm('Are you sure you want to remove @movie.MovieName from watched?')" asp-action="RemoveFromWatched" asp-route-movieId="@movie.MovieId">Remove from Watched</a>

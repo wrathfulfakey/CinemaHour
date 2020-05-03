@@ -41,7 +41,7 @@
             <td>@movie.Name</td>
             <td>@movie.IsDeleted</td>
             <td>@movie.DeletedOn</td>
-            <td><a class="btn btn-group btn-danger" asp-area="Administration" asp-controller="Dashboard" asp-action="RecoverMovie" asp-route-movieId="@movie.Id">Recover</a></td>
+            <td><a class="btn btn-group btn-danger" asp-area="Administration" asp-controller="Dashboard" asp-action="RecoverMovie" asp-route-movieId="@movie.Id" onclick="return confirm('Are you sure you want to recover @movie.Name ?')">Recover</a></td>
         </tr>
     }
 </table>

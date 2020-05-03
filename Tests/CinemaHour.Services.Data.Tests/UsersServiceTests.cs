@@ -47,7 +47,7 @@
             await repository.AddAsync(new ApplicationUser { Id = "test3", UserName = "TestUser3" });
 
             await repository.SaveChangesAsync();
-            var service = new UsersService(repository, null, null, null, null, null);
+            var service = new UsersService(repository, null, null, null, null);
 
             var user = service.GetByUsername<UserTestModel>("TestUser2");
 
@@ -71,9 +71,10 @@
             await repository.AddAsync(new ApplicationUser { Id = "test3", UserName = "TestUser3" });
 
             await repository.SaveChangesAsync();
-            var service = new UsersService(repository, null, null, null, null, null);
+            var service = new UsersService(repository, null, null, null, null);
 
-            Assert.Throws<NullReferenceException>(() => service.GetByUsername<UserTestModel>(username));
+            bool isNull = service.GetByUsername<UserTestModel>(username) == null;
+            Assert.True(isNull);
         }
 
         [Fact]
@@ -89,7 +90,7 @@
 
             await repository.SaveChangesAsync();
             var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
-            var service = new UsersService(repository, null, null, null, null, mockedUserManager.Object);
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
 
             await service.LockdownUserAsync("TestUser1");
             var user = service.GetByUsername<UserTestModel>("TestUser1");
@@ -112,7 +113,7 @@
 
             await repository.SaveChangesAsync();
             var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
-            var service = new UsersService(repository, null, null, null, null, mockedUserManager.Object);
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
 
             var outputMessage = await service.LockdownUserAsync(output);
 
@@ -133,7 +134,7 @@
             await repository.SaveChangesAsync();
 
             var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
-            var service = new UsersService(repository, null, null, null, null, mockedUserManager.Object);
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
 
             await service.LockdownUserAsync("TestUser1");
             var user = service.GetByUsername<UserTestModel>("TestUser1");
@@ -159,7 +160,7 @@
 
             await repository.SaveChangesAsync();
             var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
-            var service = new UsersService(repository, null, null, null, null, mockedUserManager.Object);
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
 
             var outputMessage = await service.RemoveLockdownUserAsync(output);
 
@@ -179,7 +180,7 @@
 
             await repository.SaveChangesAsync();
             var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
-            var service = new UsersService(repository, null, null, null, null, mockedUserManager.Object);
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
 
             var outputMessage = await service.RemoveLockdownUserAsync("TestUser1");
 
@@ -201,7 +202,7 @@
 
             await repository.SaveChangesAsync();
             var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
-            var service = new UsersService(repository, null, null, null, null, mockedUserManager.Object);
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
 
             var outputMessage = await service.DeleteUserAsync("TestUser2");
 
@@ -224,7 +225,7 @@
 
             await repository.SaveChangesAsync();
             var mockedUserManager = MockUserManager<ApplicationUser>(repository.All().ToList());
-            var service = new UsersService(repository, null, null, null, null, mockedUserManager.Object);
+            var service = new UsersService(repository, null, null, null, mockedUserManager.Object);
 
             var outputMessage = await service.DeleteUserAsync("TestUser4");
 
