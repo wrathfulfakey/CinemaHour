@@ -23,6 +23,8 @@
 
         Task<string> DeleteUserAsync(string username);
 
+        Task<string> RecoverUserAsync(string username);
+
         Task<string> AddMovieToFavouritesAsync(int movieId, string username);
 
         Task<string> AddMovieToWatchedAsync(int movieId, string username);

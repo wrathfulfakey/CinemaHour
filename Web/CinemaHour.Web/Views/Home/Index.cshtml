@@ -7,9 +7,17 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-@if (this.TempData["DeleteUser"] != null)
+@if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
-    <p class="alert alert-danger">@this.TempData["DeleteUser"]</p>
+    @if (this.TempData["DeleteUser"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["DeleteUser"]</p>
+    }
+
+    @if (this.TempData["RecoverUser"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["RecoverUser"]</p>
+    }
 }
 
 <div class="text-center">

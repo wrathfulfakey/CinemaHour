@@ -3,13 +3,16 @@
     this.ViewData["Title"] = "All Actors";
 }
 
-@if (this.TempData["DeleteActorTemp"] != null)
+@if (this.User.IsInRole("Administrator"))
 {
-    <p class="alert alert-danger">@this.TempData["DeleteActorTemp"]</p>
-}
-@if (this.TempData["HardDeleteActorTemp"] != null)
-{
-    <p class="alert alert-danger">@this.TempData["HardDeleteActorTemp"]</p>
+    @if (this.TempData["DeleteActorTemp"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["DeleteActorTemp"]</p>
+    }
+    @if (this.TempData["HardDeleteActorTemp"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["HardDeleteActorTemp"]</p>
+    }
 }
 
 <h1 class="display-4 text-center">@this.ViewData["Title"]</h1>

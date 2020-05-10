@@ -32,23 +32,36 @@
         <th>Full Name</th>
         <th>Created On</th>
         <th>Is Deleted?</th>
+        <th>Delete/Recover</th>
     </tr>
     @foreach (var user in Model.Users)
     {
-    <tr>
-        <td width="20">@user.Id</td>
-        <td><img src="@user.AvatarUrl" width="70" /></td>
-        @if (user.IsDeleted)
-        {
-            <td>@user.UserName</td>
-        }
-        else
-        {
-            <td><a asp-area="" asp-controller="Users" asp-action="Profile" asp-route-username="@user.UserName">@user.UserName</a></td>
-        }
-        <td>@user.FullName</td>
-        <td>@user.CreatedOn</td>
-        <td>@user.IsDeleted</td>
-    </tr>
+        <tr>
+            <td width="20">@user.Id</td>
+            <td><img src="@user.AvatarUrl" width="70" /></td>
+            <td>
+                @if (user.IsDeleted)
+                {
+                    @user.UserName
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Users" asp-action="Profile" asp-route-username="@user.UserName">@user.UserName</a>
+                }
+            </td>
+            <td>@user.FullName</td>
+            <td>@user.CreatedOn</td>
+            <td>@user.IsDeleted</td>
+            <td>
+                @if (!user.IsDeleted)
+                {
+                    <a class="btn btn-danger" asp-area="" asp-controller="Users" asp-action="DeleteUser" asp-route-username="@user.UserName" onclick="return confirm('Are you sure you want to delete @user.UserName ?')">Delete</a>
+                }
+                else
+                {
+                    <a class="btn btn-warning" asp-area="" asp-controller="Users" asp-action="RecoverUser" asp-route-username="@user.UserName" onclick="return confirm('Are you sure you want to recover @user.UserName ?')">Recover</a>
+                }
+            </td>
+        </tr>
     }
 </table>

@@ -17,18 +17,6 @@
             this.usersService = usersService;
         }
 
-        public IActionResult Profile(string username)
-        {
-            var user = this.usersService.GetByUsername<UserViewModel>(username);
-
-            if (user == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(user);
-        }
-
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> MakeAdmin(string username)
         {
@@ -37,6 +25,33 @@
             this.TempData["AddAdminRoleToUser"] = result;
 
             return this.RedirectToAction(nameof(this.Profile), new { username });
+        }
+
+        // IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT IMPLEMENT 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public IActionResult RemoveModerator(string username)
+        {
+            return this.View();
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> DeleteUser(string username)
+        {
+            var result = await this.usersService.DeleteUserAsync(username);
+
+            this.TempData["DeleteUser"] = result;
+
+            return this.Redirect("/");
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> RecoverUser(string username)
+        {
+            var result = await this.usersService.RecoverUserAsync(username);
+
+            this.TempData["RecoverUser"] = result;
+
+            return this.Redirect("/");
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -59,14 +74,16 @@
             return this.RedirectToAction(nameof(this.Profile), new { username });
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public async Task<IActionResult> DeleteUser(string username)
+        public IActionResult Profile(string username)
         {
-            var result = await this.usersService.DeleteUserAsync(username);
+            var user = this.usersService.GetByUsername<UserViewModel>(username);
 
-            this.TempData["DeleteUser"] = result;
+            if (user == null)
+            {
+                return this.NotFound();
+            }
 
-            return this.Redirect("/");
+            return this.View(user);
         }
 
         [Authorize]

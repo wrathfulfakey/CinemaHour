@@ -136,6 +136,28 @@
             return $"User '{name}' successfully deleted.";
         }
 
+        public async Task<string> RecoverUserAsync(string username)
+        {
+            var user = this.usersRepository
+                .AllAsNoTrackingWithDeleted()
+                .Where(x => x.UserName == username)
+                .FirstOrDefault();
+
+            if (user == null)
+            {
+                return "User not found.";
+            }
+
+            string name = user.UserName;
+
+            user.IsDeleted = false;
+
+            this.usersRepository.Update(user);
+            await this.usersRepository.SaveChangesAsync();
+
+            return $"User '{name}' successfully recovered.";
+        }
+
         public async Task<string> RemoveFromFavouritesAsync(int movieId, string username)
         {
             var user = this.usersRepository.All().Where(x => x.UserName == username).FirstOrDefault();

@@ -13,17 +13,21 @@
 {
     <p class="alert alert-success">@this.TempData["RemoveMovieFromFavourites"]</p>
 }
-@if (this.TempData["AddAdminRoleToUser"] != null)
+
+@if (this.User.IsInRole("Administrator"))
 {
-    <p class="alert alert-danger">@this.TempData["AddAdminRoleToUser"]</p>
-}
-@if (this.TempData["LockdownUser"] != null)
-{
-    <p class="alert alert-danger">@this.TempData["LockdownUser"]</p>
-}
-@if (this.TempData["RemoveLockdownUser"] != null)
-{
-    <p class="alert alert-danger">@this.TempData["RemoveLockdownUser"]</p>
+    @if (this.TempData["AddAdminRoleToUser"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["AddAdminRoleToUser"]</p>
+    }
+    @if (this.TempData["LockdownUser"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["LockdownUser"]</p>
+    }
+    @if (this.TempData["RemoveLockdownUser"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["RemoveLockdownUser"]</p>
+    }
 }
 
 <div class="col-md-12 media">

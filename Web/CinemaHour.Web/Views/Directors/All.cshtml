@@ -3,13 +3,16 @@
     this.ViewData["Title"] = "All Directors";
 }
 
-@if (this.TempData["DeleteDirectorTemp"] != null)
+@if (this.User.IsInRole("Administrator"))
 {
-    <p class="alert alert-danger">@this.TempData["DeleteDirectorTemp"]</p>
-}
-@if (this.TempData["HardDeleteDirectorTemp"] != null)
-{
-    <p class="alert alert-danger">@this.TempData["HardDeleteDirectorTemp"]</p>
+    @if (this.TempData["DeleteDirectorTemp"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["DeleteDirectorTemp"]</p>
+    }
+    @if (this.TempData["HardDeleteDirectorTemp"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["HardDeleteDirectorTemp"]</p>
+    }
 }
 
 <h1 class="display-4 text-center">@this.ViewData["Title"]</h1>
@@ -18,7 +21,7 @@
     @foreach (var director in Model.Directors.OrderBy(x => x.FullName))
     {
         <div class="col-md-3 media" style="margin-top:10px; width: 50px;">
-            <div class="media-body"> 
+            <div class="media-body">
                 <a asp-action="Details" asp-route-id="@director.Id" class="btn btn-info">
                     <h5 class="mt-0">
                         @director.FullName

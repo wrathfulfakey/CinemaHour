@@ -3,9 +3,12 @@
     this.ViewData["Title"] = "Actor Details";
 }
 
-@if (this.TempData["CreateActorTemp"] != null)
+@if (this.User.IsInRole("Administrator"))
 {
-    <p class="alert alert-success">@this.TempData["CreateActorTemp"]</p>
+    @if (this.TempData["CreateActorTemp"] != null)
+    {
+        <p class="alert alert-success">@this.TempData["CreateActorTemp"]</p>
+    }
 }
 
 <div class="col-md-12 media">

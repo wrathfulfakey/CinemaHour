@@ -4,13 +4,16 @@
     //var sortedMovies = Model.Movies.OrderByDescending(x => x.ReleaseDate);
 }
 
-@if (this.TempData["DeleteMovieTemp"] != null)
+@if (this.User.IsInRole("Administrator"))
 {
-    <p class="alert alert-danger">@this.TempData["DeleteMovieTemp"]</p>
-}
-@if (this.TempData["HardDeleteMovieTemp"] != null)
-{
-    <p class="alert alert-danger">@this.TempData["HardDeleteMovieTemp"]</p>
+    @if (this.TempData["DeleteMovieTemp"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["DeleteMovieTemp"]</p>
+    }
+    @if (this.TempData["HardDeleteMovieTemp"] != null)
+    {
+        <p class="alert alert-danger">@this.TempData["HardDeleteMovieTemp"]</p>
+    }
 }
 
 
@@ -119,7 +122,7 @@
             if (i > 0 && pageNumber - 1 != pagesToShow[i - 1])
             {
                 <li class="pager__item @active">
-                    <a class="pager__link" 
+                    <a class="pager__link"
                        asp-action="All"
                        asp-route-sortOrder="@ViewData["CurrentSort"]"
                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
