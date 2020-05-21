@@ -1,7 +1,8 @@
 # CinemaHour
 Web Project for SoftUni 
 
-https://cinemahour.azurewebsites.net/
+https://cinemahour.azurewebsites.net/ 
+(Azure Free Trial expired)
 
 This project has been made with:
 1. Asp.Net Core
