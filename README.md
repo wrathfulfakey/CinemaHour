@@ -1,9 +1,6 @@
 # CinemaHour
 Web Project for SoftUni 
 
-https://cinemahour.azurewebsites.net/ 
-(Azure Free Trial expired)
-
 This project has been made with:
 1. Asp.Net Core
 2. xUnit
@@ -12,4 +9,4 @@ This project has been made with:
 5. TinyMCE
 6. MSSQL Express
 7. EntityFramework Core
-8. Azure Deployment (Web App + SQL)
+8. Azure Deployment (Web App + SQL) (expired)
